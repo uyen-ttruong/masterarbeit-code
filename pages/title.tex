@@ -1,36 +1,56 @@
-\titlehead{
-	\begin{flushright}
-		\includegraphics[width=50mm]{logos/university_logo}
-	\end{flushright}
-	\begin{center}
-		{\Large \getUniversity}\\
-		{\large \getFaculty}
-		\vspace*{10mm}
-	\end{center}
-}
+\thispagestyle{empty}
 
-\subject{\getDoctype\ zum Thema:}
+% Logo oben rechteckig
+\begin{flushright}
+\includegraphics[width=6cm,keepaspectratio]{logos/university_logo}
+\end{flushright}
 
-\title{\vspace{-10mm} \getTitle}
+\vspace*{1cm}
 
-\subtitle{Zur Erlangung des akademischen Grades Bachelor of Science}
+% Obere Linie
+\noindent\rule{\linewidth}{0.5mm}
 
-\author{}
+\vspace{1cm}
 
-\date{}
+% Titel
+\begin{flushright}
+  \sffamily\bfseries\LARGE
+  \getTitle
+  
+  \vspace{0.5cm}
+  
+  {\Large\getAuthor}
+\end{flushright}
 
-\publishers{
-	\parbox{\textwidth}{
-		\vspace*{40mm}
-		\large
-		\begin{tabularx}{0.8\textwidth}{lX}
-			\textbf{Vorgelegt von:} & \getAuthor \\[0.7em]
-			\textbf{Matrikelnummer:} & \getMatriculationNumber \\[0.7em]
-			\textbf{Studiengang:} & \getCourse \\[0.7em]
-			\textbf{Betreuer:} & \getSupervisor \\[0.7em]
-			\textbf{Abgabedatum:} & \getSubmissionDate \\[0.7em]
-		\end{tabularx}
-	}
-}\normalsize
+\vspace{1cm}
 
-\maketitle
+% Untere Linie
+\noindent\rule{\linewidth}{0.5mm}
+
+\vspace*{\stretch{1}}
+
+% Zusätzliche Informationen
+\begin{center}
+  \large
+  Masterarbeit\\
+  \vspace{0.5cm}
+  an der \getUniversity\\
+  \getFaculty
+  
+  \vspace{1cm}
+  
+  Studienrichtung: \getCourse
+  
+  \vspace{1cm}
+  
+  vorgelegt von\\
+  \getAuthor
+  
+  \vspace{\stretch{1}}
+  
+  München, den \getSubmissionDate
+  
+  \vspace{1cm}
+  
+  Erstgutachter: \getSupervisor
+\end{center}
