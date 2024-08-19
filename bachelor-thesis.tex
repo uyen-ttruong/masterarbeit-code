@@ -3,11 +3,11 @@
 % **************************************************
 
 \documentclass[
-	a4paper,
-	12pt,
-	bibtotoc,
-	listof=totoc,
-	titlepage
+    a4paper,
+    12pt,                  % Schriftgröße 12 pt (hoặc thay bằng 11 pt nếu cần)
+    bibliography=totoc,    % Thay thế bibtotoc bằng bibliography=totoc
+    listof=totoc,
+    titlepage
 ]{scrartcl}
 
 
@@ -15,7 +15,7 @@
 % Settings
 % **************************************************
 
-\usepackage{settings}
+\usepackage{settings} % Đảm bảo rằng settings.sty không chứa các lệnh lỗi thời
 
 
 % **************************************************
@@ -38,10 +38,14 @@
 % **************************************************
 
 \hypersetup{
-	pdftitle = \getTitle,
-	pdfauthor = \getAuthor,
-	pdfsubject = \getDoctype
-	pdfkeywords = {Masterarbeitarbeit, Informatik}
+    pdftitle = {\getTitle},
+    pdfauthor = {\getAuthor},
+    pdfsubject = {\getDoctype},
+    pdfkeywords = {Masterarbeit, Informatik},
+    colorlinks=true,        % tạo liên kết có thể nhấp
+    citecolor=green,        % màu cho trích dẫn
+    linkcolor=blue,         % màu cho các liên kết đến phần khác của tài liệu
+    urlcolor=cyan           % màu cho liên kết URL
 }
 
 
@@ -73,7 +77,7 @@
 \input{chapters/01_introduction}
 \clearpage
 
-\input{chapters/03_Porfolio preparation.tex}
+\input{chapters/03_Porfolio preparation}
 
 \clearpage
 \input{chapters/99_conclusion}

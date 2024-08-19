@@ -1,67 +1,38 @@
 % **************************************************
 % Packages
 % **************************************************
-\usepackage{parskip}
-\usepackage{a4wide}
 
-% Use UTF-8 encoding
-\usepackage[utf8]{inputenc}
+\usepackage{geometry}      % Paket für Seitenränder
+\geometry{
+    left=2.5cm,
+    right=2.5cm,
+    top=2.5cm,
+    bottom=2.5cm
+}
 
-% Use german language package
-\usepackage[ngerman]{babel}
+\usepackage{setspace}      % Paket für Zeilenabstand
+\setstretch{1.33}          % 16 pt Zeilenabstand bei 12 pt Schriftgröße (1.33 ist der Faktor)
 
-% Use T1 font encoding
-\usepackage[T1]{fontenc}
+\usepackage{mathptmx}   % Times New Roman font setting
+\usepackage[scaled]{helvet} % Helvetica (nah an Arial)
 
-% Reference the number of pages
-\usepackage{lastpage}
-
-% Style header and footer
-\usepackage{fancyhdr}
-
-% Embed pictures
-\usepackage{graphicx}
-
-% Embed tables
-\usepackage{tabularx}
-
-% Embed source code
-\usepackage{listings}
-
-% Use different colors
-\usepackage{xcolor}
-
-% Embed urls
-\usepackage[urlcolor=blue, pdfborder={0 0 0}]{hyperref}
-
-% Use multiple columns
-\usepackage{multicol}
-
-% Add list of abbreviations
-\usepackage{acronym}
-
-% Improve figure positioning
-\usepackage{float}
-
-% Use Helvetica font
-\usepackage[scaled]{helvet}
-
-% Use Times New Roman font
-\usepackage{mathptmx}
-
+\usepackage{parskip}       % Vermeidung von Einzug bei neuen Absätzen
+\usepackage{graphicx}      % Paket für das Einbinden von Bildern
+\usepackage{tabularx}      % Paket für erweiterte Tabellen
+\usepackage{listings}      % Paket für Quellcode-Darstellung
+\usepackage{xcolor}        % Paket für Farben
+\usepackage{hyperref}      % Paket für Links und PDF-Metadaten
+\usepackage{multicol}      % Paket für mehrere Spalten
+\usepackage{acronym}       % Paket für Abkürzungsverzeichnis
+\usepackage{float}         % Paket für exakte Platzierung von Bildern und Tabellen
+\usepackage{csquotes}      % Paket für erweiterte Zitate
 
 % **************************************************
 % Bibliography
 % **************************************************
 
-% Use biblatex with biber for bibliography
-\usepackage[backend=biber, style=apa, sorting=none]{biblatex}
-
-% Add source for bibliographic database
+\usepackage[backend=biber, style=authoryear, sorting=none]{biblatex}
 \addbibresource{bibliography.bib}
-
-% Provide advanced quotations
-\usepackage{csquotes}
 
 
 % **************************************************
@@ -69,7 +40,6 @@
 % **************************************************
 
 \renewcommand\lstlistingname{Quellcode}
-
 \renewcommand\lstlistlistingname{Quellcodeverzeichnis}
 
 \lstset{ %
@@ -93,6 +63,7 @@
 % Header and footer
 % **************************************************
 
+\usepackage{fancyhdr}
 \pagestyle{fancyplain}
 \fancyhf{}
 \lhead{\nouppercase{\leftmark}}
@@ -106,7 +77,7 @@
 % Miscellaneous
 % **************************************************
 
-% Prevent identation of new paragraphs
+% Prevent indentation of new paragraphs
 \setlength{\parindent}{0pt} 
 
 % Reduce hyphenation
