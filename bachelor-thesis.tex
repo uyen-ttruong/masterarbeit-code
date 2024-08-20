@@ -1,22 +1,22 @@
 % **************************************************
 % Document class
 % **************************************************
-
+% cSpell:disable
 \documentclass[
     a4paper,
-    12pt,                  % Schriftgröße 12 pt (hoặc thay bằng 11 pt nếu cần)
-    bibliography=totoc,    % Thay thế bibtotoc bằng bibliography=totoc
+    12pt,
+    bibliography=totoc,
     listof=totoc,
-    titlepage
+    titlepage,
+    footheight=19.28502pt 
 ]{scrartcl}
-
 
 % **************************************************
 % Settings
 % **************************************************
 
-\usepackage{settings} % Đảm bảo rằng settings.sty không chứa các lệnh lỗi thời
-
+\usepackage{settings}
+\usepackage{bookmark}
 
 % **************************************************
 % Variables
@@ -26,12 +26,10 @@
 \newcommand*{\getFaculty}{Fakultät für Informatik und Mathematik}
 \newcommand*{\getTitle}{Integration von Climate Value at Risk und Geospatial Analyse zur Risikobewertung von Immobilienportfolios}
 \newcommand*{\getAuthor}{Uyen Truong}
-\newcommand*{\getMatriculationNumber}{08151337}
 \newcommand*{\getCourse}{Stochastic Engineering in Business and Finance }
 \newcommand*{\getDoctype}{Masterarbeit}
 \newcommand*{\getSupervisor}{Prof. Dr. Silja Grawert}
 \newcommand*{\getSubmissionDate}{\today}
-
 
 % **************************************************
 % PDF Metadata
@@ -42,12 +40,11 @@
     pdfauthor = {\getAuthor},
     pdfsubject = {\getDoctype},
     pdfkeywords = {Masterarbeit, Informatik},
-    colorlinks=true,        % tạo liên kết có thể nhấp
-    citecolor=green,        % màu cho trích dẫn
-    linkcolor=blue,         % màu cho các liên kết đến phần khác của tài liệu
-    urlcolor=cyan           % màu cho liên kết URL
+    colorlinks=true,       
+    citecolor=green,       
+    linkcolor=blue,        
+    urlcolor=cyan           
 }
-
 
 % **************************************************
 % Content

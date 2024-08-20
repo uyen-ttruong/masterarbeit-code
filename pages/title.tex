@@ -1,56 +1,65 @@
+% cSpell:disable
 \thispagestyle{empty}
+
+% Đặt tất cả nội dung trong một minipage để kiểm soát chiều cao
+\begin{minipage}[c][\textheight][s]{\textwidth}
 
 % Logo oben rechteckig
 \begin{flushright}
-\includegraphics[width=6cm,keepaspectratio]{logos/university_logo}
+\includegraphics[width=5cm,keepaspectratio]{logos/hm_logo.png}
 \end{flushright}
 
-\vspace*{1cm}
+\vspace{0.5cm}
 
 % Obere Linie
-\noindent\rule{\linewidth}{0.5mm}
+\noindent\rule{\linewidth}{0.4mm}
 
-\vspace{1cm}
+\vspace{0.5cm}
 
 % Titel
 \begin{flushright}
-  \sffamily\bfseries\LARGE
-  \getTitle
+  \sffamily\bfseries\Large
+  \parbox{0.9\textwidth}{\raggedleft\getTitle}
   
-  \vspace{0.5cm}
+  \vspace{0.3cm}
   
-  {\Large\getAuthor}
+  {\large\getAuthor}
 \end{flushright}
 
-\vspace{1cm}
+\vspace{0.5cm}
 
 % Untere Linie
-\noindent\rule{\linewidth}{0.5mm}
+\noindent\rule{\linewidth}{0.4mm}
 
-\vspace*{\stretch{1}}
+\vfill
 
 % Zusätzliche Informationen
 \begin{center}
   \large
-  Masterarbeit\\
-  \vspace{0.5cm}
+  \getDoctype
+  
+  \vspace{0.3cm}
+  
   an der \getUniversity\\
   \getFaculty
   
-  \vspace{1cm}
+  \vspace{0.5cm}
   
   Studienrichtung: \getCourse
   
-  \vspace{1cm}
+  \vspace{0.5cm}
   
   vorgelegt von\\
-  \getAuthor
+  \getAuthor\ 
   
-  \vspace{\stretch{1}}
+  \vfill
   
   München, den \getSubmissionDate
   
-  \vspace{1cm}
+  \vspace{0.5cm}
   
   Erstgutachter: \getSupervisor
 \end{center}
+
+\end{minipage}
+\clearpage
