@@ -1,0 +1,24 @@
+% cSpell:disable
+\section{Theoretischer Hintergrund}
+\subsubsection{Stichprobenumfang }
+Stichprobenverfahren zielen darauf ab, die Merkmalsverteilungen der Grundgesamtheit zu schätzen. Während Schlussfolgerungen aus einer Stichprobe mit Sicherheit nur für diese selbst gelten, basiert die Verallgemeinerung auf die Grundgesamtheit auf statistischer Inferenz. Aufgrund des Ziels, eine möglichst kleine Teilmenge zu untersuchen, unterliegt die Stichprobenziehung strengen statistischen Kriterien. Zur Gewährleistung der Repräsentativität ist sowohl die Berechnung des erforderlichen Stichprobenumfangs als auch die Auswahl der geeigneten Stichprobenmethode durch sorgfältige organisatorische Evaluation unerlässlich.
+
+Der initiale Schritt bei der Portfolioerstellung besteht in der Ermittlung des erforderlichen Umfangs, um das Bankportfolio präzise abzubilden. Die Berechnung des notwendigen Stichprobenumfangs beginnt mit der Bestimmung der theoretischen Stichprobengröße für ein Portfolio mit unendlicher Grundgesamtheit. Diese Basisberechnung ist fundamental für die anschließende Ermittlung des Stichprobenumfangs bei einer endlichen Anzahl von Immobilien.
+
+Für die Berechnung des erforderlichen Stichprobenumfangs bei einer theoretisch unendlichen Grundgesamtheit wird die Cochran-Formel (\cite{cochran1953sampling}) herangezogen. Die Cochran-Formel lautet:
+
+\begin{equation}
+n = \frac{Z^2 \cdot P(1 - P)}{\varepsilon^2}
+\end{equation}
+
+Hierbei repräsentiert $n$ den initialen Stichprobenumfang. Ein entscheidender Faktor in dieser Formel ist die Festlegung der gewünschten Sicherheit, ausgedrückt durch den Z-Wert. Die Aussagewahrscheinlichkeit einer Stichprobe gibt an, in wie vielen Fällen das angewendete Verfahren zuverlässige Ergebnisse liefert. Das Organisationshandbuch empfiehlt eine Aussagewahrscheinlichkeit von 95\%, was einem Z-Wert von etwa 1,96 entspricht. Diese Wahl beeinflusst direkt die Größe der erforderlichen Stichprobe und stellt einen Kompromiss zwischen Präzision und praktischer Durchführbarkeit dar.
+
+Die Stärke der Cochran-Formel liegt in ihrer Flexibilität und Anwendbarkeit auf verschiedene Forschungsszenarien. Sie berücksichtigt sowohl das gewünschte Konfidenzniveau als auch die erwartete Variabilität in der Population.
+
+Für Populationen mit bekannter, endlicher Größe wird die Cochran-Formel modifiziert. Diese angepasste Formel dient als Eingabeparameter für die nachfolgende Gleichung, die den notwendigen Portfolioumfang für eine statistische Repräsentation eines Portfolios der Größe $N$ berechnet:
+
+\begin{equation}
+n' = \frac{n}{1 + \frac{n - 1}{N}}
+\end{equation}
+
+In diesen Formeln steht $Z$ für den z-Wert des gewählten Konfidenzintervalls, $N$ für den Umfang der Originalpopulation, $\varepsilon$ für die Fehlermarge, die das Ausmaß des zufälligen Stichprobenfehlers quantifiziert und ein Maß für die akzeptable Abweichung vom wahren Wert darstellt. $P$ bezeichnet den Populationsanteil, der den Anteil der Population in einer spezifischen Kategorie angibt. In diesem Kontext wird $P$ mit 0,5 angesetzt, da der spezifische Wert unbekannt ist und 0,5 den erforderlichen Stichprobenumfang maximiert. Diese konservative Schätzung gewährleistet, dass die Stichprobe groß genug ist, um auch bei unbekannten Populationsparametern zuverlässige Ergebnisse zu liefern.

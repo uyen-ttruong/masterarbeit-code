@@ -8,7 +8,8 @@
     bibliography=totoc,
     listof=totoc,
     titlepage,
-    footheight=19.28502pt 
+    footheight=19.28502pt,
+    headsepline  % Thêm đường gạch chân cho tiêu đề
 ]{scrartcl}
 
 % **************************************************
@@ -17,6 +18,19 @@
 
 \usepackage{settings}
 \usepackage{bookmark}
+% Tùy chỉnh tiêu đề trang
+%\usepackage[automark]{scrlayer-scrpage}
+%\clearpairofpagestyles
+%\chead{\upshape\headmark} % Tiêu đề ở giữa, không nghiêng
+%%\ohead{\pagemark} % Số trang ở góc ngoài bên phải
+
+% Đặt font chữ thẳng cho tiêu đề
+%\setkomafont{pageheadfoot}{\normalfont}
+%\setkomafont{pagenumber}{\normalfont}
+
+% Tùy chỉnh tiêu đề trang (nếu cần)
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+\renewcommand{\subsectionmark}[1]{\markright{#1}}
 
 % **************************************************
 % Variables
@@ -26,25 +40,10 @@
 \newcommand*{\getFaculty}{Fakultät für Informatik und Mathematik}
 \newcommand*{\getTitle}{Integration von Climate Value at Risk und Geospatial Analyse zur Risikobewertung von Immobilienportfolios}
 \newcommand*{\getAuthor}{Uyen Truong}
-\newcommand*{\getCourse}{Stochastic Engineering in Business and Finance }
+\newcommand*{\getCourse}{Stochastic Engineering in Business and Finance}
 \newcommand*{\getDoctype}{Masterarbeit}
 \newcommand*{\getSupervisor}{Prof. Dr. Silja Grawert}
 \newcommand*{\getSubmissionDate}{\today}
-
-% **************************************************
-% PDF Metadata
-% **************************************************
-
-\hypersetup{
-    pdftitle = {\getTitle},
-    pdfauthor = {\getAuthor},
-    pdfsubject = {\getDoctype},
-    pdfkeywords = {Masterarbeit, Informatik},
-    colorlinks=true,       
-    citecolor=green,       
-    linkcolor=blue,        
-    urlcolor=cyan           
-}
 
 % **************************************************
 % Content
@@ -75,6 +74,7 @@
 \clearpage
 
 \input{chapters/03_Porfolio preparation}
+\input{chapters/04_Theoretischer Hintergrund}
 
 \clearpage
 \input{chapters/99_conclusion}
