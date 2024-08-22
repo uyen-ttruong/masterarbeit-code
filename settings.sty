@@ -10,7 +10,7 @@
     head=19.28502pt,
     foot=19.28502pt
 ]{geometry}  
-
+\usepackage{booktabs}
 \usepackage{setspace}      % Paket für Zeilenabstand
 \setstretch{1.33}          % 16 pt Zeilenabstand bei 12 pt Schriftgröße (1.33 ist der Faktor)
 
@@ -22,7 +22,14 @@
 \usepackage{tabularx}      % Paket für erweiterte Tabellen
 \usepackage{listings}      % Paket für Quellcode-Darstellung
 \usepackage{xcolor}        % Paket für Farben
-\usepackage{hyperref}      % Paket für Links und PDF-Metadaten
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=[rgb]{0.133, 0.545, 0.133},       % Forest Green
+    urlcolor=[rgb]{0.133, 0.545, 0.133},        
+    citecolor=[rgb]{0.133, 0.545, 0.133},       
+    filecolor=[rgb]{0.133, 0.545, 0.133},       
+}  % Paket für Links und PDF-Metadaten
 \usepackage{multicol}      % Paket für mehrere Spalten
 \usepackage{acronym}       % Paket für Abkürzungsverzeichnis
 \usepackage{float}         % Paket für exakte Platzierung von Bildern und Tabellen

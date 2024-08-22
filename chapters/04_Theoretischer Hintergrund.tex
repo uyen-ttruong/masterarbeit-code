@@ -9,6 +9,7 @@ Für die Berechnung des erforderlichen Stichprobenumfangs bei einer theoretisch 
 
 \begin{equation}
 n = \frac{Z^2 \cdot P(1 - P)}{\varepsilon^2}
+\label{eq:cochran}
 \end{equation}
 
 Hierbei repräsentiert $n$ den initialen Stichprobenumfang. Ein entscheidender Faktor in dieser Formel ist die Festlegung der gewünschten Sicherheit, ausgedrückt durch den Z-Wert. Die Aussagewahrscheinlichkeit einer Stichprobe gibt an, in wie vielen Fällen das angewendete Verfahren zuverlässige Ergebnisse liefert. Das Organisationshandbuch empfiehlt eine Aussagewahrscheinlichkeit von 95\%, was einem Z-Wert von etwa 1,96 entspricht. Diese Wahl beeinflusst direkt die Größe der erforderlichen Stichprobe und stellt einen Kompromiss zwischen Präzision und praktischer Durchführbarkeit dar.
@@ -19,6 +20,7 @@ Für Populationen mit bekannter, endlicher Größe wird die Cochran-Formel modif
 
 \begin{equation}
 n' = \frac{n}{1 + \frac{n - 1}{N}}
+\label{eq:finite_population}
 \end{equation}
 
 In diesen Formeln steht $Z$ für den z-Wert des gewählten Konfidenzintervalls, $N$ für den Umfang der Originalpopulation, $\varepsilon$ für die Fehlermarge, die das Ausmaß des zufälligen Stichprobenfehlers quantifiziert und ein Maß für die akzeptable Abweichung vom wahren Wert darstellt. $P$ bezeichnet den Populationsanteil, der den Anteil der Population in einer spezifischen Kategorie angibt. In diesem Kontext wird $P$ mit 0,5 angesetzt, da der spezifische Wert unbekannt ist und 0,5 den erforderlichen Stichprobenumfang maximiert. Diese konservative Schätzung gewährleistet, dass die Stichprobe groß genug ist, um auch bei unbekannten Populationsparametern zuverlässige Ergebnisse zu liefern.
