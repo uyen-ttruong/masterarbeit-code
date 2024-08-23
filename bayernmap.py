@@ -46,12 +46,26 @@ bayern_df.plot(
     categorical=False, 
     legend=True, 
     cmap='autumn_r',
+    edgecolor='none',  # Loại bỏ đường viền của các vùng
 )
 
-ax.set(
-    title='Bayern: Anzahl der Einwohner pro Postleitzahl', 
-    aspect=1.3, 
-    facecolor='lightblue'
-);
+# Thiết lập tiêu đề và các thuộc tính khác
+ax.set_title('Bayern: Anzahl der Einwohner pro Postleitzahl', fontsize=16)
+ax.axis('off')  # Loại bỏ trục và đường lưới
+
+# Điều chỉnh thanh màu (colorbar)
+cbar = ax.get_figure().get_axes()[1]
+cbar.set_ylabel('Einwohner', fontsize=12)
+cbar.tick_params(labelsize=10)
+
+# Đặt nền trắng
+fig.patch.set_facecolor('white')
+ax.set_facecolor('white')
+
+plt.tight_layout()
 plt.show()
-#germany_df.to_csv('germany_df.csv', index=False)
+try:
+    bayern_df.to_csv("bayern_df.csv", index=False)
+    print("File CSV đã được tạo thành công.")
+except Exception as e:
+    print(f"Có lỗi khi tạo file CSV: {e}")
