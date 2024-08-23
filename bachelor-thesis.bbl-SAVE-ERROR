@@ -1,0 +1,147 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{hawking_1999}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=906302c30c766570fe1df9446c425436}{%
+           family={Hawking},
+           familyi={H\bibinitperiod},
+           given={Stephen\bibnamedelima W.},
+           giveni={S\bibinitperiod\bibinitdelim W\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Rowohlt}%
+      }
+      \strng{namehash}{906302c30c766570fe1df9446c425436}
+      \strng{fullhash}{906302c30c766570fe1df9446c425436}
+      \strng{fullhashraw}{906302c30c766570fe1df9446c425436}
+      \strng{bibnamehash}{906302c30c766570fe1df9446c425436}
+      \strng{authorbibnamehash}{906302c30c766570fe1df9446c425436}
+      \strng{authornamehash}{906302c30c766570fe1df9446c425436}
+      \strng{authorfullhash}{906302c30c766570fe1df9446c425436}
+      \strng{authorfullhashraw}{906302c30c766570fe1df9446c425436}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Eine kurze Geschichte der Zeit}
+      \field{year}{1999}
+    \endentry
+    \entry{MuenchenerHyp2022}{report}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=6f3efb34987d3d9d68f178f22fab5061}{%
+           family={{Münchener Hypothekenbank eG}},
+           familyi={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{fullhash}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{fullhashraw}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{bibnamehash}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{authorbibnamehash}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{authornamehash}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{authorfullhash}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{authorfullhashraw}{6f3efb34987d3d9d68f178f22fab5061}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{MünchenerHyp Geschäftsbericht 2022}
+      \field{type}{techreport}
+      \field{year}{2022}
+    \endentry
+    \entry{zurek2022real}{article}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=cfe70227db0d1f53bdbe9c96ca3aa4b2}{%
+           family={Zurek},
+           familyi={Z\bibinitperiod},
+           given={Maximilian},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
+      \strng{fullhash}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
+      \strng{fullhashraw}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
+      \strng{bibnamehash}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
+      \strng{authorbibnamehash}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
+      \strng{authornamehash}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
+      \strng{authorfullhash}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
+      \strng{authorfullhashraw}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Financial Services Research}
+      \field{number}{1}
+      \field{title}{Real estate markets and lending: does local growth fuel risk?}
+      \field{volume}{62}
+      \field{year}{2022}
+      \field{pages}{27\bibrangedash 59}
+      \range{pages}{33}
+    \endentry
+    \entry{cochran1953sampling}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=dbe9ae6cc9e5e24a66a2b712affd05de}{%
+           family={Cochran},
+           familyi={C\bibinitperiod},
+           given={William\bibnamedelima G},
+           giveni={W\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {John Wiley \& Sons}%
+      }
+      \strng{namehash}{dbe9ae6cc9e5e24a66a2b712affd05de}
+      \strng{fullhash}{dbe9ae6cc9e5e24a66a2b712affd05de}
+      \strng{fullhashraw}{dbe9ae6cc9e5e24a66a2b712affd05de}
+      \strng{bibnamehash}{dbe9ae6cc9e5e24a66a2b712affd05de}
+      \strng{authorbibnamehash}{dbe9ae6cc9e5e24a66a2b712affd05de}
+      \strng{authornamehash}{dbe9ae6cc9e5e24a66a2b712affd05de}
+      \strng{authorfullhash}{dbe9ae6cc9e5e24a66a2b712affd05de}
+      \strng{authorfullhashraw}{dbe9ae6cc9e5e24a66a2b712affd05de}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{1st}
+      \field{title}{Sampling Techniques}
+      \field{year}{1953}
+      \field{pages}{50\bibrangedash 51}
+      \range{pages}{2}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
