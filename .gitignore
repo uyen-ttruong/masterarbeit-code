@@ -39,3 +39,5 @@
 *.listing
 *.loe
 germany_df.csv 
+flutbayern.csv
+merged_flutbayern.csv
