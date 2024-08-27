@@ -1,6 +1,7 @@
 % **************************************************
 % Packages
 % **************************************************
+\usepackage[ngerman]{babel} 
 \usepackage{subcaption} 
 \usepackage[
     left=2.5cm,
@@ -11,45 +12,46 @@
     foot=19.28502pt
 ]{geometry}  
 \usepackage{booktabs}
-\usepackage{setspace}      % Paket für Zeilenabstand
-\setstretch{1.33}          % 16 pt Zeilenabstand bei 12 pt Schriftgröße (1.33 ist der Faktor)
+\usepackage{setspace}
+\setstretch{1.33}
 
-\usepackage{mathptmx}      % Times New Roman font setting
-\usepackage[scaled]{helvet} % Helvetica (nah an Arial)
+\usepackage{mathptmx}
+\usepackage[scaled]{helvet}
 
-\KOMAoption{parskip}{full} % Vermeidung von Einzug bei neuen Absätzen
-\usepackage{graphicx}      % Paket für das Einbinden von Bildern
-\usepackage{tabularx}      % Paket für erweiterte Tabellen
-\usepackage{listings}      % Paket für Quellcode-Darstellung
-\usepackage{xcolor}        % Paket für Farben
+\KOMAoption{parskip}{full}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage{xcolor}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
-    linkcolor=[rgb]{0.133, 0.545, 0.133},       % Forest Green
-    urlcolor=[rgb]{0.133, 0.545, 0.133},        
-    citecolor=[rgb]{0.133, 0.545, 0.133},       
-    filecolor=[rgb]{0.133, 0.545, 0.133},       
-}  % Paket für Links und PDF-Metadaten
-\usepackage{multicol}      % Paket für mehrere Spalten
-\usepackage{acronym}       % Paket für Abkürzungsverzeichnis
-\usepackage{float}         % Paket für exakte Platzierung von Bildern und Tabellen
-\usepackage{csquotes}      % Paket für erweiterte Zitate
+    linkcolor=[rgb]{0.133, 0.545, 0.133},
+    urlcolor=[rgb]{0.133, 0.545, 0.133},
+    citecolor=[rgb]{0.133, 0.545, 0.133},
+    filecolor=[rgb]{0.133, 0.545, 0.133},
+}
+\usepackage{multicol}
+\usepackage{acronym}
+\usepackage{float}
+\usepackage{csquotes}
+
+% Tải gói caption (nếu bạn đang sử dụng nó)
+\usepackage{caption}
 
 % **************************************************
 % Bibliography
 % **************************************************
 \usepackage[backend=biber, style=authoryear, sorting=none]{biblatex}
-
 \addbibresource{bibliography.bib}
 
 % **************************************************
 % Source code formatting
 % **************************************************
-
 \renewcommand\lstlistingname{Quellcode}
 \renewcommand\lstlistlistingname{Quellcodeverzeichnis}
 
-\lstset{ %
+\lstset{%
     backgroundcolor=\color{white},
     basicstyle=\footnotesize,
     breaklines=true,
@@ -78,10 +80,13 @@
 % **************************************************
 % Miscellaneous
 % **************************************************
-
-% Prevent indentation of new paragraphs
-\setlength{\parindent}{0pt} 
-
-% Reduce hyphenation
+\setlength{\parindent}{0pt}
 \hyphenpenalty=5000
 \tolerance=1414
+
+% **************************************************
+% Custom Settings
+% **************************************************
+\renewcommand{\figurename}{Abbildung}  % Change "Figure" to "Abbildung"
+
+% ... các cài đặt tùy chỉnh khác ...

@@ -1,3 +1,4 @@
+cSpell:disable
 \section{Daten und Portfolio-Vorbereitung}
 
 Im Rahmen dieses Kapitels wird die Methodik zur Generierung eines repräsentativen Musterportfolios erläutert, das als Grundlage für die Prognose klimabedingter Schäden dient. Trotz des umfangreichen Datenbestands der Finanzinstitute über ihre Kreditengagements hat die limitierte Zugänglichkeit zu detaillierten Datensätzen bisher umfassende empirische Analysen der Kreditrisiken eingeschränkt. Zur Überwindung dieser Limitation wird ein Musterportfolio konstruiert, das eine fundierte Approximation der erwarteten Verluste aus Wohnimmobilienkrediten ermöglicht. Die Quantifizierung essenzieller Risikoparameter basiert primär auf dem Geschäftsbericht der Münchener Hypothekenbank \parencite{MuenchenerHyp2022}, ergänzt durch ausdifferenzierte Datensätze zur Distribution von Energieeffizienzklassen und regionalen Verteilung von Wohneinheiten. Diese Datenaggregation bildet die Basis für eine detaillierte Analyse der Anfälligkeit verschiedener Immobilienarten und Standorte gegenüber umweltbedingten Wertänderungen, physischen Risiken sowie Transitionsrisiken.
@@ -23,26 +24,20 @@ Diese Informationen stellen die fundamentalen finanziellen Parameter dar, die f�
 \end{table}
 Der nächste Schritt beinhaltet die Erzeugung präziser Koordinaten für die Datenpunkte. Eine zufällige Verteilung von Punkten in Bayern würde die tatsächliche Struktur eines Kreditportfolios nicht angemessen widerspiegeln, da Immobilien sowohl in Deutschland als auch in Bayern ungleichmäßig verteilt sind. Die Studie von \textcite{zurek2022real} untersucht den Zusammenhang zwischen Bevölkerungsdichte und Kreditvergabe im deutschen Kontext. Sie unterstützt die Annahme, dass Gebiete mit stärkerem Wirtschaftswachstum - oft gekennzeichnet durch höhere Bevölkerungsdichte - zu höheren Immobilienpreisen und folglich zu einer erhöhten Kreditnachfrage neigen. Daher wird die Bevölkerungsdichte als Basis für die Zuweisung spezifischer Koordinaten zu jedem Datenpunkt verwendet.
 
-Die von der Webseite \parencite{suche_postleitzahl} bereitgestellte Datengrundlage integriert geographische Rohdaten aus OpenStreetMap mit den offiziellen Ermittlungen der Bevölkerungszahlen durch die Statistischen Ämter des Bundes und der Länder. Diese Synthese ermöglicht eine präzise Segmentierung des Bundesgebiets in Postleitzahlenzonen, denen jeweils spezifische Bevölkerungskennzahlen zugeordnet sind.
-Zur repräsentativen Verteilung der 3853 Datenpunkte, die der Anzahl der Hypothekarkredite entsprechen, wird ein proportionaler Ansatz basierend auf der Einwohnerzahl jeder Region angewandt. Innerhalb der jeweiligen Postleitzahlgebiete erfolgt die Platzierung mittels eines kontrollierten stochastischen Verfahrens, bei dem randomisierte Koordinaten generiert und auf ihre Lage innerhalb der definierten Polygongrenzen verifiziert werden. Dieses Vorgehen gewährleistet eine realitätsnahe räumliche Verteilung unter Berücksichtigung demographischer und geographischer Faktoren. Die resultierende Distribution der Datenpunkte ist in Abbildung \ref{fig:vergleich_bayern} visualisiert.
+Die Datenquelle, die von der Website \textcite{suche_postleitzahl} verwendet wird, integriert Rohdaten aus OpenStreetMap mit der Einwohnerzahl, die von \textcite{destatis} veröffentlicht wurden. Durch die Kombination dieser beiden Datenquellen wird eine präzise Segmentierung des Bundesgebiets in Postleitzahlenzonen ermöglicht.
+Zur repräsentativen Verteilung der 3853 Datenpunkte, die der Anzahl der Hypothekarkredite entsprechen, wird ein proportionaler Ansatz basierend auf der Einwohnerzahl jeder Region angewandt. Innerhalb der jeweiligen Postleitzahlgebiete erfolgt die Platzierung mittels eines kontrollierten stochastischen Verfahrens, bei dem randomisierte Koordinaten generiert und auf ihre Lage innerhalb der definierten Polygongrenzen verifiziert werden. Dieses Vorgehen gewährleistet eine realitätsnahe räumliche Verteilung unter Berücksichtigung demographischer und geographischer Faktoren. Die resultierende Distribution der Datenpunkte ist in Abbildung \ref{fig:hypothekenportfolio} visualisiert.
 \begin{figure}[htbp]
     \centering
-    \begin{subfigure}{\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{figures/Bayern_pop_plz.png}
-        \caption{Verteilung der Bevölkerungsdichte Bayerns nach Postleitzahlenbereichen}
-        \label{fig:bevoelkerungsdichte}
-    \end{subfigure}
-
-    \vspace{0.5cm} % Reduce vertical space between the images
-
-    \begin{subfigure}{\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{figures/bayen_por_pop.png}
-        \caption{Datenpunktverteilung im Hypothekenportfolio Bayern}
-        \label{fig:hypothekenportfolio}
-    \end{subfigure}
-    \caption{Vergleich der Bevölkerungsdichte und der Hypothekenverteilung in Bayern}
-    \label{fig:vergleich_bayern}
+    \includegraphics[width=0.95\textwidth]{figures/Bayern_pop_plz.png}
+    \caption{Verteilung der Bevölkerungsdichte Bayerns nach Postleitzahlenbereichen}
+    \label{fig:bevoelkerungsdichte}
 \end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/bayen_por_pop.png} 
+    \caption{Datenpunktverteilung im Hypothekenportfolio Bayern}
+    \label{fig:hypothekenportfolio}
+\end{figure}
+
 \clearpage
