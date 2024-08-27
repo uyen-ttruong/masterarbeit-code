@@ -1,6 +1,7 @@
 import geopandas as gpd
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
 from adjustText import adjust_text
 
 # Load shapefile data for PLZ (Postleitzahl) and Landkreis boundaries
@@ -36,14 +37,21 @@ ort_centers = bayern_df[bayern_df['landkreis'].isna()].groupby('ort').agg({
 # Ensure the geometry column is set correctly
 ort_centers = ort_centers.set_geometry('geometry')
 
+# Adjusted population bins and labels based on the actual data distribution
+population_bins = [0, 2000, 5000, 10000, 20000, 30000, 50000, 100000]
+population_labels = ['0-2000', '2001-5000', '5001-10000', '10001-20000', '20001-30000', '30001-50000', '50001+']
+
+# Updating the population category based on the new bins
+bayern_df['pop_category'] = pd.cut(bayern_df['einwohner'], bins=population_bins, labels=population_labels)
+
 fig, ax = plt.subplots(figsize=(16, 11))
 
 # Plotting the population distribution by PLZ in Bayern
 bayern_df.plot(
     ax=ax, 
-    column='einwohner', 
-    categorical=False, 
-    legend=True, 
+    column='pop_category', 
+    categorical=True, 
+    legend=False,  # Turn off the default legend
     cmap='summer',
     edgecolor='black', 
     linewidth=0.2 
@@ -58,8 +66,7 @@ ax.scatter(
     zorder=5 
 )
 
-# Annotating only unique Orts with empty 'landkreis' 
-# with white color and a semi-transparent black background for better readability
+# Annotating only unique Orts with empty 'landkreis'
 texts = []
 for idx, row in ort_centers.iterrows():
     texts.append(ax.text(
@@ -76,14 +83,17 @@ for idx, row in ort_centers.iterrows():
 # Use adjust_text to avoid overlapping
 adjust_text(texts, arrowprops=dict(arrowstyle='->', color='darkred', lw=0.5))
 
-# Set the title and other attributes
-ax.set_title('Verteilung der Bevölkerungsdichte Bayerns nach Postleitzahlenbereichen', fontsize=16)
-ax.axis('off')
+# Manually create a legend with colored patches
+legend_handles = [
+    Patch(color=plt.cm.summer(i/len(population_labels)), label=label) 
+    for i, label in enumerate(population_labels)
+]
 
-# Adjusting the colorbar
-cbar = ax.get_figure().get_axes()[1]
-cbar.set_ylabel('Bevölkerung', fontsize=12)
-cbar.tick_params(labelsize=10)
+# Position legend in the bottom right corner, outside the map area
+ax.legend(handles=legend_handles, title='Einwohnerzahl nach PLZ', loc='lower right', fontsize=10, title_fontsize=12, bbox_to_anchor=(1.2, 0))
+
+# Remove the title
+ax.axis('off')
 
 # Set white background
 fig.patch.set_facecolor('white')

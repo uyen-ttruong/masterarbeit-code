@@ -3,13 +3,15 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from shapely.geometry import Point
+from matplotlib.patches import Patch  # Import Patch for the legend
+from adjustText import adjust_text
 
 # Load the shapefile
 zip_path = r"C:\Users\uyen truong\Desktop\Hochschule-Muenchen-LaTeX-Template\plz-5stellig.shp.zip"
 shp_name = 'plz-5stellig'
 full_path = f"zip://{zip_path}!{shp_name}.shp"
 plz_shape_df = gpd.read_file(full_path, dtype={'plz': str})
-plt.rcParams['figure.figsize'] = [16, 11]  # Set the figure size to match the original aspect ratio
+plt.rcParams['figure.figsize'] = [16, 11] 
 
 # Load the regional data
 plz_region_df = pd.read_csv(
@@ -30,6 +32,9 @@ germany_df.drop(['note'], axis=1, inplace=True)
 
 # Filter for Bayern
 bayern_df = germany_df.query('bundesland == "Bayern"')
+
+# Adjust CRS to reduce distortion
+bayern_df = bayern_df.to_crs("EPSG:3035") 
 
 # Calculate the total population
 total_population = bayern_df['einwohner'].sum()
@@ -69,14 +74,29 @@ points_gdf = gpd.GeoDataFrame(geometry=points)
 # Convert the data list to a DataFrame
 points_df = pd.DataFrame(data)
 
+# Group by 'ort' and get the centroid for each unique Ort
+ort_centers = bayern_df[bayern_df['landkreis'].isna()].groupby('ort').agg({
+    'geometry': lambda x: x.union_all().centroid
+}).reset_index()
+
+# Ensure the geometry column is set correctly
+ort_centers = ort_centers.set_geometry('geometry')
+
 # Plot the map
-fig, ax = plt.subplots(figsize=(16, 11))  # Use the correct aspect ratio
+fig, ax = plt.subplots(figsize=(16, 11))
+
+# Adjusted population bins and labels based on the actual data distribution
+population_bins = [0, 2000, 5000, 10000, 20000, 30000, 50000, 100000]
+population_labels = ['0-2000', '2001-5000', '5001-10000', '10001-20000', '20001-30000', '30001-50000', '50001+']
+
+# Updating the population category based on the new bins
+bayern_df['pop_category'] = pd.cut(bayern_df['einwohner'], bins=population_bins, labels=population_labels)
 
 bayern_df.plot(
     ax=ax, 
-    column='einwohner', 
-    categorical=False, 
-    legend=True, 
+    column='pop_category', 
+    categorical=True, 
+    legend=False,  # Turn off the default legend
     cmap='summer',
     edgecolor='black',
     linewidth=0.2
@@ -85,31 +105,44 @@ bayern_df.plot(
 # Overlay the points on the map in dark red
 points_gdf.plot(ax=ax, marker='o', color='darkred', markersize=1, alpha=0.5)
 
-# Get unique Orts without landkreis
-unique_orts = bayern_df[bayern_df['landkreis'].isna()].groupby('ort').agg({
-    'geometry': lambda x: x.unary_union.centroid
-}).reset_index()
+# Plot red dots at the centroid of each Ort, slightly smaller
+ax.scatter(
+    ort_centers.geometry.x, 
+    ort_centers.geometry.y, 
+    color='darkred', 
+    s=4,
+    zorder=5
+)
 
-# Add labels for unique Orts without landkreis
-for idx, row in unique_orts.iterrows():
-    ax.annotate(
-        text=row['ort'],
-        xy=(row.geometry.x, row.geometry.y),
-        ha='center',
+# Annotating only unique Orts with empty 'landkreis' 
+# with white color and a semi-transparent black background for better readability
+texts = []
+for idx, row in ort_centers.iterrows():
+    texts.append(ax.text(
+        row.geometry.x + 0.005,
+        row.geometry.y + 0.005,
+        row['ort'],
+        ha='center', 
         va='center',
-        fontsize=8,
-        color='black',
-        fontweight='bold'
-    )
+        fontsize=9,
+        color='white',  
+        bbox=dict(facecolor='black', alpha=0.5, edgecolor='none', pad=1)  
+    ))
 
-# Set the title and other plot attributes
-ax.set_title('Verteilung der Hypothekendatenpunkte Bayerns', fontsize=16)
-ax.axis('off')  # Remove axes
+# Use adjust_text to avoid overlapping
+adjust_text(texts, arrowprops=dict(arrowstyle='->', color='darkred', lw=0.5))
 
-# Adjust the colorbar
-cbar = ax.get_figure().get_axes()[1]
-cbar.set_ylabel('Bevölkerung', fontsize=12)
-cbar.tick_params(labelsize=10)
+# Manually create a legend with colored patches
+legend_handles = [
+    Patch(color=plt.cm.summer(i/len(population_labels)), label=label) 
+    for i, label in enumerate(population_labels)
+]
+
+# Position legend in the bottom right corner, outside the map area
+ax.legend(handles=legend_handles, title='Einwohnerzahl nach PLZ', loc='lower right', fontsize=10, title_fontsize=12, bbox_to_anchor=(1.2, 0))
+
+# Remove the title
+ax.axis('off')
 
 # Set the background color to white
 fig.patch.set_facecolor('white')
