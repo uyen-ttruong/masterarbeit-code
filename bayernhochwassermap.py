@@ -77,3 +77,4 @@ plt.show()
 # In thông tin về dữ liệu lũ lụt
 print(flood_data.info())
 print(flood_data.head())
+flood_data.to_csv("bayernflooddata.csv", index=False)

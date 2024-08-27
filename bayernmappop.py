@@ -9,7 +9,7 @@ zip_path = r"C:\Users\uyen truong\Desktop\Hochschule-Muenchen-LaTeX-Template\plz
 shp_name = 'plz-5stellig'
 full_path = f"zip://{zip_path}!{shp_name}.shp"
 plz_shape_df = gpd.read_file(full_path, dtype={'plz': str})
-plt.rcParams['figure.figsize'] = [16, 11]
+plt.rcParams['figure.figsize'] = [16, 11]  # Set the figure size to match the original aspect ratio
 
 # Load the regional data
 plz_region_df = pd.read_csv(
@@ -70,7 +70,7 @@ points_gdf = gpd.GeoDataFrame(geometry=points)
 points_df = pd.DataFrame(data)
 
 # Plot the map
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(16, 11))  # Use the correct aspect ratio
 
 bayern_df.plot(
     ax=ax, 
@@ -78,11 +78,29 @@ bayern_df.plot(
     categorical=False, 
     legend=True, 
     cmap='summer',
-    edgecolor='none',  # Remove the borders
+    edgecolor='black',
+    linewidth=0.2
 )
 
-# Overlay the points on the map in red
-points_gdf.plot(ax=ax, marker='o', color='red', markersize=2, alpha=0.5)
+# Overlay the points on the map in dark red
+points_gdf.plot(ax=ax, marker='o', color='darkred', markersize=1, alpha=0.5)
+
+# Get unique Orts without landkreis
+unique_orts = bayern_df[bayern_df['landkreis'].isna()].groupby('ort').agg({
+    'geometry': lambda x: x.unary_union.centroid
+}).reset_index()
+
+# Add labels for unique Orts without landkreis
+for idx, row in unique_orts.iterrows():
+    ax.annotate(
+        text=row['ort'],
+        xy=(row.geometry.x, row.geometry.y),
+        ha='center',
+        va='center',
+        fontsize=8,
+        color='black',
+        fontweight='bold'
+    )
 
 # Set the title and other plot attributes
 ax.set_title('Verteilung der Hypothekendatenpunkte Bayerns', fontsize=16)
@@ -97,7 +115,12 @@ cbar.tick_params(labelsize=10)
 fig.patch.set_facecolor('white')
 ax.set_facecolor('white')
 
+# Adjust layout to remove any unnecessary padding
 plt.tight_layout()
+
+# Save the figure with high resolution
+plt.savefig('bayern_map.png', dpi=300, bbox_inches='tight')
+
 plt.show()
 
 # Save the points DataFrame to a CSV file (optional)

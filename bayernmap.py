@@ -30,8 +30,11 @@ bayern_df = germany_df.query('bundesland == "Bayern"')
 
 # Group by 'ort' and get the centroid for each unique Ort
 ort_centers = bayern_df[bayern_df['landkreis'].isna()].groupby('ort').agg({
-    'geometry': lambda x: x.unary_union.centroid
+    'geometry': lambda x: x.union_all().centroid
 }).reset_index()
+
+# Ensure the geometry column is set correctly
+ort_centers = ort_centers.set_geometry('geometry')
 
 fig, ax = plt.subplots(figsize=(16, 11))
 
@@ -42,29 +45,40 @@ bayern_df.plot(
     categorical=False, 
     legend=True, 
     cmap='summer',
-    edgecolor='black',  # Add borders to the PLZ areas
+    edgecolor='black', 
+    linewidth=0.2 
 )
 
-# Annotating only unique Orts with empty 'landkreis' with bold orange color
+# Plot red dots at the centroid of each Ort, slightly smaller
+ax.scatter(
+    ort_centers.geometry.x, 
+    ort_centers.geometry.y, 
+    color='darkred', 
+    s=4, 
+    zorder=5 
+)
+
+# Annotating only unique Orts with empty 'landkreis' 
+# with white color and a semi-transparent black background for better readability
 texts = []
 for idx, row in ort_centers.iterrows():
     texts.append(ax.text(
-        row.geometry.x, 
-        row.geometry.y, 
+        row.geometry.x + 0.005, 
+        row.geometry.y + 0.005, 
         row['ort'],
         ha='center', 
         va='center',
-        fontsize=10, 
-        color='darkorange',
-        fontweight='bold'
+        fontsize=9, 
+        color='white',  
+        bbox=dict(facecolor='black', alpha=0.5, edgecolor='none', pad=1)  
     ))
 
 # Use adjust_text to avoid overlapping
-adjust_text(texts, arrowprops=dict(arrowstyle='->', color='red', lw=0.5))
+adjust_text(texts, arrowprops=dict(arrowstyle='->', color='darkred', lw=0.5))
 
 # Set the title and other attributes
 ax.set_title('Verteilung der Bevölkerungsdichte Bayerns nach Postleitzahlenbereichen', fontsize=16)
-ax.axis('off')  # Remove axis and grid
+ax.axis('off')
 
 # Adjusting the colorbar
 cbar = ax.get_figure().get_axes()[1]
