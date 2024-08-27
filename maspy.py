@@ -1,79 +1,89 @@
+import geopandas as gpd
 import pandas as pd
 import numpy as np
-from scipy.stats import lognorm
+import matplotlib.pyplot as plt
+from shapely.geometry import Point
+from matplotlib.patches import Patch  # Import Patch for the legend
+from adjustText import adjust_text
 
-# Funktionen für die Generierung von Daten
-def generate_price(mean, min_price, max_price, size):
-    shape, loc, scale = lognorm.fit([min_price, mean, max_price], floc=0)
-    return np.clip(lognorm.rvs(shape, loc=loc, scale=scale, size=size), min_price, max_price)
+# Load the shapefile
+zip_path = r"C:\Users\uyen truong\Desktop\Hochschule-Muenchen-LaTeX-Template\plz-5stellig.shp.zip"
+shp_name = 'plz-5stellig'
+full_path = f"zip://{zip_path}!{shp_name}.shp"
+plz_shape_df = gpd.read_file(full_path, dtype={'plz': str})
+plt.rcParams['figure.figsize'] = [16, 11] 
 
-def generate_area(mean, std, size):
-    return np.clip(np.random.normal(mean, std, size), 20, 500)
+# Load the regional data
+plz_region_df = pd.read_csv(
+    'zuordnung_plz_ort.csv',
+    sep=',',
+    dtype={'plz': str}
+)
 
-def generate_build_year():
-    ranges = [(1900, 1950), (1950, 1980), (1980, 2000), (2000, 2016), (2016, 2023)]
-    weights = [0.10, 0.20, 0.30, 0.25, 0.15]
-    range_index = np.random.choice(len(ranges), p=weights)
-    return np.random.randint(*ranges[range_index])
+# Prepare the data by merging the shapefile and population data
+plz_region_df.drop('osm_id', axis=1, inplace=True)
+germany_df = pd.merge(
+    left=plz_shape_df, 
+    right=plz_region_df, 
+    on='plz',
+    how='inner'
+)
+germany_df.drop(['note'], axis=1, inplace=True)
 
-def generate_energy_class(build_year):
-    classes = ['A+', 'A', 'B', 'C', 'D', 'E', 'F', 'G']
-    weights = [0.05, 0.10, 0.15, 0.25, 0.20, 0.15, 0.07, 0.03]
-    base_class = np.random.choice(classes, p=weights)
-    
-    # Adjusting for build year
-    if build_year >= 2016:
-        return np.random.choice(['A+', 'A', 'B'], p=[0.4, 0.4, 0.2])
-    elif build_year >= 2000:
-        return np.random.choice(['A', 'B', 'C'], p=[0.3, 0.4, 0.3])
-    else:
-        return base_class
+# Filter for Bayern
+bayern_df = germany_df.query('bundesland == "Bayern"')
 
-# Hauptfunktion zur Erstellung des Portfolios
-def create_portfolio(size=10000):
-    portfolio = pd.DataFrame()
+# Load the Shapefile back into a GeoDataFrame
+bayern_df = gpd.read_file("flutbayern_shapefile.shp")
 
-    # Immobilientyp
-    portfolio['type'] = np.random.choice(['Wohnung', 'Haus'], size=size, p=[0.7, 0.3])
+# Adjust CRS to reduce distortion
+bayern_df = bayern_df.to_crs("EPSG:3035") 
 
-    # Preis pro Quadratmeter
-    portfolio.loc[portfolio['type'] == 'Wohnung', 'price_per_sqm'] = generate_price(3433, 768, 18008, sum(portfolio['type'] == 'Wohnung'))
-    portfolio.loc[portfolio['type'] == 'Haus', 'price_per_sqm'] = generate_price(3723, 1320, 19009, sum(portfolio['type'] == 'Haus'))
+# Calculate the total population
+total_population = bayern_df['einwohner'].sum()
 
-    # Wohnfläche
-    portfolio.loc[portfolio['type'] == 'Wohnung', 'area'] = generate_area(75, 25, sum(portfolio['type'] == 'Wohnung'))
-    portfolio.loc[portfolio['type'] == 'Haus', 'area'] = generate_area(150, 50, sum(portfolio['type'] == 'Haus'))
+# Calculate the number of points to assign to each region based on its population
+bayern_df['points'] = (bayern_df['einwohner'] / total_population * 3853).round().astype(int)
 
-    # Gesamtpreis
-    portfolio['total_price'] = portfolio['price_per_sqm'] * portfolio['area']
+# Ensure the sum of points equals 3853 (due to rounding)
+difference = 3853 - bayern_df['points'].sum()
+if difference != 0:
+    max_index = bayern_df['points'].idxmax()
+    bayern_df.at[max_index, 'points'] += difference
 
-    # Baujahr
-    portfolio['build_year'] = [generate_build_year() for _ in range(size)]
+# Generate random points within each region and create a DataFrame for them
+points = []
+data = []
+for idx, row in bayern_df.iterrows():
+    num_points = row['points']
+    polygon = row['geometry']
+    minx, miny, maxx, maxy = polygon.bounds
+    for _ in range(num_points):
+        while True:
+            random_point = Point(np.random.uniform(minx, maxx), np.random.uniform(miny, maxy))
+            if polygon.contains(random_point):
+                points.append(random_point)
+                data.append({
+                    'ort': row['ort'],
+                    'landkreis': row['landkreis'],
+                    'fluvial': row['Fluvial'],
+                    'AEP': row['AEP'],
+                    'floodrisk': row['floodrisk'],
+                    'latitude': random_point.y,
+                    'longitude': random_point.x
+                })
+                break
 
-    # Energieeffizienzklasse
-    portfolio['energy_class'] = [generate_energy_class(year) for year in portfolio['build_year']]
+# Convert the points to a GeoDataFrame
+points_gdf = gpd.GeoDataFrame(geometry=points)
 
-    # Kreditinformationen
-    portfolio['ltv'] = np.random.normal(0.55, 0.1, size).clip(0.2, 0.8)
-    portfolio['interest_rate'] = np.random.normal(0.025, 0.005, size).clip(0.01, 0.05)
-    portfolio['loan_term'] = np.random.randint(10, 31, size)
+# Convert the data list to a DataFrame
+points_df = pd.DataFrame(data)
 
-    # Zusätzliche Attribute
-    portfolio['rented'] = np.random.choice([True, False], size=size)
-    portfolio['rooms'] = np.random.randint(1, 7, size)
-    portfolio['has_balcony'] = np.random.choice([True, False], size=size)
-    portfolio['has_parking'] = np.random.choice([True, False], size=size)
 
-    return portfolio
 
-# Portfolio erstellen
-portfolio = create_portfolio()
+# Save the points DataFrame to a CSV file (optional)
+points_df.to_csv("bayern_points_distribution.csv", index=False)
 
-# Erste paar Zeilen anzeigen
-print(portfolio.head())
-
-# Grundlegende statistische Informationen
-print(portfolio.describe())
-
-# Portfolio in CSV-Datei speichern
-#portfolio.to_csv('bayern_immobilien_portfolio.csv', index=False)
+# Display the DataFrame
+print(points_df.head())
