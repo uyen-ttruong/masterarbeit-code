@@ -19,35 +19,6 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global/global}
-    \entry{hawking_1999}{book}{}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=906302c30c766570fe1df9446c425436}{%
-           family={Hawking},
-           familyi={H\bibinitperiod},
-           given={Stephen\bibnamedelima W.},
-           giveni={S\bibinitperiod\bibinitdelim W\bibinitperiod},
-           givenun=0}}%
-      }
-      \list{publisher}{1}{%
-        {Rowohlt}%
-      }
-      \strng{namehash}{906302c30c766570fe1df9446c425436}
-      \strng{fullhash}{906302c30c766570fe1df9446c425436}
-      \strng{fullhashraw}{906302c30c766570fe1df9446c425436}
-      \strng{bibnamehash}{906302c30c766570fe1df9446c425436}
-      \strng{authorbibnamehash}{906302c30c766570fe1df9446c425436}
-      \strng{authornamehash}{906302c30c766570fe1df9446c425436}
-      \strng{authorfullhash}{906302c30c766570fe1df9446c425436}
-      \strng{authorfullhashraw}{906302c30c766570fe1df9446c425436}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Eine kurze Geschichte der Zeit}
-      \field{year}{1999}
-    \endentry
     \entry{cochran1953sampling}{book}{}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=dbe9ae6cc9e5e24a66a2b712affd05de}{%
@@ -71,8 +42,8 @@
       \strng{authornamehash}{dbe9ae6cc9e5e24a66a2b712affd05de}
       \strng{authorfullhash}{dbe9ae6cc9e5e24a66a2b712affd05de}
       \strng{authorfullhashraw}{dbe9ae6cc9e5e24a66a2b712affd05de}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
       \field{labelnamesource}{author}
@@ -82,6 +53,30 @@
       \field{year}{1953}
       \field{pages}{50\bibrangedash 51}
       \range{pages}{2}
+    \endentry
+    \entry{MuenchenerHyp2023}{report}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=6f3efb34987d3d9d68f178f22fab5061}{%
+           family={{Münchener Hypothekenbank eG}},
+           familyi={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{fullhash}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{fullhashraw}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{bibnamehash}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{authorbibnamehash}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{authornamehash}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{authorfullhash}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{authorfullhashraw}{6f3efb34987d3d9d68f178f22fab5061}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{MünchenerHyp Geschäftsbericht 2023}
+      \field{type}{techreport}
+      \field{year}{2023}
     \endentry
     \entry{zurek2022real}{article}{}{}
       \name{author}{1}{}{%
@@ -119,18 +114,18 @@
     \endentry
     \entry{suche_postleitzahl}{misc}{}{}
       \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=1e11aa29d2d3b0861862e34fe70850fe}{%
-           family={{https://www.suche-postleitzahl.org}},
-           familyi={h\bibinitperiod}}}%
+        {{un=0,uniquepart=base,hash=a187933412edfc65aab8ab7a30eb401f}{%
+           family={{www.suche-postleitzahl.org}},
+           familyi={w\bibinitperiod}}}%
       }
-      \strng{namehash}{1e11aa29d2d3b0861862e34fe70850fe}
-      \strng{fullhash}{1e11aa29d2d3b0861862e34fe70850fe}
-      \strng{fullhashraw}{1e11aa29d2d3b0861862e34fe70850fe}
-      \strng{bibnamehash}{1e11aa29d2d3b0861862e34fe70850fe}
-      \strng{authorbibnamehash}{1e11aa29d2d3b0861862e34fe70850fe}
-      \strng{authornamehash}{1e11aa29d2d3b0861862e34fe70850fe}
-      \strng{authorfullhash}{1e11aa29d2d3b0861862e34fe70850fe}
-      \strng{authorfullhashraw}{1e11aa29d2d3b0861862e34fe70850fe}
+      \strng{namehash}{a187933412edfc65aab8ab7a30eb401f}
+      \strng{fullhash}{a187933412edfc65aab8ab7a30eb401f}
+      \strng{fullhashraw}{a187933412edfc65aab8ab7a30eb401f}
+      \strng{bibnamehash}{a187933412edfc65aab8ab7a30eb401f}
+      \strng{authorbibnamehash}{a187933412edfc65aab8ab7a30eb401f}
+      \strng{authornamehash}{a187933412edfc65aab8ab7a30eb401f}
+      \strng{authorfullhash}{a187933412edfc65aab8ab7a30eb401f}
+      \strng{authorfullhashraw}{a187933412edfc65aab8ab7a30eb401f}
       \field{sortinit}{5}
       \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
       \field{extradatescope}{labelyear}
@@ -179,32 +174,126 @@
       \verb https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Bevoelkerung/Bevoelkerungsstand/_inhalt.html
       \endverb
     \endentry
-    \entry{MuenchenerHyp2023}{report}{}{}
+    \entry{ECB2022ClimateStressTest}{report}{}{}
       \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=6f3efb34987d3d9d68f178f22fab5061}{%
-           family={{Münchener Hypothekenbank eG}},
-           familyi={M\bibinitperiod}}}%
+        {{un=0,uniquepart=base,hash=fc0835c66c6644c8a6ca0239bce9cc73}{%
+           family={{European Central Bank}},
+           familyi={E\bibinitperiod}}}%
       }
-      \strng{namehash}{6f3efb34987d3d9d68f178f22fab5061}
-      \strng{fullhash}{6f3efb34987d3d9d68f178f22fab5061}
-      \strng{fullhashraw}{6f3efb34987d3d9d68f178f22fab5061}
-      \strng{bibnamehash}{6f3efb34987d3d9d68f178f22fab5061}
-      \strng{authorbibnamehash}{6f3efb34987d3d9d68f178f22fab5061}
-      \strng{authornamehash}{6f3efb34987d3d9d68f178f22fab5061}
-      \strng{authorfullhash}{6f3efb34987d3d9d68f178f22fab5061}
-      \strng{authorfullhashraw}{6f3efb34987d3d9d68f178f22fab5061}
+      \list{institution}{1}{%
+        {European Central Bank}%
+      }
+      \strng{namehash}{fc0835c66c6644c8a6ca0239bce9cc73}
+      \strng{fullhash}{fc0835c66c6644c8a6ca0239bce9cc73}
+      \strng{fullhashraw}{fc0835c66c6644c8a6ca0239bce9cc73}
+      \strng{bibnamehash}{fc0835c66c6644c8a6ca0239bce9cc73}
+      \strng{authorbibnamehash}{fc0835c66c6644c8a6ca0239bce9cc73}
+      \strng{authornamehash}{fc0835c66c6644c8a6ca0239bce9cc73}
+      \strng{authorfullhash}{fc0835c66c6644c8a6ca0239bce9cc73}
+      \strng{authorfullhashraw}{fc0835c66c6644c8a6ca0239bce9cc73}
       \field{sortinit}{7}
       \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{MünchenerHyp Geschäftsbericht 2023}
-      \field{type}{techreport}
-      \field{year}{2023}
+      \field{month}{7}
+      \field{note}{Published on July 8, 2022}
+      \field{title}{2022 Climate Risk Stress Test}
+      \field{type}{Report}
+      \field{year}{2022}
+      \verb{urlraw}
+      \verb https://www.bankingsupervision.europa.eu/ecb/pub/pdf/ ssm.climate_stress_test_report.20220708~2e3cc0999f.en.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.bankingsupervision.europa.eu/ecb/pub/pdf/%20ssm.climate_stress_test_report.20220708~2e3cc0999f.en.pdf
+      \endverb
+    \endentry
+    \entry{Carter2018}{misc}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=aba92cad49f35f2014d9c43820d20202}{%
+           family={Carter},
+           familyi={C\bibinitperiod},
+           given={J.G.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=cd166b63013c260002f75059ce5bfe53}{%
+           family={Hincks},
+           familyi={H\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b99e20d14cdfd944a097f33e8c6bc3d1}{%
+           family={Vlastaras},
+           familyi={V\bibinitperiod},
+           given={V.},
+           giveni={V\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=bf270ef6b03452e33741df80bfe265d2}{%
+           family={Connelly},
+           familyi={C\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1da7e41fdaafc0a9072c0d8f337888af}{%
+           family={Handley},
+           familyi={H\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{9105354b41288625dd207e556bb0e8e2}
+      \strng{fullhash}{5849039f48c5658f64c1e46b6de2961a}
+      \strng{fullhashraw}{5849039f48c5658f64c1e46b6de2961a}
+      \strng{bibnamehash}{9105354b41288625dd207e556bb0e8e2}
+      \strng{authorbibnamehash}{9105354b41288625dd207e556bb0e8e2}
+      \strng{authornamehash}{9105354b41288625dd207e556bb0e8e2}
+      \strng{authorfullhash}{5849039f48c5658f64c1e46b6de2961a}
+      \strng{authorfullhashraw}{5849039f48c5658f64c1e46b6de2961a}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Online}
+      \field{note}{Available at: \url{http://european-crt.org/index.html}}
+      \field{title}{European Climate Risk Typology}
+      \field{year}{2018}
+    \endentry
+    \entry{LfU_Bayern}{misc}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=eaed1cc4dd61afe3140a60a1b91f63d8}{%
+           family={{Bayerisches Landesamt für Umwelt}},
+           familyi={B\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Bayerisches Landesamt für Umwelt}%
+      }
+      \strng{namehash}{eaed1cc4dd61afe3140a60a1b91f63d8}
+      \strng{fullhash}{eaed1cc4dd61afe3140a60a1b91f63d8}
+      \strng{fullhashraw}{eaed1cc4dd61afe3140a60a1b91f63d8}
+      \strng{bibnamehash}{eaed1cc4dd61afe3140a60a1b91f63d8}
+      \strng{authorbibnamehash}{eaed1cc4dd61afe3140a60a1b91f63d8}
+      \strng{authornamehash}{eaed1cc4dd61afe3140a60a1b91f63d8}
+      \strng{authorfullhash}{eaed1cc4dd61afe3140a60a1b91f63d8}
+      \strng{authorfullhashraw}{eaed1cc4dd61afe3140a60a1b91f63d8}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Historische Hochwasserereignisse}
+      \field{year}{2017}
+      \verb{urlraw}
+      \verb https://www.lfu.bayern.de/umweltdaten/geodatendienste/pretty_downloaddienst.htm?dld=historische_ereignisse.xml
+      \endverb
+      \verb{url}
+      \verb https://www.lfu.bayern.de/umweltdaten/geodatendienste/pretty_downloaddienst.htm?dld=historische_ereignisse.xml
+      \endverb
     \endentry
   \enddatalist
-  \missing{MuenchenerHyp2022}
 \endrefsection
 \endinput
 

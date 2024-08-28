@@ -32,7 +32,7 @@ Die verwendete Datenquelle stammt von \textcite{suche_postleitzahl}. Sie kombini
 
 Tabelle \ref{tab:geodaten} wurde aus Shapefile-Daten der Postleitzahlenregionen generiert und umfasst die Bevölkerungsverteilung. Vier Spalten sind von besonderer Relevanz: Ort, Landkreis, Geometrie und Einwohner. Die Geometriespalte enthält die geografischen Koordinaten der Gemeinden, dargestellt als Polygon oder Multipolygon. Ein Multipolygon setzt sich aus mehreren Einzelpolygonen verschiedener Formen zusammen. Zur räumlichen Referenzierung dient das Koordinatensystem EPSG:3035. Abbildung \ref{fig:bevoelkerungsdichte} visualisiert die aus diesen Daten abgeleitete Bevölkerungsdichteverteilung Bayerns nach Postleitzahlenbereichen.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{figures/Bayern_pop_plz.png}
     \caption{Verteilung der Bevölkerungsdichte Bayerns nach Postleitzahlenbereichen}
@@ -40,7 +40,7 @@ Tabelle \ref{tab:geodaten} wurde aus Shapefile-Daten der Postleitzahlenregionen 
 \end{figure}
 \clearpage  
 
-Zur repräsentativen Verteilung der 3853 Datenpunkte, entsprechend der Anzahl der Hypothekarkredite, wird ein proportionaler Ansatz implementiert, der auf der Einwohnerzahl jeder Region basiert. Innerhalb der Postleitzahlgebiete erfolgt die Platzierung mittels eines kontrollierten stochastischen Verfahrens. Für jede Region wird eine zuvor determinierte Anzahl von Zufallspunkten innerhalb der definierten Gebietsgrenzen generiert. Jedem Punkt werden spezifische Koordinaten in Form von Latitude (Breitengrad) und Longitude (Längengrad) zugewiesen. Anschließend wird eine Verifikation der Lage innerhalb des jeweiligen Polygons durchgeführt. Bei erfolgreicher Validierung wird der Punkt mit seinen Latitude- und Longitude-Koordinaten in die Liste der akzeptierten Datenpunkte integriert. Die resultierenden Daten werden in Tabelle \ref{tab:geodatenhyp} dargestellt. Abbildung \ref{fig:hypothekenportfolio} zeigt die resultierende Distribution der Datenpunkte.
+Zur repräsentativen Verteilung der 3853 Datenpunkte, entsprechend der Anzahl der Hypothekarkredite, wird ein proportionaler Ansatz implementiert, der auf der Einwohnerzahl jeder Region basiert. Innerhalb der Postleitzahlgebiete erfolgt die Platzierung mittels eines kontrollierten stochastischen Verfahrens. Für jede Region wird eine zuvor determinierte Anzahl von Zufallspunkten innerhalb der definierten Gebietsgrenzen generiert. Jedem Punkt werden spezifische Koordinaten in Form von Latitude (Breitengrad) und Longitude (Längengrad) zugewiesen. Anschließend wird eine Verifikation der Lage innerhalb des jeweiligen Polygons durchgeführt. Bei erfolgreicher Validierung wird der Punkt mit seinen Latitude- und Longitude-Koordinaten in die Liste der akzeptierten Datenpunkte integriert. Die resultierenden Daten werden in Tabelle \ref{tab:geodatenhyp} dargestellt. Abbildung \ref{fig:hypothekenportfolio} zeigt die resultierende Distribution der Datenpunkte auf der Karte Bayerns.
 
 \begin{table}[htbp]
     \centering
@@ -51,21 +51,21 @@ Zur repräsentativen Verteilung der 3853 Datenpunkte, entsprechend der Anzahl de
         \toprule
         \textbf{plz} & \textbf{ort} & \textbf{landkreis} & \textbf{latitude} & \textbf{longitude} \\
         \midrule
-        637390 & Aschaffenburg & & 4,99725E+15 & 9,1401E+15 \\
-        979040 & Dorfprozelten & Landkreis Miltenberg & 4,97711E+15 & 9,39219E+15 \\
-        815470 & München & & 4,81047E+16 & 1,15764E+15 \\
-        850980 & Großmehring & Landkreis Eichstätt & 4,87748E+15 & 1,15158E+16 \\
-        820640 & Oberhaching & Landkreis München & 4,79859E+15 & 1,14903E+16 \\
-        863430 & Königsbrunn & Landkreis Augsburg & 4,82435E+15 & 1,08994E+15 \\
-        972470 & Eisenheim & Landkreis Würzburg & 4,9885E+16 & 1,01471E+16 \\
+        637390 & Aschaffenburg & & 49.9725 & 9.1401 \\
+        979040 & Dorfprozelten & Landkreis Miltenberg & 4.9711 & 9.3921 \\
+        815470 & München & & 48.1047 & 11.5764 \\
+        850980 & Großmehring & Landkreis Eichstätt & 48.7748 & 11.5158\\
+        820640 & Oberhaching & Landkreis München & 47.9859 & 11.4903 \\
+        863430 & Königsbrunn & Landkreis Augsburg & 48.2435 & 10.8994 \\
+        972470 & Eisenheim & Landkreis Würzburg & 49.8850 & 10.1471 \\
         \dots & \dots & \dots & \dots & \dots \\
-        852380 & Petershausen & Landkreis Dachau & 4,84E+15 & 1,15212E+16 \\
+        852380 & Petershausen & Landkreis Dachau & 48.4000 & 11.5212\\
         \bottomrule
     \end{tabularx}
 \end{table} 
 \clearpage 
 
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{figures/bayern_por_pop.png} 
     \caption{Datenpunktverteilung im Hypothekenportfolio Bayern}
@@ -75,13 +75,31 @@ Zur repräsentativen Verteilung der 3853 Datenpunkte, entsprechend der Anzahl de
 \subsubsection{Hochwassergeodaten}
 Nach der Erfassung der geographischen Koordinaten der Hypothekendarlehen ist es erforderlich, die Lage der entsprechenden Immobilien in Bezug auf Hochwasserrisikogebiete zu ermitteln. Infolgedessen erläutert dieser Abschnitt die Methodologie zur Erstellung einer detaillierten Hochwasserrisikokarte für Bayern. Diese basiert auf EU-Stresstest-Szenarien sowie regionalen Daten und beschreibt die Integration diverser Datenquellen zur präzisen Risikoanalyse.
 
-Im Rahmen eines EU-weiten Stresstests stellt die  den Banken zur Simulation eines schweren Überschwemmungsszenarios eine Hochwasserrisikokarte (Abbildung \ref{fig:euflut}) zur Verfügung.
+Im Rahmen eines EU-weiten Stresstests stellt die \ac{EZB} den Banken zur Simulation eines schweren Überschwemmungsszenarios eine Hochwasserrisikokarte (Abbildung \ref{fig:euflut}) zur Verfügung.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{figures/euflood.png} 
-    \caption{EU-Hochwasserrisikokarte}
+    \caption{EU-Hochwasserrisikokarte.Quelle: EZB 2022 Klimarisiko-Stresstest}
     \label{fig:euflut}
+\end{figure}
+
+
+Diese Karte basierend auf Informationen der Gemeinsamen Forschungsstelle der Europäischen Kommission und ergänzt durch Daten von Four Twenty Seven kategorisiert Regionen nach Risikoklassen \parencite{ECB2022ClimateStressTest}. Da jedoch die zugrundeliegenden Daten von der \ac{EZB} nicht veröffentlicht wurden und die visuelle Repräsentation keine präzise Identifikation spezifischer Regionen ermöglicht, erweist sich für Bayern die Notwendigkeit einer differenzierteren Analyse als evident. Hierfür werden Daten des European Climate Risk Typology \parencite{Carter2018} herangezogen, dessen Datenerhebungsprozess in Abbildung \ref{fig:ing} veranschaulicht wird.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/EUclimateriskIng.png} 
+    \caption{Exemplarische Darstellung klimatischer Daten aus dem EU-Klimarisiko-Modell für Ingolstadt. Quelle: European Climate Risk Typology, https://european-crt.org/map.html}
+    \label{fig:ing}
+\end{figure}
+Ergänzend dazu erstellt das Bayerische Landesamt für Umwelt im Rahmen des Hochwasserrisikomanagements spezifische Karten für die Flussgebiete von Donau, Rhein und Elbe. Diese Karten bieten detaillierte Informationen zur Hochwassergefährdung, betroffenen Nutzungen und historischen Ereignissen \parencite{LfU_Bayern}.
+Die ursprünglich im ETRS89-Koordinatensystem vorliegenden Daten werden für die Analyse in das EPSG:3035-System konvertiert. Diese Transformation ermöglicht eine präzise Integration und Darstellung aller Datensätze auf einer einheitlichen Karte Bayerns.
+Eine abschließende Abbildung \ref{fig:bayernflut} präsentiert einen umfassenden Überblick über die potenziell von Hochwasser betroffenen Gebiete in Bayern, wodurch die räumliche Verteilung des Risikos verdeutlicht wird.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/bayern_flut.png} 
+    \caption{Kartografische Visualisierung der potenziellen Hochwassergefahrenzonen in Bayern}
+    \label{fig:bayernflut}
 \end{figure}
 
 
