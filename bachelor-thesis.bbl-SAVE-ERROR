@@ -48,64 +48,6 @@
       \field{title}{Eine kurze Geschichte der Zeit}
       \field{year}{1999}
     \endentry
-    \entry{MuenchenerHyp2022}{report}{}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=6f3efb34987d3d9d68f178f22fab5061}{%
-           family={{Münchener Hypothekenbank eG}},
-           familyi={M\bibinitperiod}}}%
-      }
-      \strng{namehash}{6f3efb34987d3d9d68f178f22fab5061}
-      \strng{fullhash}{6f3efb34987d3d9d68f178f22fab5061}
-      \strng{fullhashraw}{6f3efb34987d3d9d68f178f22fab5061}
-      \strng{bibnamehash}{6f3efb34987d3d9d68f178f22fab5061}
-      \strng{authorbibnamehash}{6f3efb34987d3d9d68f178f22fab5061}
-      \strng{authornamehash}{6f3efb34987d3d9d68f178f22fab5061}
-      \strng{authorfullhash}{6f3efb34987d3d9d68f178f22fab5061}
-      \strng{authorfullhashraw}{6f3efb34987d3d9d68f178f22fab5061}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{MünchenerHyp Geschäftsbericht 2022}
-      \field{type}{techreport}
-      \field{year}{2022}
-    \endentry
-    \entry{zurek2022real}{article}{}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=cfe70227db0d1f53bdbe9c96ca3aa4b2}{%
-           family={Zurek},
-           familyi={Z\bibinitperiod},
-           given={Maximilian},
-           giveni={M\bibinitperiod},
-           givenun=0}}%
-      }
-      \list{publisher}{1}{%
-        {Springer}%
-      }
-      \strng{namehash}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
-      \strng{fullhash}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
-      \strng{fullhashraw}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
-      \strng{bibnamehash}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
-      \strng{authorbibnamehash}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
-      \strng{authornamehash}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
-      \strng{authorfullhash}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
-      \strng{authorfullhashraw}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Journal of Financial Services Research}
-      \field{number}{1}
-      \field{title}{Real estate markets and lending: does local growth fuel risk?}
-      \field{volume}{62}
-      \field{year}{2022}
-      \field{pages}{27\bibrangedash 59}
-      \range{pages}{33}
-    \endentry
     \entry{cochran1953sampling}{book}{}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=dbe9ae6cc9e5e24a66a2b712affd05de}{%
@@ -129,8 +71,8 @@
       \strng{authornamehash}{dbe9ae6cc9e5e24a66a2b712affd05de}
       \strng{authorfullhash}{dbe9ae6cc9e5e24a66a2b712affd05de}
       \strng{authorfullhashraw}{dbe9ae6cc9e5e24a66a2b712affd05de}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
       \field{labelnamesource}{author}
@@ -141,7 +83,128 @@
       \field{pages}{50\bibrangedash 51}
       \range{pages}{2}
     \endentry
+    \entry{zurek2022real}{article}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=cfe70227db0d1f53bdbe9c96ca3aa4b2}{%
+           family={Zurek},
+           familyi={Z\bibinitperiod},
+           given={Maximilian},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
+      \strng{fullhash}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
+      \strng{fullhashraw}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
+      \strng{bibnamehash}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
+      \strng{authorbibnamehash}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
+      \strng{authornamehash}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
+      \strng{authorfullhash}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
+      \strng{authorfullhashraw}{cfe70227db0d1f53bdbe9c96ca3aa4b2}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Financial Services Research}
+      \field{number}{1}
+      \field{title}{Real estate markets and lending: does local growth fuel risk?}
+      \field{volume}{62}
+      \field{year}{2022}
+      \field{pages}{27\bibrangedash 59}
+      \range{pages}{33}
+    \endentry
+    \entry{suche_postleitzahl}{misc}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=1e11aa29d2d3b0861862e34fe70850fe}{%
+           family={{https://www.suche-postleitzahl.org}},
+           familyi={h\bibinitperiod}}}%
+      }
+      \strng{namehash}{1e11aa29d2d3b0861862e34fe70850fe}
+      \strng{fullhash}{1e11aa29d2d3b0861862e34fe70850fe}
+      \strng{fullhashraw}{1e11aa29d2d3b0861862e34fe70850fe}
+      \strng{bibnamehash}{1e11aa29d2d3b0861862e34fe70850fe}
+      \strng{authorbibnamehash}{1e11aa29d2d3b0861862e34fe70850fe}
+      \strng{authornamehash}{1e11aa29d2d3b0861862e34fe70850fe}
+      \strng{authorfullhash}{1e11aa29d2d3b0861862e34fe70850fe}
+      \strng{authorfullhashraw}{1e11aa29d2d3b0861862e34fe70850fe}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Suche Postleitzahl - Deutsche Postleitzahlenkarte und Gemeinden}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://www.suche-postleitzahl.org
+      \endverb
+      \verb{url}
+      \verb https://www.suche-postleitzahl.org
+      \endverb
+    \endentry
+    \entry{destatis}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=c67d4b4a4397f84a4fe4580e6f9aa63d}{%
+           family={{Statistisches Bundesamt}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{c67d4b4a4397f84a4fe4580e6f9aa63d}
+      \strng{fullhash}{c67d4b4a4397f84a4fe4580e6f9aa63d}
+      \strng{fullhashraw}{c67d4b4a4397f84a4fe4580e6f9aa63d}
+      \strng{bibnamehash}{c67d4b4a4397f84a4fe4580e6f9aa63d}
+      \strng{authorbibnamehash}{c67d4b4a4397f84a4fe4580e6f9aa63d}
+      \strng{authornamehash}{c67d4b4a4397f84a4fe4580e6f9aa63d}
+      \strng{authorfullhash}{c67d4b4a4397f84a4fe4580e6f9aa63d}
+      \strng{authorfullhashraw}{c67d4b4a4397f84a4fe4580e6f9aa63d}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Bevölkerung und Demografie - Bevölkerungsstand}
+      \field{urlday}{27}
+      \field{urlmonth}{8}
+      \field{urlyear}{2024}
+      \field{year}{2023}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Bevoelkerung/Bevoelkerungsstand/_inhalt.html
+      \endverb
+      \verb{url}
+      \verb https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Bevoelkerung/Bevoelkerungsstand/_inhalt.html
+      \endverb
+    \endentry
+    \entry{MuenchenerHyp2023}{report}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=6f3efb34987d3d9d68f178f22fab5061}{%
+           family={{Münchener Hypothekenbank eG}},
+           familyi={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{fullhash}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{fullhashraw}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{bibnamehash}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{authorbibnamehash}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{authornamehash}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{authorfullhash}{6f3efb34987d3d9d68f178f22fab5061}
+      \strng{authorfullhashraw}{6f3efb34987d3d9d68f178f22fab5061}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{MünchenerHyp Geschäftsbericht 2023}
+      \field{type}{techreport}
+      \field{year}{2023}
+    \endentry
   \enddatalist
+  \missing{MuenchenerHyp2022}
 \endrefsection
 \endinput
 
