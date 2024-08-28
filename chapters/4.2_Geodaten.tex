@@ -1,10 +1,12 @@
+
 \subsection{Geodaten zu Hypotheken und Hochwasser}
 \subsubsection{Hypothekengeodaten}
+
 Für die Kompatibilität von Hypotheken- und Hochwasserdaten sind geografische Koordinaten erforderlich. Dieser Abschnitt befasst sich mit der Generierung präziser Koordinaten für die Datenpunkte.
 
 Eine zufällige Verteilung in Bayern würde die Struktur eines Kreditportfolios nicht korrekt abbilden, da eine ungleichmäßige Verteilung von Immobilien sowohl in Deutschland als auch in Bayern zu beobachten ist. \textcite{zurek2022real} analysierte die Beziehung zwischen Bevölkerungsdichte und Kreditvergabe in Deutschland. Die Studie zeigt, dass Regionen mit stärkerem Wirtschaftswachstum höhere Immobilienpreise aufweisen. Dies führt zu einer erhöhten Kreditnachfrage. Auf Basis dieser empirischen Erkenntnisse wird die Bevölkerungsdichte als Grundlage für die Zuweisung spezifischer Koordinaten zu jedem Datenpunkt herangezogen.
 
-Die verwendete Datenquelle stammt von \textcite{suche_postleitzahl}. Sie kombiniert OpenStreetMap-Daten mit Einwohnerzahlen von \textcite{destatis}. Dies ermöglicht eine präzise Segmentierung in Postleitzahlenzonen. Tabelle \ref{tab:geodaten} präsentiert die resultierenden Daten dieser räumlichen Strukturierung.
+Die verwendete Datenquelle stammt von \textcite{suche_postleitzahl}. Sie kombiniert OpenStreetMap-Daten mit Einwohnerzahlen von \textcite{destatis}. Dies ermöglicht eine präzise Segmentierung in Postleitzahlenzonen. Tabelle \ref{tab:geodaten} zeigt die Daten dieser geographischen Strukturierung.
 
 \begin{table}[htbp]
     \centering
@@ -26,25 +28,60 @@ Die verwendete Datenquelle stammt von \textcite{suche_postleitzahl}. Sie kombini
         \bottomrule
     \end{tabularx}
 \end{table}
+\clearpage  
+
 Tabelle \ref{tab:geodaten} wurde aus Shapefile-Daten der Postleitzahlenregionen generiert und umfasst die Bevölkerungsverteilung. Vier Spalten sind von besonderer Relevanz: Ort, Landkreis, Geometrie und Einwohner. Die Geometriespalte enthält die geografischen Koordinaten der Gemeinden, dargestellt als Polygon oder Multipolygon. Ein Multipolygon setzt sich aus mehreren Einzelpolygonen verschiedener Formen zusammen. Zur räumlichen Referenzierung dient das Koordinatensystem EPSG:3035. Abbildung \ref{fig:bevoelkerungsdichte} visualisiert die aus diesen Daten abgeleitete Bevölkerungsdichteverteilung Bayerns nach Postleitzahlenbereichen.
 
-\begin{figure}[htbp]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.95\textwidth]{figures/Bayern_pop_plz.png}
     \caption{Verteilung der Bevölkerungsdichte Bayerns nach Postleitzahlenbereichen}
     \label{fig:bevoelkerungsdichte}
 \end{figure}
-\clearpage
+\clearpage  
 
-Zur repräsentativen Verteilung der 3853 Datenpunkte, die der Anzahl der Hypothekarkredite entsprechen, wird ein proportionaler Ansatz implementiert, der auf der Einwohnerzahl jeder Region basiert. Innerhalb der Postleitzahlgebiete erfolgt die Platzierung stochastisch. Es werden zufällige Koordinaten generiert und auf ihre Lage geprüft. Dieses Verfahren gewährleistet eine realitätsnahe räumliche Verteilung. Abbildung \ref{fig:hypothekenportfolio} zeigt die resultierende Distribution der Datenpunkte.
+Zur repräsentativen Verteilung der 3853 Datenpunkte, entsprechend der Anzahl der Hypothekarkredite, wird ein proportionaler Ansatz implementiert, der auf der Einwohnerzahl jeder Region basiert. Innerhalb der Postleitzahlgebiete erfolgt die Platzierung mittels eines kontrollierten stochastischen Verfahrens. Für jede Region wird eine zuvor determinierte Anzahl von Zufallspunkten innerhalb der definierten Gebietsgrenzen generiert. Jedem Punkt werden spezifische Koordinaten in Form von Latitude (Breitengrad) und Longitude (Längengrad) zugewiesen. Anschließend wird eine Verifikation der Lage innerhalb des jeweiligen Polygons durchgeführt. Bei erfolgreicher Validierung wird der Punkt mit seinen Latitude- und Longitude-Koordinaten in die Liste der akzeptierten Datenpunkte integriert. Die resultierenden Daten werden in Tabelle \ref{tab:geodatenhyp} dargestellt. Abbildung \ref{fig:hypothekenportfolio} zeigt die resultierende Distribution der Datenpunkte.
 
+\begin{table}[htbp]
+    \centering
+    \small  % Adjust font size to make everything fit in the table
+    \caption{Beschreibung der Geodaten in verschiedenen Postleitzahlgebieten in Bayern}
+    \label{tab:geodatenhyp}
+    \begin{tabularx}{\textwidth}{lXlXrXr}
+        \toprule
+        \textbf{plz} & \textbf{ort} & \textbf{landkreis} & \textbf{latitude} & \textbf{longitude} \\
+        \midrule
+        637390 & Aschaffenburg & & 4,99725E+15 & 9,1401E+15 \\
+        979040 & Dorfprozelten & Landkreis Miltenberg & 4,97711E+15 & 9,39219E+15 \\
+        815470 & München & & 4,81047E+16 & 1,15764E+15 \\
+        850980 & Großmehring & Landkreis Eichstätt & 4,87748E+15 & 1,15158E+16 \\
+        820640 & Oberhaching & Landkreis München & 4,79859E+15 & 1,14903E+16 \\
+        863430 & Königsbrunn & Landkreis Augsburg & 4,82435E+15 & 1,08994E+15 \\
+        972470 & Eisenheim & Landkreis Würzburg & 4,9885E+16 & 1,01471E+16 \\
+        \dots & \dots & \dots & \dots & \dots \\
+        852380 & Petershausen & Landkreis Dachau & 4,84E+15 & 1,15212E+16 \\
+        \bottomrule
+    \end{tabularx}
+\end{table} 
+\clearpage 
 
-
-\begin{figure}[htbp]
+\begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{figures/bayern_por_pop.png} 
     \caption{Datenpunktverteilung im Hypothekenportfolio Bayern}
     \label{fig:hypothekenportfolio}
 \end{figure}
-\clearpage
+
 \subsubsection{Hochwassergeodaten}
+Nach der Erfassung der geographischen Koordinaten der Hypothekendarlehen ist es erforderlich, die Lage der entsprechenden Immobilien in Bezug auf Hochwasserrisikogebiete zu ermitteln. Infolgedessen erläutert dieser Abschnitt die Methodologie zur Erstellung einer detaillierten Hochwasserrisikokarte für Bayern. Diese basiert auf EU-Stresstest-Szenarien sowie regionalen Daten und beschreibt die Integration diverser Datenquellen zur präzisen Risikoanalyse.
+
+Im Rahmen eines EU-weiten Stresstests stellt die den Banken zur Simulation eines schweren Überschwemmungsszenarios eine Hochwasserrisikokarte (Abbildung \ref{fig:euflut}) zur Verfügung.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{figures/euflood.png} 
+    \caption{Datenpunktverteilung im Hypothekenportfolio Bayern}
+    \label{fig:euflut}
+\end{figure}
+
+
