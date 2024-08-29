@@ -5,7 +5,7 @@ import os
 import tempfile
 
 # Đường dẫn tới file zip
-zip_path = r"C:\Users\uyen truong\Desktop\Hochschule-Muenchen-LaTeX-Template\hochwasserereignisse_epsg4258_shp.zip"
+zip_path = r"C:\Users\uyen truong\Desktop\Hochschule-Muenchen-LaTeX-Template\data\hochwasserereignisse_epsg4258_shp.zip"
 
 # Tạo thư mục tạm thời để giải nén
 with tempfile.TemporaryDirectory() as tmpdir:
@@ -21,14 +21,15 @@ with tempfile.TemporaryDirectory() as tmpdir:
     # Đọc file shapefile đầu tiên (giả sử đây là file chứa dữ liệu vùng ngập)
     shapefile_path = os.path.join(tmpdir, shp_files[0])
     gdf = gpd.read_file(shapefile_path)
+    gdf.to_file('flutbayern_shapefile.shp')
     
     # Chuyển đổi GeoDataFrame thành DataFrame, bỏ cột geometry
-    df = pd.DataFrame(gdf.drop(columns='geometry'))
+    #df = pd.DataFrame(gdf.drop(columns='geometry'))
     
     # Đường dẫn lưu file CSV
-    csv_output_path = r"C:\Users\uyen truong\Desktop\Hochschule-Muenchen-LaTeX-Template\UeFlaecheEreignis_epsg4258.csv"
+    #csv_output_path = r"C:\Users\uyen truong\Desktop\Hochschule-Muenchen-LaTeX-Template\UeFlaecheEreignis_epsg4258.csv"
     
     # Lưu DataFrame thành CSV
-    df.to_csv(csv_output_path, index=False)
+    #df.to_csv(csv_output_path, index=False)
 
-print(f"Dữ liệu đã được chuyển đổi và lưu tại: {csv_output_path}")
+

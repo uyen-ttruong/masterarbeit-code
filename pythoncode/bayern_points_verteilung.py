@@ -5,14 +5,14 @@ from shapely.geometry import Point
 import matplotlib.pyplot as plt
 
 # Load the shapefile
-zip_path = r"C:\Users\uyen truong\Desktop\Hochschule-Muenchen-LaTeX-Template\plz-5stellig.shp.zip"
+zip_path = r"C:\Users\uyen truong\Desktop\Hochschule-Muenchen-LaTeX-Template\data\plz-5stellig.shp.zip"
 shp_name = 'plz-5stellig'
 full_path = f"zip://{zip_path}!{shp_name}.shp"
 plz_shape_df = gpd.read_file(full_path, dtype={'plz': str})
 plt.rcParams['figure.figsize'] = [16, 11] 
 
 # Load the regional data
-plz_region_df = pd.read_csv('zuordnung_plz_ort.csv', sep=',', dtype={'plz': str})
+plz_region_df = pd.read_csv('data/zuordnung_plz_ort.csv', sep=',', dtype={'plz': str})
 
 # Prepare the data by merging the shapefile and population data
 plz_region_df.drop('osm_id', axis=1, inplace=True)
@@ -23,7 +23,7 @@ germany_df.drop(['note'], axis=1, inplace=True)
 bayern_df = germany_df.query('bundesland == "Bayern"')
 
 # Load the Shapefile back into a GeoDataFrame
-bayern_df = gpd.read_file("flutbayern_shapefile_test.shp")
+bayern_df = gpd.read_file("data/flutbayern_shapefile_test.shp")
 
 # Adjust CRS to reduce distortion
 bayern_df = bayern_df.to_crs("EPSG:3035") 
@@ -87,7 +87,7 @@ print(f'Number of data points: {points_df.shape[0]}')
 assert points_df.shape[0] == 3853, "The number of points does not match the target."
 
 # # Save the points DataFrame to a CSV file (optional)
-points_df.to_csv("bayern_points_distribution.csv", index=False)
+#points_df.to_csv("bayern_points_distribution.csv", index=False)
 
 # # Display the DataFrame
 # print(points_df.head())
