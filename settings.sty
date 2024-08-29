@@ -2,10 +2,11 @@
 % Packages
 % **************************************************
 \usepackage[utf8]{inputenc}
-\usepackage[ngerman]{babel} 
+\usepackage[ngerman]{babel}
 \usepackage{array}
 \usepackage{placeins}
-\usepackage{subcaption} 
+\usepackage{subcaption}
+
 \usepackage[
     left=2.5cm,
     right=2.5cm,
@@ -13,7 +14,8 @@
     bottom=2.5cm,
     head=19.28502pt,
     foot=19.28502pt
-]{geometry}  
+]{geometry}
+
 \usepackage{booktabs}
 \usepackage{setspace}
 \setstretch{1.33}
@@ -41,14 +43,36 @@
 \usepackage{float}
 \usepackage{csquotes}
 
-% Tải gói caption (nếu bạn đang sử dụng nó)
+% Load caption package (if you're using it)
 \usepackage{caption}
 
 % **************************************************
 % Bibliography
 % **************************************************
-\usepackage[backend=biber, style=authoryear, sorting=none]{biblatex}
+\usepackage[
+    backend=biber,
+    style=authoryear,
+    sorting=nyt,
+    maxbibnames=99,
+    giveninits=true,
+    uniquename=init,
+    uniquelist=true,
+    dashed=false
+]{biblatex}
+
 \addbibresource{bibliography.bib}
+
+% Format author names
+\DeclareNameAlias{sortname}{family-given}
+
+% Format date
+\DeclareFieldFormat{date}{#1}
+
+% Remove URL and DOI
+\AtEveryBibitem{\clearfield{url}\clearfield{doi}}
+
+% Italicize book and report titles
+\DeclareFieldFormat[book,report]{title}{\textit{#1}}
 
 % **************************************************
 % Source code formatting
@@ -94,4 +118,4 @@
 % **************************************************
 \renewcommand{\figurename}{Abbildung}  % Change "Figure" to "Abbildung"
 
-% ... các cài đặt tùy chỉnh khác ...
+% ... other custom settings ...
