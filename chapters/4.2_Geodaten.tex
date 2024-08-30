@@ -73,7 +73,7 @@ Zur repräsentativen Verteilung der 3853 Datenpunkte, entsprechend der Anzahl de
 \end{figure}
 \FloatBarrier
 
-\subsubsection{Hochwassergeodaten}
+\subsubsection{Hochwassergeodaten}\label{sec:hochgeo}
 Nach der Erfassung der geographischen Koordinaten der Hypothekendarlehen ist es erforderlich, die Lage der entsprechenden Immobilien in Bezug auf Hochwasserrisikogebiete zu ermitteln. Infolgedessen erläutert dieser Abschnitt die Methodologie zur Erstellung einer detaillierten Hochwasserrisikokarte für Bayern. Diese basiert auf EU-Stresstest-Szenarien sowie regionalen Daten und beschreibt die Integration diverser Datenquellen zur präzisen Risikoanalyse.
 
 Im Rahmen eines EU-weiten Stresstests stellt die \ac{EZB} den Banken zur Simulation eines schweren Überschwemmungsszenarios eine Hochwasserrisikokarte (Abbildung \ref{fig:euflut}) zur Verfügung.
@@ -86,15 +86,9 @@ Im Rahmen eines EU-weiten Stresstests stellt die \ac{EZB} den Banken zur Simulat
 \end{figure}
 \FloatBarrier
 
-Diese Karte basierend auf Informationen der Gemeinsamen Forschungsstelle der Europäischen Kommission und ergänzt durch Daten von Four Twenty Seven kategorisiert Regionen nach Risikoklassen \parencite{ECB2022ClimateStressTest}. Da jedoch die zugrundeliegenden Daten von der \ac{EZB} nicht veröffentlicht wurden und die visuelle Repräsentation keine präzise Identifikation spezifischer Regionen ermöglicht, erweist sich für Bayern die Notwendigkeit einer differenzierteren Analyse als evident. Hierfür werden Daten des European Climate Risk Typology \parencite{Carter2018} herangezogen, dessen Datenerhebungsprozess in Abbildung \ref{fig:ing} veranschaulicht wird.
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\textwidth]{figures/EUclimateriskIng.png} 
-    \caption{Exemplarische Darstellung klimatischer Daten aus dem EU-Klimarisiko-Modell für Ingolstadt. Quelle: European Climate Risk Typology, https://european-crt.org/map.html}
-    \label{fig:ing}
-\end{figure}
-\FloatBarrier
-Ergänzend dazu erstellt das Bayerische Landesamt für Umwelt im Rahmen des Hochwasserrisikomanagements spezifische Karten für die Flussgebiete von Donau, Rhein und Elbe. Diese Karten bieten detaillierte Informationen zur Hochwassergefährdung, betroffenen Nutzungen und historischen Ereignissen \parencite{LfU_Bayern}.
+Diese Karte basierend auf Informationen der Gemeinsamen Forschungsstelle der Europäischen Kommission und ergänzt durch Daten von Four Twenty Seven kategorisiert Regionen nach Risikoklassen \parencite{ECB2022ClimateStressTest}. Da jedoch die zugrundeliegenden Daten von der \ac{EZB} nicht veröffentlicht wurden und die visuelle Repräsentation keine präzise Identifikation spezifischer Regionen ermöglicht, erweist sich für Bayern die Notwendigkeit einer differenzierteren Analyse als evident. 
+
+Als potenzielle Lösung für diese Problematik könnten die vom Bayerischen Landesamt für Umwelt im Rahmen des Hochwasserrisikomanagements entwickelten Kartierungen herangezogen werden. Diese spezifischen Kartierungen für die Einzugsgebiete von Donau, Rhein und Elbe bieten eine detaillierte Darstellung der Hochwassergefährdung, der potenziell betroffenen Landnutzungen sowie historischer Hochwasserereignisse, wodurch eine präzisere regionale Risikoeinschätzung ermöglicht wird \parencite{LfU_Bayern}.
 Die ursprünglich im ETRS89-Koordinatensystem vorliegenden Daten werden für die Analyse in das EPSG:3035-System konvertiert. Diese Transformation ermöglicht eine präzise Integration und Darstellung aller Datensätze auf einer einheitlichen Karte Bayerns.
 Eine abschließende Abbildung \ref{fig:bayernflut} präsentiert einen umfassenden Überblick über die potenziell von Hochwasser betroffenen Gebiete in Bayern, wodurch die räumliche Verteilung des Risikos verdeutlicht wird.
 \begin{figure}[htbp]

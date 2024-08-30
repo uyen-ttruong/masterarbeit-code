@@ -1,0 +1,66 @@
+\subsection{Statistische Grundlage}
+\subsubsection{Jährliche Überschreitungswahrscheinlichkeit (Annual Exceedance Probability)}
+Der Begriff des  ,,100-jährlichen Ereignisses`` oder HQ\textsubscript{100}, wie in Abschnitt \ref{sec:HQ} erläutert, ist im öffentlichen Diskurs weit verbreitet. Diese Terminologie kann zu Missinterpretationen führen, da sie impliziert, dass solche Ereignisse nur alle 100 Jahre auftreten. Um dieses Missverständnis zu vermeiden, verwendet man in den Geowissenschaften das Konzept der \ac{AEP}, auch bekannt als Jährliche Überschreitungswahrscheinlichkeit \parencite{uswrc1981} .
+Die \ac{AEP}, basierend auf der Theorie der unabhängigen Wahrscheinlichkeit, quantifiziert die jährliche Auftrittswahrscheinlichkeit von Extremereignissen als Prozentwert
+Die Formel für die AEP lautet:
+\begin{equation*}
+    \text{AEP} = 1 - \left(1 - \frac{1}{T}\right)^n
+    \end{equation*}
+Wobei:
+\begin{itemize}
+\item T: Wiederkehrperiode in Jahren
+\item n: Anzahl der betrachteten Jahre
+\end{itemize}
+Für ein einzelnes Jahr (n = 1) vereinfacht sich die Formel zu:
+\begin{equation}
+\text{AEP} = \frac{1}{T}
+\end{equation}
+
+Wie aus Tabelle \ref{tab:wiederkehrperiode} ersichtlich wird, hat ein Hochwasserereignis mit einer Wiederkehrperiode von 100 Jahren (ein ,,100-jährliches Ereignis``) eine jährliche Auftrittswahrscheinlichkeit von 1\%. Im Gegensatz dazu weist ein Hochwasserereignis mit einer Wiederkehrperiode von 2 Jahren (ein ,,2-jährliches Ereignis``) eine jährliche Auftrittswahrscheinlichkeit von 50\% auf.
+
+Wie aus Tabelle \ref{tab:wiederkehrperiode} ersichtlich wird, hat ein Hochwasserereignis mit einer Wiederkehrperiode von 100 Jahren (ein ,,100-jährliches Ereignis``) eine jährliche Auftrittswahrscheinlichkeit von 1\%. Im Gegensatz dazu weist ein Hochwasserereignis mit einer Wiederkehrperiode von 2 Jahren (ein ,,2-jährliches Ereignis``) eine jährliche Auftrittswahrscheinlichkeit von 50\% auf.
+\begin{table}[htbp]
+    \centering
+    \small  % Điều chỉnh kích thước font chữ cho bảng nếu cần
+    \caption{Wiederkehrperiode und Jährliche Überschreitungswahrscheinlichkeit mit HQ\textsubscript{T\textsubscript{n}}}
+    \label{tab:wiederkehrperiode}
+    \begin{tabularx}{1.0\textwidth}{>{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X>{\centering\arraybackslash}X}
+        \toprule  % Dòng kẻ đậm trên cùng
+        \textbf{HQ\textsubscript{T\textsubscript{n}}} & \textbf{Wiederkehrperiode (Jahre)} & \textbf{Jährliche Überschreitungswahrscheinlichkeit} \\
+        \midrule  % Dòng kẻ nhạt hơn dưới tên các cột
+        HQ\textsubscript{2} & 2 & 50\% \\
+        HQ\textsubscript{10} & 10 & 10\% \\
+        HQ\textsubscript{25} & 25 & 4\% \\
+        HQ\textsubscript{50} & 50 & 2\% \\
+        HQ\textsubscript{100} & 100 & 1\% \\
+        HQ\textsubscript{500} & 500 & 0,2\% \\
+        HQ\textsubscript{1000} & 1000 & 0,1\% \\
+        \bottomrule  % Dòng kẻ đậm dưới cùng
+    \end{tabularx}
+\end{table}
+\FloatBarrier
+
+\subsubsection{Stichprobenumfang }
+Stichprobenverfahren zielen darauf ab, die Merkmalsverteilungen der Grundgesamtheit zu schätzen. Während Schlussfolgerungen aus einer Stichprobe mit Sicherheit nur für diese selbst gelten, basiert die Verallgemeinerung auf die Grundgesamtheit auf statistischer Inferenz. Aufgrund des Ziels, eine möglichst kleine Teilmenge zu untersuchen, unterliegt die Stichprobenziehung strengen statistischen Kriterien. Zur Gewährleistung der Repräsentativität ist sowohl die Berechnung des erforderlichen Stichprobenumfangs als auch die Auswahl der geeigneten Stichprobenmethode durch sorgfältige organisatorische Evaluation unerlässlich.
+
+Der initiale Schritt bei der Portfolioerstellung besteht in der Ermittlung des erforderlichen Umfangs, um das Bankportfolio präzise abzubilden. Die Berechnung des notwendigen Stichprobenumfangs beginnt mit der Bestimmung der theoretischen Stichprobengröße für ein Portfolio mit unendlicher Grundgesamtheit. Diese Basisberechnung ist fundamental für die anschließende Ermittlung des Stichprobenumfangs bei einer endlichen Anzahl von Immobilien.
+
+Für die Berechnung des erforderlichen Stichprobenumfangs bei einer theoretisch unendlichen Grundgesamtheit wird die Cochran-Formel (\cite{cochran1953sampling}) herangezogen. Die Cochran-Formel lautet:
+
+\begin{equation}
+n = \frac{Z^2 \cdot P(1 - P)}{\varepsilon^2}
+\label{eq:cochran}
+\end{equation}
+
+Hierbei repräsentiert $n$ den initialen Stichprobenumfang. Ein entscheidender Faktor in dieser Formel ist die Festlegung der gewünschten Sicherheit, ausgedrückt durch den Z-Wert. Die Aussagewahrscheinlichkeit einer Stichprobe gibt an, in wie vielen Fällen das angewendete Verfahren zuverlässige Ergebnisse liefert. Das Organisationshandbuch empfiehlt eine Aussagewahrscheinlichkeit von 95\%, was einem Z-Wert von etwa 1,96 entspricht. Diese Wahl beeinflusst direkt die Größe der erforderlichen Stichprobe und stellt einen Kompromiss zwischen Präzision und praktischer Durchführbarkeit dar.
+
+Die Stärke der Cochran-Formel liegt in ihrer Flexibilität und Anwendbarkeit auf verschiedene Forschungsszenarien. Sie berücksichtigt sowohl das gewünschte Konfidenzniveau als auch die erwartete Variabilität in der Population.
+
+Für Populationen mit bekannter, endlicher Größe wird die Cochran-Formel modifiziert. Diese angepasste Formel dient als Eingabeparameter für die nachfolgende Gleichung, die den notwendigen Portfolioumfang für eine statistische Repräsentation eines Portfolios der Größe $N$ berechnet:
+
+\begin{equation}
+n' = \frac{n}{1 + \frac{n - 1}{N}}
+\label{eq:finite_population}
+\end{equation}
+
+In diesen Formeln steht $Z$ für den z-Wert des gewählten Konfidenzintervalls, $N$ für den Umfang der Originalpopulation, $\varepsilon$ für die Fehlermarge, die das Ausmaß des zufälligen Stichprobenfehlers quantifiziert und ein Maß für die akzeptable Abweichung vom wahren Wert darstellt. $P$ bezeichnet den Populationsanteil, der den Anteil der Population in einer spezifischen Kategorie angibt. In diesem Kontext wird $P$ mit 0,5 angesetzt, da der spezifische Wert unbekannt ist und 0,5 den erforderlichen Stichprobenumfang maximiert. Diese konservative Schätzung gewährleistet, dass die Stichprobe groß genug ist, um auch bei unbekannten Populationsparametern zuverlässige Ergebnisse zu liefern.
