@@ -74,7 +74,8 @@ Zur repräsentativen Verteilung der 3853 Datenpunkte, entsprechend der Anzahl de
 \FloatBarrier
 
 \subsubsection{Hochwassergeodaten}\label{sec:hochgeo}
-Nach der Erfassung der geographischen Koordinaten der Hypothekendarlehen ist es erforderlich, die Lage der entsprechenden Immobilien in Bezug auf Hochwasserrisikogebiete zu ermitteln. Infolgedessen erläutert dieser Abschnitt die Methodologie zur Erstellung einer detaillierten Hochwasserrisikokarte für Bayern. Diese basiert auf EU-Stresstest-Szenarien sowie regionalen Daten und beschreibt die Integration diverser Datenquellen zur präzisen Risikoanalyse.
+
+Im Anschluss an die in Abschnitt \ref{sec:hypogeo} dargelegte Erfassung der geografischen Koordinaten der Hypothekendarlehen ergibt sich die Notwendigkeit einer weiterführenden Analyse. Diese zielt darauf ab, die räumliche Relation der betreffenden Immobilien zu den definierten Hochwasserrisikogebieten zu determinieren. Zur Durchführung dieser Analyse ist eine detaillierte Hochwasserrisikokarte für Bayern erforderlich. Die Erstellung dieser Karte basiert auf zwei Hauptquellen: Hochwasserrisikokarte von \ac{EZB}-Stresstest und Daten des Onlinekartendienstes des bayernrischen Landesamt für Umwelt. Durch die Integration dieser Daten wird eine präzise Risikoanalyse ermöglicht.
 
 Im Rahmen eines EU-weiten Stresstests stellt die \ac{EZB} den Banken zur Simulation eines schweren Überschwemmungsszenarios eine Hochwasserrisikokarte (Abbildung \ref{fig:euflut}) zur Verfügung.
 
@@ -86,11 +87,10 @@ Im Rahmen eines EU-weiten Stresstests stellt die \ac{EZB} den Banken zur Simulat
 \end{figure}
 \FloatBarrier
 
-Diese Karte basierend auf Informationen der Gemeinsamen Forschungsstelle der Europäischen Kommission und ergänzt durch Daten von Four Twenty Seven kategorisiert Regionen nach Risikoklassen \parencite{ECB2022ClimateStressTest}. Da jedoch die zugrundeliegenden Daten von der \ac{EZB} nicht veröffentlicht wurden und die visuelle Repräsentation keine präzise Identifikation spezifischer Regionen ermöglicht, erweist sich für Bayern die Notwendigkeit einer differenzierteren Analyse als evident. 
+Die EZB-Karte klassifiziert Regionen nach Hochwasserrisiken. Sie basiert auf Daten der Europäischen Kommission und Four Twenty Seven \parencite{ECB2022ClimateStressTest}. Allerdings sind die Basisdaten nicht öffentlich zugänglich. Zudem erlaubt die visuelle Darstellung keine präzise Identifikation spezifischer Gebiete. Folglich ergibt sich für Bayern die Notwendigkeit einer detaillierteren Analyse.
 
-Als potenzielle Lösung für diese Problematik könnten die vom Bayerischen Landesamt für Umwelt im Rahmen des Hochwasserrisikomanagements entwickelten Kartierungen herangezogen werden. Diese spezifischen Kartierungen für die Einzugsgebiete von Donau, Rhein und Elbe bieten eine detaillierte Darstellung der Hochwassergefährdung, der potenziell betroffenen Landnutzungen sowie historischer Hochwasserereignisse, wodurch eine präzisere regionale Risikoeinschätzung ermöglicht wird \parencite{LfU_Bayern}.
-Die ursprünglich im ETRS89-Koordinatensystem vorliegenden Daten werden für die Analyse in das EPSG:3035-System konvertiert. Diese Transformation ermöglicht eine präzise Integration und Darstellung aller Datensätze auf einer einheitlichen Karte Bayerns.
-Eine abschließende Abbildung \ref{fig:bayernflut} präsentiert einen umfassenden Überblick über die potenziell von Hochwasser betroffenen Gebiete in Bayern, wodurch die räumliche Verteilung des Risikos verdeutlicht wird.
+Die Kartierungen des Bayerischen Landesamts für Umwelt bieten eine fundierte Grundlage für die regionale Risikoanalyse. Diese für die Einzugsgebiete von Donau, Rhein und Elbe entwickelten Karten ermöglichen eine präzise Einschätzung der Hochwasserrisiken in Bayern \parencite{LfU_Bayern}. Sie visualisieren detailliert die Hochwassergefährdung, potenziell betroffene Landnutzungen und historische Hochwasserereignisse.
+Diese Daten liegen aber im ETRS89-Koordinatensystem vor, während die Hypothekendaten das EPSG:3035-System nutzen. Zur Herstellung der Datenkohärenz erfolgt eine Koordinatentransformation in das EPSG:3035-System. Abbildung \ref{fig:bayernflut} präsentiert das Resultat dieser Vereinheitlichung und visualisiert die räumliche Verteilung der Hochwasserrisikogebiete Bayerns.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{figures/bayern_flut.png} 
@@ -102,7 +102,7 @@ Eine abschließende Abbildung \ref{fig:bayernflut} präsentiert einen umfassende
 
 \subsubsection{Überflutungstiefen}
 Die Schäden durch Überschwemmungen hängen von der Wassertiefe ab. Tieferes Wasser verursacht meist größere und teurere Schäden an Häusern. Für die Analyse der Überflutungstiefe in Bayern benötigt man Überflutungstiefen-Geodaten. \ac{DGM} Modell beschreibt die Höhe des Bodens, wobei eine hohe Auflösung genaue Ergebnisse liefert \parencite{vermessungsverwaltung2019gelandemodell}. Hochwasserstände aus Messungen sind wichtig für präzise Berechnungen. Dafür wurden Daten vom \textcite{bayern2016hochwassernachrichtendienst} für aktuelle Pegelstände betrachtet. Historische Hochwasserdaten helfen bei Einschätzungen künftiger Ereignisse und sind in Berichten und Karten enthalten. Diese wurden vom \textcite{LfU_Bayern} bezogen, wie in Abschnitt \ref{sec:hochgeo} beschrieben.
-Die \ac{DGM}-Daten von \parencite{vermessungsverwaltung2019gelandemodell} für ganz Bayern umfassen ein sehr großes Datenvolumen von ca. 240 GB. Daher wurden nur Daten für die Gebiete mit Hypotheken-Datenpunkten aus Abschnitt \ref{sec:hypogeo} heruntergeladen. Abbildung \ref{fig:ingolstadt} visualisiert das digitale Geländemodell für Ingolstadt, welches die topographischen Merkmale der Stadt und ihrer Umgebung detailliert darstellt und somit eine wichtige Grundlage für die Hochwasseranalyse bildet.
+Die \ac{DGM}-Daten von \textcite{vermessungsverwaltung2019gelandemodell} für ganz Bayern umfassen ein sehr großes Datenvolumen von ca. 240 GB. Daher wurden nur Daten für die Gebiete mit Hypotheken-Datenpunkten aus Abschnitt \ref{sec:hypogeo} heruntergeladen. Abbildung \ref{fig:ingolstadt} visualisiert das digitale Geländemodell für Ingolstadt, welches die topographischen Merkmale der Stadt und ihrer Umgebung detailliert darstellt und somit eine wichtige Grundlage für die Hochwasseranalyse bildet.
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/dgm_3d_wireframe_ingolstadt.png}
