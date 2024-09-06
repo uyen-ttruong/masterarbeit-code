@@ -8,4 +8,43 @@ Im Rahmen dieses Kapitels wird die Methodik zur Generierung eines repräsentativ
 
 
 \input{chapters/4.1_Hypothekendaten}
-\input{chapters/4.2_Geodaten.tex}
+\input{chapters/4.2_Geodaten}
+\input{chapters/4.3_Preis}
+\input{chapters/4.4_EPCBayern}
+
+\subsection{Übersicht über das Hypothekenportfolio}
+Nachdem alle genannten Schritte der Datenanalyse abgeschlossen waren, wurde ein realistisches Portfolio von Hypotheken-Immobilien erstellt. Die in Tabelle \ref{tab:objekt-variablen} beschriebenen Objektvariablen bilden die Grundlage. Sie dienen der Berechnung physischer Risiken und Transitionsrisiken im nächsten Abschnitt.
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption{Übersicht über das Hypothekenportfolio und die relevanten Objekt-Variablen}
+    \label{tab:objekt-variablen}
+    \begin{tabularx}{1.0\textwidth}{>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
+        \toprule
+        \textbf{Objekt-Variablen} & \textbf{Erklärung} \\
+        \midrule
+        ID & Identifikationsnummer \\
+        \addlinespace
+        Ort & Ort der Immobilie \\
+        \addlinespace
+        Landkreis & Landkreis der Immobilie \\
+        \addlinespace
+        Geometrie & Geometrische Lage der Immobilie, bestehend aus Breiten- und Längengrad zur Berechnung der Überschwemmungsgefahr an diesem Punkt \\
+        \addlinespace
+        GEB\_Q & Hochwasser Ergeiniss \\
+        \addlinespace
+        Überschwemmung Tiefe & Tiefe der Überschwemmung an dem Punkt \\
+        \addlinespace
+        Überschwemmungsrisiko Stufe & Stufe des Überschwemmungsrisikos \\
+        \addlinespace
+        Energieklasse & Energieeffizienzklasse der Immobilie \\
+        \addlinespace
+        Aktueller Immobilienwert & Der aktuelle Wert der Immobilie \\
+        \addlinespace
+        Aktuelles LTV & Aktuelles Verhältnis von Darlehen zu Wert (Loan-to-Value) \\
+
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+
