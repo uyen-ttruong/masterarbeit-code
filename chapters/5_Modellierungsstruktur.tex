@@ -1,0 +1,30 @@
+
+\section{Modellierungstruktur}
+\subsection{Modellierung des Hochwasserrisikos}
+In diesem Abschnitt wird bei der Modellierung des Hochwasserrisikos die grundlegende Quantifizierung des physischen Risikos erläutert.
+
+Gemäß der Definition von der \textcite{undro1979,} ergibt sich das Risiko aus drei Komponenten: Gefährdungswahrscheinlichkeit,  den betroffenen Elemente (Exposition) und Vulnerabilität. \parencite{coburn1991vulnerability}. Dies kann vereinfacht ausgedrückt werden als:
+
+\begin{equation}
+    \text{Physisches Risiko} = \text{Gefährdungswahrscheinlichkeit} \times \text{Exposition} \times \text{Vulnerabilität}
+\end{equation}
+
+Um eine genauere Analyse der einzelnen Immobilienschäden zu ermöglichen, wird eine detailliertere Schadensformel \parencite{vanweddingen2023physicalrisk} benutzt:
+\begin{equation}
+    Immobilienschaden_{i,j} = E_j \times d(I_{i,j}|v_j)
+    \label{eq:schaden}
+\end{equation}
+Wobei:
+\begin{itemize}
+    \item i das spezifische Ereignis bezeichnet
+    \item $E_j$ den Wert der einzelnen Immobilie am Standort j repräsentiert
+    \item $d$ die spezifische Schadensfunktion darstellt
+    \item $I_{i,j}$ die lokale Intensität des Ereignisses i am Standort j ist
+    \item $v_j$ die spezifische Vulnerabilität der einzelnen Immobilie am Standort j bezeichnet
+\end{itemize}
+
+Formel \ref{eq:schaden} berücksichtigt die Gefährdungswahrscheinlichkeit nicht, da sie den Schaden für ein einzelnes Ereignis berechnet. Für den erwarteten jährlichen Immobilienschaden wird die jährliche Überschreitungswahrscheinlichkeit aus Kapitel \ref{sec:EPC} benötigt und wird nachfolgend berechnet:
+\begin{equation}
+    EAI_j = \sum_i Immobilienschaden_{i,j} * p(I_{i,j})
+\end{equation}
+Hierbei steht \ac{EAI} für den erwarteten jährlichen Schaden, und \( p(I_{i,j}) \) ist die Eintrittswahrscheinlichkeit des Ereignisses \( i \) mit der Intensität \( I_{i,j} \) am Standort \( j \).

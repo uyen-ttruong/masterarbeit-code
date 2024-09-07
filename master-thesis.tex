@@ -1,0 +1,95 @@
+% **************************************************
+% Document class
+% **************************************************
+% cSpell:disable
+\documentclass[
+    a4paper,
+    12pt,
+    bibliography=totoc,
+    listof=totoc,
+    titlepage,
+    footheight=19.28502pt,
+    headsepline  % Thêm đường gạch chân cho tiêu đề
+]{scrartcl}
+
+% **************************************************
+% Settings
+% **************************************************
+
+\usepackage{settings}
+\usepackage{bookmark}
+% Tùy chỉnh tiêu đề trang
+%\usepackage[automark]{scrlayer-scrpage}
+%\clearpairofpagestyles
+%\chead{\upshape\headmark} % Tiêu đề ở giữa, không nghiêng
+%%\ohead{\pagemark} % Số trang ở góc ngoài bên phải
+
+% Đặt font chữ thẳng cho tiêu đề
+%\setkomafont{pageheadfoot}{\normalfont}
+%\setkomafont{pagenumber}{\normalfont}
+
+% Tùy chỉnh tiêu đề trang (nếu cần)
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+\renewcommand{\subsectionmark}[1]{\markright{#1}}
+\renewcommand{\figurename}{Abbildung}
+
+% **************************************************
+% Additional Biblatex configuration
+% **************************************************
+\DeclareNameAlias{sortname}{family-given}
+\DeclareDelimFormat{nameyeardelim}{\addcomma\space}
+
+% **************************************************
+% Variables
+% **************************************************
+
+\newcommand*{\getUniversity}{Hochschule für angewandte Wissenschaften München}
+\newcommand*{\getFaculty}{Fakultät für Informatik und Mathematik}
+\newcommand*{\getTitle}{Integration von Climate Risk und Geospatial Analyse zur Risikobewertung von Immobilienportfolios}
+\newcommand*{\getAuthor}{Uyen Truong}
+\newcommand*{\getCourse}{Stochastic Engineering in Business and Finance}
+\newcommand*{\getDoctype}{Masterarbeit}
+\newcommand*{\getSupervisor}{Prof. Dr. Silja Grawert}
+\newcommand*{\getSubmissionDate}{\today}
+
+% **************************************************
+% Content
+% **************************************************
+
+\begin{document}
+
+\input{pages/title}
+
+\input{pages/abstract}
+
+\tableofcontents
+
+\clearpage
+\listoffigures
+
+\clearpage
+\listoftables
+
+\clearpage
+\lstlistoflistings
+
+\clearpage
+\input{pages/acronyms}
+
+\clearpage
+\input{chapters/1_introduction}
+
+\input{chapters/3_Theoretischer Hintergrund}
+\clearpage
+\input{chapters/4_Porfolio preparation}
+\clearpage
+\input{chapters/5_Modellierungsstruktur}
+
+
+\clearpage
+\printbibliography[title=Literaturverzeichnis,heading=bibintoc]
+
+\clearpage
+\input{pages/declaration}
+
+\end{document}
