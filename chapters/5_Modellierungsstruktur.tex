@@ -2,7 +2,7 @@
 \section{Modellierungstruktur}
 \subsection{Modellierung des Hochwasserrisikos}
 In diesem Abschnitt wird bei der Modellierung des Hochwasserrisikos die grundlegende Quantifizierung des physischen Risikos erläutert.
-
+\subsubsection{Berechnung von Hochwasserschäden}
 Gemäß der Definition von der \textcite{undro1979,} ergibt sich das Risiko aus drei Komponenten: Gefährdungswahrscheinlichkeit,  den betroffenen Elemente (Exposition) und Vulnerabilität. \parencite{coburn1991vulnerability}. Dies kann vereinfacht ausgedrückt werden als:
 
 \begin{equation}
@@ -25,6 +25,33 @@ Wobei:
 
 Formel \ref{eq:schaden} berücksichtigt die Gefährdungswahrscheinlichkeit nicht, da sie den Schaden für ein einzelnes Ereignis berechnet. Für den erwarteten jährlichen Immobilienschaden wird die jährliche Überschreitungswahrscheinlichkeit aus Kapitel \ref{sec:EPC} benötigt und wird nachfolgend berechnet:
 \begin{equation}
-    EAI_j = \sum_i Immobilienschaden_{i,j} * p(I_{i,j})
+    EAI_j = \sum_i Immobilienschaden_{i,j} \times p(I_{i,j})
+    \label{eq:EAI}
 \end{equation}
 Hierbei steht \ac{EAI} für den erwarteten jährlichen Schaden, und \( p(I_{i,j}) \) ist die Eintrittswahrscheinlichkeit des Ereignisses \( i \) mit der Intensität \( I_{i,j} \) am Standort \( j \).
+Auf Grundlage der Formel \ref{eq:EAI} wird der \ac{EI}, auf Deutsch der erwartete Einfluss, über die Kreditlaufzeit wie folgt berechnet:
+\begin{equation}
+    EI(j) = EAI(j) \times T
+\end{equation}
+Dabei ist \( EI(j) \) der gesamte erwartete Schaden über die Kreditlaufzeit \( T \).
+
+Die Auswirkungen auf den Immobilienwert nach einem Schaden werden wie folgt berechnet:
+\begin{equation}
+    \text{Neuer Immobilienwert} = \text{Ursprünglicher Immobilienwert} - \text{Schaden}
+\end{equation}
+
+Zur Bestimmung der neuen Beleihungsquote \ac{LtV} auf Basis des angepassten Immobilienwertes gilt:
+\begin{equation}
+    \text{Neue LtV} = \frac{\text{Darlehenbetrag}}{\text{Neuer Immobilienwert}}
+\end{equation}
+
+Die risikogewichteten Aktiva,  auch bekannt als \ac{RWA}, abhängig von der Beleihungsquote, berechnen sich folgendermaßen:
+\begin{equation}
+    RWA = \text{Darlehenbetrag} \times \text{Risikogewicht}
+\end{equation}
+Das Risikogewicht wird anhand der Beleihungsquote ermittelt.
+
+Zum Schluss lässt sich die prozentuale Änderung der RWA mit dieser Formel bestimmen:
+\begin{equation}
+    \% \text{Änderung RWA} = \frac{\text{Neue RWA}}{\text{Ursprüngliche RWA}} - 1
+\end{equation}
