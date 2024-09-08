@@ -102,16 +102,42 @@ Zum Schluss lässt sich die prozentuale Änderung der \acs{RWA} mit dieser Forme
 \end{equation}
 \subsection{Modellierung des Transitionsrisikos}
 \subsubsection{NGFS-Szenarien und Energiepreismodellierung}
-\subsubsection{NGFS-Szenarien und Energiepreismodellierung}
-Die NGFS-Szenarien und die damit verbundene Energiepreismodellierung sind von entscheidender Bedeutung für eine präzise Bewertung von Immobilien. Die beschriebenen Szenarien im Abschnitt \ref{sec:ngfs} beinhalten verschiedene Entwicklungsmöglichkeiten der Energiepreise.
+Die \ac{NGFS}-Szenarien und die zugehörige Modellierung der Energiepreise sind wesentlich für eine Bewertung von Immobilien. Die beschriebenen Szenarien im Abschnitt \ref{sec:ngfs} beinhalten verschiedene Entwicklungsmöglichkeiten der Energiepreise.
 
-Die Energiepreise basieren auf einer Kombination aus Öl- und Gaspreisen, die den Hauptanteil des Energieverbrauchs in deutschen Wohngebäuden ausmachen. Die Heizenergiepreis von 7,51~\text{Cent/kWh} für 2022 in Bayern \parencite{behr2023warmemonitor} dient als Referenzpunkt für die Preisentwicklung in den verschiedenen Szenarien 
-
-Ebenso sind bei der CO\textsubscript{2}-Steuern enthalten, die eine vollständige Betrachtung der zukünftigen Energiekosten zulassen. Die Preisberechnung erfolgt mithilfe einer bestimmten Methodik, die von \textcite{tergerman} dargelegt wird.
-Die Berechnung der Energiepreise erfolgt nach einer spezifischen Methodik, die von ter Steege und Vogel (2021) detailliert beschrieben wird. Die Autoren verwenden folgende erweiterte Formel zur Berechnung des Endpreises der Energie:
-\begin{equation}
+Die Energiepreise basieren auf einer Kombination aus Öl- und Gaspreisen, die den Hauptanteil des Energieverbrauchs in deutschen Wohngebäuden ausmachen. Die Heizenergiepreis von 5,89~\text{Cent/kWh} im Jahr 2020 in Deutschland \parencite{behr2023warmemonitor} dient als Referenzpunkt für die Preisentwicklung in den verschiedenen Szenarien. Darüber hinaus müssen CO\textsubscript{2}-Steuern in die Betrachtung der zukünftigen Energiekosten einbezogen werden. Die Berechnung der Energiepreise erfolgt nach einer spezifischen Methodik, die von \textcite{tergerman} detailliert beschrieben wird. Die Autoren verwenden folgende erweiterte Formel zur Berechnung des Endpreises der Energie:
+\begin{equation}\label{eq:pt}
 P_t = (1 + \tau_t) \cdot [\omega^O \cdot (\frac{\kappa^O \cdot T^{CO2}_t}{1000} + \frac{P^O_t}{E_t \cdot \gamma}) + (1 - \omega^O) \cdot (\frac{\kappa^G \cdot T^{CO2}_t}{1000} + \frac{P^G_t}{E_t \cdot \gamma})]
 \end{equation}
-Hierbei ist $P_t$ der Endpreis der Energie, $\tau_t$ die Mehrwert- und Energiesteuer, $\omega^O$ der Anteil von Öl am Energiemix (35\%), $P^O_t$ und $P^G_t$ die Rohstoffpreise von Öl und Gas in Dollar, $T^{CO2}_t$ die CO\textsubscript{2}-Steuer, $E_t$ der Wechselkurs Dollar/Euro, $\kappa^O$ und $\kappa^G$ die CO\textsubscript{2}-Emissionsfaktoren für Öl und Gas, und $\gamma$ der Umrechnungsfaktor von Barrel Öläquivalent zu kWh. Die Daten für $P^O_t$, $P^G_t$, $T^{CO2}_t$ und $E_t$ stammen aus den NGFS-Szenarien und dem NiGEM-Modell [S. 7]. Wichtige Konstanten aus dem Anhang B [S. 15] sind: $\kappa^O = 0,287$ kg CO\textsubscript{2}/kWh für Öl, $\kappa^G = 0,238$ kg CO\textsubscript{2}/kWh für Gas, und $\gamma = 1700$ kWh/BOE. 
+Hierbei ist $P_t$ der Endpreis der Energie, $\tau_t$ die Mehrwert- und Energiesteuer, $\omega^O$ der Anteil von Öl am Energiemix (35\%), $P^O_t$ und $P^G_t$ die Rohstoffpreise von Öl und Gas in Dollar, $T^{CO2}_t$ die CO\textsubscript{2}-Steuer, $E_t$ der Wechselkurs Dollar/Euro, $\kappa^O$ und $\kappa^G$ die CO\textsubscript{2}-Emissionsfaktoren für Öl und Gas, und $\gamma$ der Umrechnungsfaktor von Barrel Öläquivalent zu kWh. Wichtige Konstanten aus dem Anhang B [S. 15] sind: $\kappa^O = 0,287$ kg CO\textsubscript{2}/kWh für Öl, $\kappa^G = 0,238$ kg CO\textsubscript{2}/kWh für Gas, und $\gamma = 1700$ kWh/BOE \parencite{tergerman}. 
 
-Die Abbildung auf Seite 8 zeigt die prognostizierten Energiepreisverläufe für vier verschiedene NGFS-Szenarien bis zum Jahr 2040, basierend auf der Studie von \textcite{tergerman}. 
+Die Daten für $P^O_t$, $P^G_t$ und $T^{CO2}_t$  stammen aus den NGFS-Szenarien und \textcite{imf2022} und werden in Abbildung \ref{fig:ngfs_preis} visualisiert.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}[b]{0.8\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/gasprice.png}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.8\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/Oilprice.png}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.8\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/co2price.png}
+    \end{minipage}
+    \caption{Energiepreise nach NGFS-Szenarien. Quelle: Eigeine Darstellung}
+    \label{fig:ngfs_preis}
+\end{figure}
+\FloatBarrier
+Abbildung \ref{fig:endpreis_energie} zeigt das Resultat der Gleichung \ref{eq:pt} bezüglich des Endpreises für Energie, unter Berücksichtigung der Mehrwert- und Energiesteuern gemäß den NGFS-Szenarien.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/endpreis.png}
+    \caption{Endpreis der Energie mit Mehrwert- und CO2-Steuern nach NGFS-Szenarien. Quelle: Eigene Darstellung}
+    \label{fig:endpreis_energie}
+\end{figure}
+\FloatBarrier
