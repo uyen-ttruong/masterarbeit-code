@@ -5,7 +5,7 @@ from matplotlib.patches import Patch
 from adjustText import adjust_text
 
 # Load shapefile data for PLZ (Postleitzahl) and Landkreis boundaries
-zip_path = r"C:\Users\uyen truong\Desktop\Hochschule-Muenchen-LaTeX-Template\plz-5stellig.shp.zip"
+zip_path = r"C:\Users\uyen truong\Desktop\Hochschule-Muenchen-LaTeX-Template\data\plz-5stellig.shp.zip"
 shp_name = 'plz-5stellig'
 full_path = f"zip://{zip_path}!{shp_name}.shp"
 
@@ -13,7 +13,7 @@ plz_shape_df = gpd.read_file(full_path, dtype={'plz': str})
 plt.rcParams['figure.figsize'] = [16, 11]
 
 # Load region data
-plz_region_df = pd.read_csv('zuordnung_plz_ort.csv', sep=',', dtype={'plz': str})
+plz_region_df = pd.read_csv('data/zuordnung_plz_ort.csv', sep=',', dtype={'plz': str})
 plz_region_df.drop('osm_id', axis=1, inplace=True)
 
 # Merge shape data with region data

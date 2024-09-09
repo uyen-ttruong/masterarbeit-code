@@ -1,36 +1,36 @@
 import geopandas as gpd
 import pandas as pd
 
-# Đọc file shapefile
-gdf = gpd.read_file("highmediumriskgeo.shp")
+# Shapefile lesen
+gdf = gpd.read_file("data/highmediumriskgeo.shp")
 
-# In hệ tọa độ hiện tại
-print(f"Hệ tọa độ hiện tại: {gdf.crs}")
+# Aktuelles Koordinatensystem ausgeben
+print(f"Aktuelles Koordinatensystem: {gdf.crs}")
 
-# Chuyển đổi hệ tọa độ sang EPSG:3035
+# Koordinatensystem in EPSG:3035 umwandeln
 gdf = gdf.to_crs("EPSG:3035")
 
-# Tạo danh sách để lưu trữ dữ liệu
+# Liste zum Speichern der Daten erstellen
 data = []
 
-# Lặp qua từng hàng trong GeoDataFrame
+# Durch jede Zeile im GeoDataFrame iterieren
 for idx, row in gdf.iterrows():
-    # Lấy geometry
+    # Geometrie abrufen
     geom = row['geometry']
     
-    # Tạo một bản sao của dữ liệu hàng, loại bỏ cột 'geometry'
+    # Kopie der Zeilendaten erstellen, Spalte 'geometry' entfernen
     row_data = row.drop('geometry').to_dict()
     
-    # Kiểm tra loại geometry
+    # Geometrietyp prüfen
     if geom.geom_type == 'Polygon':
-        # Nếu là Polygon, lấy tọa độ của các điểm
+        # Wenn es sich um ein Polygon handelt, Koordinaten der Punkte abrufen
         for point in geom.exterior.coords:
             point_data = row_data.copy()
             point_data['longitude'] = point[0]
             point_data['latitude'] = point[1]
             data.append(point_data)
     elif geom.geom_type == 'MultiPolygon':
-        # Nếu là MultiPolygon, lặp qua từng polygon
+        # Wenn es sich um ein MultiPolygon handelt, durch jedes Polygon iterieren
         for polygon in geom.geoms:
             for point in polygon.exterior.coords:
                 point_data = row_data.copy()
@@ -38,19 +38,19 @@ for idx, row in gdf.iterrows():
                 point_data['latitude'] = point[1]
                 data.append(point_data)
 
-# Tạo DataFrame từ danh sách dữ liệu
+# DataFrame aus der Datenliste erstellen
 df = pd.DataFrame(data)
 
-# Lưu DataFrame thành file CSV
-output_file = "highmediumriskgeo_all_columns_latlon_epsg3035.csv"
-df.to_csv(output_file, index=False)
+# DataFrame als CSV-Datei speichern
+#output_file = "highmediumriskgeo_all_columns_latlon_epsg3035.csv"
+#df.to_csv(output_file, index=False)
 
-print(f"Đã lưu dữ liệu vào file '{output_file}'")
+#print(f"Daten wurden in der Datei '{output_file}' gespeichert")
 
-# Hiển thị vài dòng đầu tiên của DataFrame
-print("\nNăm dòng đầu tiên của dữ liệu:")
+# Erste fünf Zeilen des DataFrames anzeigen
+print("\nDie ersten fünf Zeilen der Daten:")
 print(df.head())
 
-# Hiển thị thông tin về các cột
-print("\nThông tin về các cột:")
+# Informationen zu den Spalten anzeigen
+print("\nInformationen zu den Spalten:")
 print(df.info())
