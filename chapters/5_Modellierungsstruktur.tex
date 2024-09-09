@@ -47,7 +47,7 @@ Basel III ist ein globales Regelwerk, das nach der Finanzkrise 2008 zur Stabilis
 
 In Tabelle \ref{tab:rwa_ltv} wird das Risikogewicht in Abhängigkeit vom \ac{LtV}-Verhältnis dargestellt.
 
-\subsubsection{Berechnung von Hochwasserschäden}
+\subsubsection{Berechnung von Immobilienwerten unter Hochwasserrisiko}
 Gemäß der Definition von der \textcite{undro1979} ergibt sich das Risiko aus drei Komponenten: Gefährdungswahrscheinlichkeit,  den betroffenen Elemente (Exposition) und Vulnerabilität. \parencite{coburn1991vulnerability}. Dies kann vereinfacht ausgedrückt werden als:
 
 \begin{equation}
@@ -104,11 +104,11 @@ Zum Schluss lässt sich die prozentuale Änderung der \acs{RWA} mit dieser Forme
 \subsubsection{NGFS-Szenarien und Energiepreismodellierung}
 Die \ac{NGFS}-Szenarien und die zugehörige Modellierung der Energiepreise sind wesentlich für eine Bewertung von Immobilien. Die beschriebenen Szenarien im Abschnitt \ref{sec:ngfs} beinhalten verschiedene Entwicklungsmöglichkeiten der Energiepreise.
 
-Die Energiepreise basieren auf einer Kombination aus Öl- und Gaspreisen, die den Hauptanteil des Energieverbrauchs in deutschen Wohngebäuden ausmachen. Die Heizenergiepreis von 5,89~\text{Cent/kWh} im Jahr 2020 in Deutschland \parencite{behr2023warmemonitor} dient als Referenzpunkt für die Preisentwicklung in den verschiedenen Szenarien. Darüber hinaus müssen CO\textsubscript{2}-Steuern in die Betrachtung der zukünftigen Energiekosten einbezogen werden. Die Berechnung der Energiepreise erfolgt nach einer spezifischen Methodik, die von \textcite{tergerman} detailliert beschrieben wird. Die Autoren verwenden folgende erweiterte Formel zur Berechnung des Endpreises der Energie:
+Die Energiepreise basieren auf einer Kombination aus Öl- und Gaspreisen, die den Hauptanteil des Energieverbrauchs in deutschen Wohngebäuden ausmachen. Die Heizenergiepreis von 5,89~\text{Cent/kWh} im Jahr 2020 in Deutschland \parencite{behr2023warmemonitor} dient als Referenzpunkt für die Preisentwicklung in den verschiedenen Szenarien. Darüber hinaus müssen CO\textsubscript{2}-Steuern in die Betrachtung der zukünftigen Energiekosten einbezogen werden. Die Berechnung der Energiepreise folgt der von \textcite{tergerman} beschriebenen Methodik mit einer erweiterten Formel für den Endpreis:
 \begin{equation}\label{eq:pt}
 P_t = (1 + \tau_t) \cdot [\omega^O \cdot (\frac{\kappa^O \cdot T^{CO2}_t}{1000} + \frac{P^O_t}{E_t \cdot \gamma}) + (1 - \omega^O) \cdot (\frac{\kappa^G \cdot T^{CO2}_t}{1000} + \frac{P^G_t}{E_t \cdot \gamma})]
 \end{equation}
-Hierbei ist $P_t$ der Endpreis der Energie, $\tau_t$ die Mehrwert- und Energiesteuer, $\omega^O$ der Anteil von Öl am Energiemix (35\%), $P^O_t$ und $P^G_t$ die Rohstoffpreise von Öl und Gas in Dollar, $T^{CO2}_t$ die CO\textsubscript{2}-Steuer, $E_t$ der Wechselkurs Dollar/Euro, $\kappa^O$ und $\kappa^G$ die CO\textsubscript{2}-Emissionsfaktoren für Öl und Gas, und $\gamma$ der Umrechnungsfaktor von Barrel Öläquivalent zu kWh. Wichtige Konstanten aus dem Anhang B [S. 15] sind: $\kappa^O = 0,287$ kg CO\textsubscript{2}/kWh für Öl, $\kappa^G = 0,238$ kg CO\textsubscript{2}/kWh für Gas, und $\gamma = 1700$ kWh/BOE \parencite{tergerman}. 
+Hierbei ist $P_t$ der Endpreis der Energie, $\tau_t$ die Mehrwertsteuer, $\omega^O$ der Anteil von Öl am Energiemix (35\%), $P^O_t$ und $P^G_t$ die Rohstoffpreise von Öl und Gas in Dollar, $T^{CO2}_t$ die CO\textsubscript{2}-Steuer, $E_t$ der Wechselkurs Dollar/Euro, $\kappa^O$ und $\kappa^G$ die CO\textsubscript{2}-Emissionsfaktoren für Öl und Gas, und $\gamma$ der Umrechnungsfaktor von Barrel Öläquivalent zu kWh. Wichtige Konstanten aus dem Anhang B [S. 15] sind: $\kappa^O = 0,287$ kg CO\textsubscript{2}/kWh für Öl, $\kappa^G = 0,238$ kg CO\textsubscript{2}/kWh für Gas, und $\gamma = 1700$ kWh/BOE \parencite{tergerman}. 
 
 Die Daten für $P^O_t$, $P^G_t$ und $T^{CO2}_t$ entstammen den im Abschnitt \ref{sec:ngfs_preis} beschriebenen Datenquellen.
 Abbildung \ref{fig:endpreis_energie} zeigt das Resultat der Gleichung \ref{eq:pt} bezüglich des Endpreises für Energie, unter Berücksichtigung der Mehrwert- und Energiesteuern gemäß den NGFS-Szenarien.
@@ -120,3 +120,29 @@ Abbildung \ref{fig:endpreis_energie} zeigt das Resultat der Gleichung \ref{eq:pt
     \label{fig:endpreis_energie}
 \end{figure}
 \FloatBarrier
+\subsubsection{Berechnung von Immobilienwerten unter Energiepreisänderungen}
+Nach der Modellierung der Energiepreise gemäß NGFS-Szenarien und deren zeitlicher Entwicklung wird im Folgenden die konkrete Anwendung dieser Daten für die Immobilienbewertung erläutert. Der methodische Ansatz basiert auf Formeln von \parencite{tergerman}. Er ermöglicht die Neuberechnung des Immobilienwerts unter Berücksichtigung energiepreisbedingter Einflüsse sowie eine Neubewertung des Beleihungsauslaufs. Die Umsetzung dieses Ansatzes erfolgt in mehreren Schritten, beginnend mit der Berechnung der absoluten Wertänderung des Gebäudes:
+\begin{equation}
+\Delta P_t = -E_t\left[ \sum_{h=1}^T \frac{EC_{t+h,new} - EC_{t+h,old}}{(1+r)^h} \right]
+\end{equation}
+wobei:
+\begin{itemize}
+\item $\Delta P_t$ die Wertänderung des Gebäudes zum Zeitpunkt t ist,
+\item $EC_{t+h,new}$ die erwarteten neuen Energiekosten zum Zeitpunkt t+h sind,
+\item $EC_{t+h,old}$ die erwarteten alten Energiekosten zum Zeitpunkt t+h sind,
+\item $h$ der Zeithorizont in Jahren ist,
+\item $r$ derAbzinsungsatz ist,
+\item $T$: Der Prognosezeitraum.
+\end{itemize}
+Anschließend wird die prozentuale Wertänderung ermittelt:
+\begin{equation}
+D_t = \frac{\Delta P_t}{P_t} 
+\end{equation}
+Basierend auf diesen Berechnungen lässt sich der neue Wert des Gebäudes bestimmen:
+\begin{equation}
+\text{Neuer Immobilienwert} = P_t \cdot (1 + D_t)
+\end{equation}
+Schließlich kann der aktualisierte \ac{LtV} berechnet werden:
+\begin{equation}
+\text{Neuer LtV} = \frac{\text{Darlehenbetrag}}{\text{Neuer Immobilienwert}}
+\end{equation}
