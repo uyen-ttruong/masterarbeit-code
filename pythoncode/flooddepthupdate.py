@@ -70,13 +70,6 @@ def get_elevation_at_point(x, y, elevation, transform, src_crs, dst_crs, bounds)
         return None
 
 def calculate_absolute_water_level(pegelstand_cm, pegelnullpunkt_m):
-    """
-    Tính toán mực nước tuyệt đối dựa trên Pegelstand và Pegelnullpunkt.
-    
-    :param pegelstand_cm: Pegelstand (cm)
-    :param pegelnullpunkt_m: Pegelnullpunkt (m NHN)
-    :return: Mực nước tuyệt đối (m NHN)
-    """
     return pegelnullpunkt_m + (pegelstand_cm / 100)
 
 def calculate_flood_depth(ground_elevation, water_level):
@@ -84,10 +77,27 @@ def calculate_flood_depth(ground_elevation, water_level):
         return None
     return max(water_level - ground_elevation, 0)
 
-def main():
-    meta4_file = r"C:\Users\uyen truong\Downloads\ingolstadt.meta4"
-    
+def convert_coordinates(latitude, longitude, from_epsg=4326, to_epsg=25832):
+    transformer = Transformer.from_crs(f"EPSG:{from_epsg}", f"EPSG:{to_epsg}", always_xy=True)
+    easting, northing = transformer.transform(longitude, latitude)
+    return easting, northing
+
+def main(input_string):
     try:
+        # Parse input string
+        parts = input_string.split(';')
+        if len(parts) != 3 or parts[0] != 'latitude' or parts[1] != 'longitude':
+            raise ValueError("Invalid input format. Expected 'latitude;longitude;lat,lon'")
+        
+        latitude, longitude = map(float, parts[2].split(','))
+        
+        # Convert coordinates
+        x, y = convert_coordinates(latitude, longitude)
+        print(f"Tọa độ đầu vào (EPSG:4326): Latitude: {latitude}, Longitude: {longitude}")
+        print(f"Tọa độ chuyển đổi (EPSG:25832): Easting (x): {x:.2f}, Northing (y): {y:.2f}")
+        
+        # DGM processing
+        meta4_file = r"C:\Users\uyen truong\Downloads\haagadamper.meta4"
         dgm_url = get_dgm_url_from_meta4(meta4_file)
         print(f"URL của DGM: {dgm_url}")
         
@@ -97,14 +107,11 @@ def main():
         elevation, transform, dgm_crs, bounds = load_dgm(dgm_file)
         print(f"DGM đã được tải. Kích thước: {elevation.shape}")
         print(f"Hệ tọa độ của DGM: {dgm_crs}")
-        
-        # Sử dụng tọa độ nằm trong phạm vi DGM (EPSG:25832)
-        x, y = 678501.30, 5397001.66  # Tọa độ đã được tính toán
-        print(f"Tọa độ đầu vào (EPSG:25832): x={x}, y={y}")
+        print(f"Phạm vi DGM: {bounds}")
         
         # Thông tin từ trạm Pegel
-        pegelstand_cm = 620  # Giả sử Pegelstand là 150 cm
-        pegelnullpunkt_m = 360.30   # Pegelnullpunkt từ thông tin đã cung cấp (360,30 m NHN)
+        pegelstand_cm = 400  # Giả sử Pegelstand là 400 cm
+        pegelnullpunkt_m = 439.61  # Pegelnullpunkt từ thông tin đã cung cấp
         
         # Tính toán mực nước tuyệt đối
         absolute_water_level = calculate_absolute_water_level(pegelstand_cm, pegelnullpunkt_m)
@@ -131,4 +138,6 @@ def main():
             print("File tạm đã được xóa")
 
 if __name__ == "__main__":
-    main()
+    # Sử dụng tọa độ nằm trong phạm vi DGM Haag a.d. Amper
+    input_string = "latitude;longitude;48.45405,11.83730"
+    main(input_string)
