@@ -3,7 +3,7 @@
 
 In diesem Kapitel wird die Methodik zur Erstellung eines repräsentativen Hypothekenportfolios erläutert. Der Prozess der Portfoliokonstruktion sowie die herangezogenen Datenquellen werden dargelegt. Diese methodische Grundlage ermöglicht die Analyse von physischen Risiken und Transitionsrisiken für Immobiliendarlehen.
 
-Im Rahmen dieses Kapitels wird die Methodik zur Generierung eines repräsentativen Musterportfolios erläutert, das als Grundlage für die Prognose klimabedingter Schäden dient. Trotz des umfangreichen Datenbestands der Finanzinstitute über ihre Kreditengagements hat die limitierte Zugänglichkeit zu detaillierten Datensätzen bisher umfassende empirische Analysen der Kreditrisiken eingeschränkt. Zur Überwindung dieser Limitation wird ein Musterportfolio konstruiert, das eine fundierte Approximation der erwarteten Verluste aus Wohnimmobilienkrediten ermöglicht. Die Quantifizierung essenzieller Risikoparameter basiert primär auf dem Geschäftsbericht der Münchener Hypothekenbank \parencite{MuenchenerHyp2023}, ergänzt durch ausdifferenzierte Datensätze zur Distribution von Energieeffizienzklassen und regionalen Verteilung von Wohneinheiten. Diese Datenaggregation bildet die Basis für eine detaillierte Analyse der Anfälligkeit verschiedener Immobilienarten und Standorte gegenüber umweltbedingten Wertänderungen, physischen Risiken sowie Transitionsrisiken.
+Im Rahmen dieses Kapitels wird die Methodik zur Generierung eines repräsentativen Musterportfolios erläutert, das als Grundlage für die Prognose klimabedingter Schäden dient. Trotz des umfangreichen Datenbestands der Finanzinstitute über ihre Kreditengagements hat die limitierte Zugänglichkeit zu detaillierten Datensätzen bisher umfassende empirische Analysen der Kreditrisiken eingeschränkt. Zur Überwindung dieser Limitation wird ein Musterportfolio konstruiert, das eine fundierte Approximation der erwarteten Verluste aus Wohnimmobilienkrediten ermöglicht. Die Quantifizierung essenzieller Risikoparameter basiert primär auf dem Geschäftsbericht der Münchener Hypothekenbank \parencite{MuenchenerHyp2023}, ergänzt durch ausdifferenzierte Datensätze zur Distribution von Energieeffizienzklassen und regionalen Verteilung von Wohneinheiten. Diese Datenaggregation bildet die Basis für eine detaillierte Analyse der Anfälligkeit verschiedener Immobilienarten und Standorte gegenüber umweltbedingten Wertänderungen, physischen Risiken sowie Transitionsrisiken. 
 
 
 
@@ -11,7 +11,29 @@ Im Rahmen dieses Kapitels wird die Methodik zur Generierung eines repräsentativ
 \input{chapters/4.2_Geodaten}
 \input{chapters/4.3_Preis}
 \input{chapters/4.4_EPCBayern}
-
+\subsection{Ennergiepreise nach NGFS-Szenarien}\label{sec:ngfs_preis}
+Die Auswertung der Heizenergiekosten imdeutschen Immobilienmark  stützt sich auf Daten aus den \ac{NGFS}-Szenarien und \textcite{imf2022}. Diese vorliegenden Daten bilden die Grundlage für die Prognose der Energiepreisentwicklung unter verschiedenen Klimaszenarien. Im Net Zero 2050 Szenario zeigen sich moderate Preissteigerungen für Öl, Gas und CO\textsubscript{2} Preis im nächsten Jahrzehnt. Ölpreise steigen aufgrund höherer Förderkosten, während Gaspreise schneller steigen, bedingt durch eine anhaltend starke Nachfrage. Die Preise für Emissionen dienen als wichtiger Indikator für das Transitionsrisiko. Es wird deutlich, dass höhere Emissionspreise mittelfristig nötig sind, insbesondere wenn Klimaschutzmaßnahmen verzögert umgesetzt werden.
+Die Entwicklung der Preise für Öl, Gas und CO\textsubscript{2}-Emissionen nach NGFS-Szenarien wird in Abbildung \ref{fig:ngfs_preis} visualisiert
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}[b]{0.9\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/gasprice.png}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.9\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/Oilprice.png}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.9\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/co2price.png}
+    \end{minipage}
+    \caption{Energiepreise nach NGFS-Szenarien. Quelle: Eigeine Darstellung}
+    \label{fig:ngfs_preis}
+\end{figure}
+\FloatBarrier
 \subsection{Übersicht über das Hypothekenportfolio}
 Nachdem alle genannten Schritte der Datenanalyse abgeschlossen waren, wurde ein realistisches Portfolio von Hypotheken-Immobilien erstellt. Die in Tabelle \ref{tab:objekt-variablen} beschriebenen Objektvariablen bilden die Grundlage. Sie dienen der Berechnung physischer Risiken und Transitionsrisiken im nächsten Abschnitt.
 \begin{table}[htbp]

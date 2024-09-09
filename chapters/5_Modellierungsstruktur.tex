@@ -110,28 +110,7 @@ P_t = (1 + \tau_t) \cdot [\omega^O \cdot (\frac{\kappa^O \cdot T^{CO2}_t}{1000} 
 \end{equation}
 Hierbei ist $P_t$ der Endpreis der Energie, $\tau_t$ die Mehrwert- und Energiesteuer, $\omega^O$ der Anteil von Öl am Energiemix (35\%), $P^O_t$ und $P^G_t$ die Rohstoffpreise von Öl und Gas in Dollar, $T^{CO2}_t$ die CO\textsubscript{2}-Steuer, $E_t$ der Wechselkurs Dollar/Euro, $\kappa^O$ und $\kappa^G$ die CO\textsubscript{2}-Emissionsfaktoren für Öl und Gas, und $\gamma$ der Umrechnungsfaktor von Barrel Öläquivalent zu kWh. Wichtige Konstanten aus dem Anhang B [S. 15] sind: $\kappa^O = 0,287$ kg CO\textsubscript{2}/kWh für Öl, $\kappa^G = 0,238$ kg CO\textsubscript{2}/kWh für Gas, und $\gamma = 1700$ kWh/BOE \parencite{tergerman}. 
 
-Die Daten für $P^O_t$, $P^G_t$ und $T^{CO2}_t$  stammen aus den NGFS-Szenarien und \textcite{imf2022} und werden in Abbildung \ref{fig:ngfs_preis} visualisiert.
-
-\begin{figure}[htbp]
-    \centering
-    \begin{minipage}[b]{0.8\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{figures/gasprice.png}
-    \end{minipage}
-    \hfill
-    \begin{minipage}[b]{0.8\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{figures/Oilprice.png}
-    \end{minipage}
-    \hfill
-    \begin{minipage}[b]{0.8\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{figures/co2price.png}
-    \end{minipage}
-    \caption{Energiepreise nach NGFS-Szenarien. Quelle: Eigeine Darstellung}
-    \label{fig:ngfs_preis}
-\end{figure}
-\FloatBarrier
+Die Daten für $P^O_t$, $P^G_t$ und $T^{CO2}_t$ entstammen den im Abschnitt \ref{sec:ngfs_preis} beschriebenen Datenquellen.
 Abbildung \ref{fig:endpreis_energie} zeigt das Resultat der Gleichung \ref{eq:pt} bezüglich des Endpreises für Energie, unter Berücksichtigung der Mehrwert- und Energiesteuern gemäß den NGFS-Szenarien.
 
 \begin{figure}[htbp]
