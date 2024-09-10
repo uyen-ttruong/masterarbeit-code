@@ -99,7 +99,7 @@ def main(input_string):
         print(f"Tọa độ chuyển đổi (EPSG:25832): Easting (x): {x:.2f}, Northing (y): {y:.2f}")
         
         # DGM processing
-        meta4_file = r"C:\Users\uyen truong\Downloads\09161000.meta4"
+        meta4_file = r"C:\Users\uyen truong\Downloads\landshut.meta4"
         dgm_url = get_dgm_url_from_meta4(meta4_file)
         print(f"URL của DGM: {dgm_url}")
         
@@ -112,8 +112,8 @@ def main(input_string):
         print(f"Phạm vi DGM: {bounds}")
         
         # Thông tin từ trạm Pegel
-        pegelstand_cm = 660  # Giả sử Pegelstand là 660 cm
-        pegelnullpunkt_m = 360  # Pegelnullpunkt từ thông tin đã cung cấp
+        pegelstand_cm = 380  # Giả sử Pegelstand là 660 cm
+        pegelnullpunkt_m = 389 # Pegelnullpunkt từ thông tin đã cung cấp
         
         # Tính toán mực nước tuyệt đối
         absolute_water_level = calculate_absolute_water_level(pegelstand_cm, pegelnullpunkt_m)
@@ -140,5 +140,5 @@ def main(input_string):
             print("File tạm đã được xóa")
 
 if __name__ == "__main__":
-    input_string = "latitude;longitude;48.70663137761434,11.43284127849265"
+    input_string = "latitude;longitude;48.58722639452854,12.271763451420263"
     main(input_string)

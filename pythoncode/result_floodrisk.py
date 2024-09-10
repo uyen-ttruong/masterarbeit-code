@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 # Đọc dữ liệu
-df = pd.read_csv('data/hypothekendaten3.csv', delimiter=';')
+df = pd.read_csv('data/hypothekendaten4.csv', delimiter=';')
 
 # In ra tên các cột trong dữ liệu
 print("Các cột trong dữ liệu:")
@@ -46,7 +46,7 @@ def get_neue_risikogewicht(ltv):
         return 0.70
 
 # Hàm tính toán các giá trị
-def calculate_values(row, T=30):
+def calculate_values(row, T=20):
     E_j = row['aktueller_immobilienwert']
     schadenfaktor = row['Schadensfaktor']
     p_I_ij = row['AEP'] if 'AEP' in row.index else 0.01

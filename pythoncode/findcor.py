@@ -7,6 +7,7 @@ import tempfile
 import os
 import math
 import csv
+from collections import defaultdict
 
 def get_dgm_url_from_meta4(meta4_file):
     tree = ET.parse(meta4_file)
@@ -35,22 +36,16 @@ def load_dgm(file_path):
 
 def get_elevation_at_point(x, y, elevation, transform, src_crs, dst_crs, bounds):
     try:
-        # Chuyển đổi tọa độ nếu cần
         if src_crs != dst_crs:
             transformer = Transformer.from_crs(src_crs, dst_crs, always_xy=True)
             x, y = transformer.transform(x, y)
         
-        # Kiểm tra xem tọa độ có nằm trong phạm vi DGM không
         if not (bounds.left <= x < bounds.right and bounds.bottom <= y < bounds.top):
             return None
         
-        # Chuyển đổi tọa độ thực tế sang chỉ số pixel
         col, row = ~transform * (x, y)
-        
-        # Làm tròn chỉ số pixel
         row, col = int(round(row)), int(round(col))
         
-        # Kiểm tra chỉ số pixel có nằm trong phạm vi của mảng elevation
         if 0 <= row < elevation.shape[0] and 0 <= col < elevation.shape[1]:
             return elevation[row, col]
         else:
@@ -63,24 +58,23 @@ def calculate_absolute_water_level(pegelstand_cm, pegelnullpunkt_m):
     return pegelnullpunkt_m + (pegelstand_cm / 100)
 
 def calculate_flood_depth(ground_elevation, water_level):
-    if ground_elevation is None:
+    if ground_elevation is None or np.isnan(ground_elevation):
         return None
-    return max(water_level - ground_elevation, 0)
+    depth = water_level - ground_elevation
+    return round(max(depth, 0), 2)  # Làm tròn đến 2 chữ số thập phân
 
 def convert_coordinates(latitude, longitude, from_epsg=4326, to_epsg=25832):
-    """Chuyển đổi tọa độ từ hệ WGS 84 (EPSG:4326) sang UTM32 (EPSG:25832)"""
     transformer = Transformer.from_crs(f"EPSG:{from_epsg}", f"EPSG:{to_epsg}", always_xy=True)
     easting, northing = transformer.transform(longitude, latitude)
     return easting, northing
 
 def reverse_convert_coordinates(easting, northing, from_epsg=25832, to_epsg=4326):
-    """Chuyển đổi tọa độ từ UTM32 (EPSG:25832) sang WGS 84 (EPSG:4326)"""
     transformer = Transformer.from_crs(f"EPSG:{from_epsg}", f"EPSG:{to_epsg}", always_xy=True)
     longitude, latitude = transformer.transform(easting, northing)
     return latitude, longitude
 
-def scan_flood_depths(elevation, transform, dgm_crs, bounds, pegelstand_cm, pegelnullpunkt_m, step=1):
-    flood_points = []
+def scan_flood_depths(elevation, transform, dgm_crs, bounds, pegelstand_cm, pegelnullpunkt_m, step=10):
+    flood_points = defaultdict(list)
     rows, cols = elevation.shape
     absolute_water_level = calculate_absolute_water_level(pegelstand_cm, pegelnullpunkt_m)
 
@@ -90,22 +84,38 @@ def scan_flood_depths(elevation, transform, dgm_crs, bounds, pegelstand_cm, pege
             point_elevation = elevation[row, col]
             flood_depth = calculate_flood_depth(point_elevation, absolute_water_level)
             
-            if flood_depth > 0.5:  # Chỉ lấy các điểm có độ sâu nước lũ lớn hơn 0,5 mét
+            if flood_depth is not None and flood_depth > 0.5:
                 lat, lon = reverse_convert_coordinates(x, y)
-                flood_points.append((lat, lon, flood_depth))
+                flood_points[flood_depth].append((lat, lon))
 
     return flood_points
 
-def write_to_csv(flood_points, filename):
+def write_to_csv(flood_points, filename, min_depth=0.1, max_depth=4.0, num_values=5):
+    # Lọc các điểm nằm trong khoảng độ sâu cho phép
+    valid_depths = [depth for depth in flood_points.keys() if min_depth <= depth <= max_depth]
+    
+    if len(valid_depths) < num_values:
+        print(f"Cảnh báo: Chỉ có {len(valid_depths)} giá trị độ sâu trong khoảng {min_depth}m - {max_depth}m")
+        selected_depths = valid_depths
+    else:
+        # Chọn num_values giá trị đều nhau trong khoảng độ sâu
+        step = (len(valid_depths) - 1) / (num_values - 1)
+        indices = [int(round(i * step)) for i in range(num_values)]
+        selected_depths = [valid_depths[i] for i in indices]
+
     with open(filename, 'w', newline='') as csvfile:
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(['Latitude', 'Longitude', 'Flood Depth (m)'])
-        for point in flood_points:
-            csvwriter.writerow(point)
+        
+        for depth in selected_depths:
+            for lat, lon in flood_points[depth]:
+                csvwriter.writerow([lat, lon, depth])
+
+    return selected_depths
 
 def main():
     try:
-        meta4_file = r"C:\Users\uyen truong\Downloads\09161000.meta4"
+        meta4_file = r"C:\Users\uyen truong\Downloads\neulm.meta4"
         dgm_url = get_dgm_url_from_meta4(meta4_file)
         print(f"URL của DGM: {dgm_url}")
         
@@ -118,21 +128,26 @@ def main():
         print(f"Phạm vi DGM: {bounds}")
         
         # Thông tin từ trạm Pegel
-        pegelstand_cm = 660  # Giả sử Pegelstand là 660 cm
-        pegelnullpunkt_m = 360  # Pegelnullpunkt từ thông tin đã cung cấp
+        pegelstand_cm = 800
+        pegelnullpunkt_m = 372
         
         flood_points = scan_flood_depths(elevation, transform, dgm_crs, bounds, pegelstand_cm, pegelnullpunkt_m)
         
-        csv_filename = 'flood_points_ingolstadt.csv'
-        write_to_csv(flood_points, csv_filename)
+        print(f"Số lượng độ sâu nước lũ duy nhất: {len(flood_points)}")
         
-        print(f"\nĐã xuất {len(flood_points)} điểm có độ sâu nước lũ lớn hơn 0,5 mét ra file {csv_filename}")
+        csv_filename = 'flood_points_MuehldorfaInncsv'
+        selected_depths = write_to_csv(flood_points, csv_filename, min_depth=0.5, max_depth=4.0, num_values=5)
+        
+        print("\nCác giá trị độ sâu nước lũ được chọn:")
+        for depth in selected_depths:
+            print(f"{depth} m: {len(flood_points[depth])} điểm")
+        
+        print(f"\nĐã xuất các điểm có độ sâu nước lũ ra file {csv_filename}")
 
     except Exception as e:
         print(f"Đã xảy ra lỗi trong main: {str(e)}")
     
     finally:
-        # Xóa file tạm sau khi sử dụng
         if 'dgm_file' in locals():
             os.unlink(dgm_file)
             print("File tạm đã được xóa")
