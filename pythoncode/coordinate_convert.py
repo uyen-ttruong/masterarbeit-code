@@ -10,8 +10,8 @@ def convert_coordinates(easting, northing, from_epsg=3035, to_epsg=25832):
     return easting_converted, northing_converted
 
 # Tọa độ đầu vào (EPSG:3035)
-easting_3035 = 4418843.632852452  # x
-northing_3035 = 2848249.605135949  # y
+easting_3035 =   4425682.23 # x11.875082552281812
+northing_3035 =  2850766.10  # y
 
 # Chuyển đổi tọa độ
 easting_25832, northing_25832 = convert_coordinates(easting_3035, northing_3035)

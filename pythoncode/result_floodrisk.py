@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 # Đọc dữ liệu
-df = pd.read_csv('data/hypothekendaten2.csv', delimiter=';')
+df = pd.read_csv('data/hypothekendaten3.csv', delimiter=';')
 
 # In ra tên các cột trong dữ liệu
 print("Các cột trong dữ liệu:")
@@ -16,7 +16,7 @@ def flexible_numeric_conversion(series):
         return pd.to_numeric(series.str.replace(',', '.'), errors='coerce')
 
 # Chuyển đổi các cột sang dạng số
-numeric_columns = ['aktuelles_LtV', 'darlehenbetrag', 'aktueller_immobilienwert', 'Schadensfaktor', 'AEP']
+numeric_columns = ['aktuelles_LtV', 'darlehenbetrag', 'aktueller_immobilienwert', 'Schadensfaktor', 'AEP', 'Risikogewicht']
 for col in numeric_columns:
     if col in df.columns:
         df[col] = flexible_numeric_conversion(df[col])
@@ -29,6 +29,21 @@ for col in numeric_columns:
 
 # Loại bỏ các hàng có giá trị NaN
 df = df.dropna(subset=[col for col in numeric_columns if col in df.columns])
+
+# Hàm xác định giá trị neue Risikogewicht dựa trên Neue LtV
+def get_neue_risikogewicht(ltv):
+    if ltv <= 0.50:
+        return 0.20
+    elif 0.50 < ltv <= 0.60:
+        return 0.25
+    elif 0.60 < ltv <= 0.80:
+        return 0.30
+    elif 0.80 < ltv <= 0.90:
+        return 0.40
+    elif 0.90 < ltv <= 1.00:
+        return 0.50
+    else:
+        return 0.70
 
 # Hàm tính toán các giá trị
 def calculate_values(row, T=30):
@@ -51,13 +66,14 @@ def calculate_values(row, T=30):
     # Tính LtV mới (Công thức 5)
     new_LtV = row['darlehenbetrag'] / new_immobilienwert if new_immobilienwert > 0 else np.inf
     
-    # Tính RWA (Công thức 6)
-    risk_weight = 0.5 if new_LtV < 0.8 else 1.0
-    new_RWA = row['darlehenbetrag'] * risk_weight
+    # Xác định neue Risikogewicht dựa trên LtV mới
+    neue_risikogewicht = get_neue_risikogewicht(new_LtV)
+    
+    # Tính RWA mới dựa trên neue Risikogewicht
+    new_RWA = row['darlehenbetrag'] * neue_risikogewicht
     
     # Tính % thay đổi RWA (Công thức 7)
-    old_risk_weight = 0.5 if row['aktuelles_LtV'] < 0.8 else 1.0
-    old_RWA = row['darlehenbetrag'] * old_risk_weight
+    old_RWA = row['darlehenbetrag'] * row['Risikogewicht']
     RWA_change = (new_RWA / old_RWA) - 1 if old_RWA > 0 else np.inf
     
     return pd.Series({
@@ -66,6 +82,7 @@ def calculate_values(row, T=30):
         'EI': EI,
         'Neuer Immobilienwert': new_immobilienwert,
         'Neue LtV': new_LtV,
+        'Neue Risikogewicht': neue_risikogewicht,
         'Neue RWA': new_RWA,
         'RWA Änderung': RWA_change
     })
@@ -78,12 +95,10 @@ df_results = pd.concat([df, results], axis=1)
 
 # In thông tin thống kê về kết quả tính toán
 print("\nThông tin về kết quả tính toán:")
-for col in ['Immobilienschaden', 'EAI', 'EI', 'Neuer Immobilienwert', 'Neue LtV', 'Neue RWA', 'RWA Änderung']:
+for col in ['Immobilienschaden', 'EAI', 'EI', 'Neuer Immobilienwert', 'Neue LtV', 'Neue Risikogewicht', 'Neue RWA', 'RWA Änderung']:
     print(f"\nThông tin về cột '{col}':")
     print(df_results[col].describe())
 
-# # In một số hàng đầu tiên của kết quả để kiểm tra
-# print("\nNăm hàng đầu tiên của kết quả:")
-# print(df_results.head())
+
 df_results.to_csv('immobilien_analyse_ergebnisse.csv', index=False, decimal=',')
 print("\nĐã lưu kết quả vào file 'immobilien_analyse_ergebnisse.csv'")

@@ -6,6 +6,8 @@ from pyproj import Transformer, CRS
 import tempfile
 import os
 import math
+import csv
+from collections import defaultdict
 
 def get_dgm_url_from_meta4(meta4_file):
     tree = ET.parse(meta4_file)
@@ -34,60 +36,75 @@ def load_dgm(file_path):
 
 def get_elevation_at_point(x, y, elevation, transform, src_crs, dst_crs, bounds):
     try:
-        # Chuyển đổi tọa độ nếu cần
         if src_crs != dst_crs:
             transformer = Transformer.from_crs(src_crs, dst_crs, always_xy=True)
             x, y = transformer.transform(x, y)
-        print(f"Tọa độ sử dụng: x={x}, y={y}")
         
-        # Kiểm tra xem tọa độ có nằm trong phạm vi DGM không
-        if not (bounds.left <= x <= bounds.right and bounds.bottom <= y <= bounds.top):
-            print(f"Lỗi: Tọa độ nằm ngoài phạm vi DGM.")
-            print(f"Tọa độ: ({x}, {y})")
-            print(f"Phạm vi DGM: {bounds}")
-            print(f"Vui lòng chọn tọa độ trong phạm vi: X({bounds.left} đến {bounds.right}), Y({bounds.bottom} đến {bounds.top})")
+        if not (bounds.left <= x < bounds.right and bounds.bottom <= y < bounds.top):
             return None
         
-        # Chuyển đổi tọa độ thực tế sang chỉ số pixel
-        row, col = ~transform * (x, y)
+        col, row = ~transform * (x, y)
+        row, col = int(round(row)), int(round(col))
         
-        # Kiểm tra NaN hoặc inf trước khi chuyển đổi sang int
-        if math.isnan(row) or math.isnan(col) or math.isinf(row) or math.isinf(col):
-            print(f"Cảnh báo: Tọa độ chuyển đổi không hợp lệ. row={row}, col={col}")
-            return None
-        
-        row, col = int(row), int(col)
-        print(f"Chỉ số pixel: row={row}, col={col}")
-        
-        # Lấy giá trị độ cao
         if 0 <= row < elevation.shape[0] and 0 <= col < elevation.shape[1]:
             return elevation[row, col]
         else:
-            print(f"Cảnh báo: Chỉ số nằm ngoài phạm vi DGM. row={row}, col={col}")
             return None
     except Exception as e:
         print(f"Lỗi trong get_elevation_at_point: {str(e)}")
         return None
 
 def calculate_absolute_water_level(pegelstand_cm, pegelnullpunkt_m):
-    """
-    Tính toán mực nước tuyệt đối dựa trên Pegelstand và Pegelnullpunkt.
-    
-    :param pegelstand_cm: Pegelstand (cm)
-    :param pegelnullpunkt_m: Pegelnullpunkt (m NHN)
-    :return: Mực nước tuyệt đối (m NHN)
-    """
     return pegelnullpunkt_m + (pegelstand_cm / 100)
 
 def calculate_flood_depth(ground_elevation, water_level):
-    if ground_elevation is None:
+    if ground_elevation is None or np.isnan(ground_elevation):
         return None
-    return max(water_level - ground_elevation, 0)
+    depth = water_level - ground_elevation
+    return round(max(depth, 0), 2)  # Làm tròn đến 2 chữ số thập phân
+
+def convert_coordinates(latitude, longitude, from_epsg=4326, to_epsg=25832):
+    transformer = Transformer.from_crs(f"EPSG:{from_epsg}", f"EPSG:{to_epsg}", always_xy=True)
+    easting, northing = transformer.transform(longitude, latitude)
+    return easting, northing
+
+def reverse_convert_coordinates(easting, northing, from_epsg=25832, to_epsg=4326):
+    transformer = Transformer.from_crs(f"EPSG:{from_epsg}", f"EPSG:{to_epsg}", always_xy=True)
+    longitude, latitude = transformer.transform(easting, northing)
+    return latitude, longitude
+
+def scan_flood_depths(elevation, transform, dgm_crs, bounds, pegelstand_cm, pegelnullpunkt_m, step=10):
+    flood_points = defaultdict(list)
+    rows, cols = elevation.shape
+    absolute_water_level = calculate_absolute_water_level(pegelstand_cm, pegelnullpunkt_m)
+
+    for row in range(0, rows, step):
+        for col in range(0, cols, step):
+            x, y = transform * (col, row)
+            point_elevation = elevation[row, col]
+            flood_depth = calculate_flood_depth(point_elevation, absolute_water_level)
+            
+            if flood_depth is not None and flood_depth > 0.5:
+                lat, lon = reverse_convert_coordinates(x, y)
+                flood_points[flood_depth].append((lat, lon))
+
+    return flood_points
+
+def write_to_csv(flood_points, filename, max_unique_depths=20):
+    sorted_depths = sorted(flood_points.keys(), reverse=True)
+    unique_depths = sorted_depths[:max_unique_depths]
+
+    with open(filename, 'w', newline='') as csvfile:
+        csvwriter = csv.writer(csvfile)
+        csvwriter.writerow(['Latitude', 'Longitude', 'Flood Depth (m)'])
+        
+        for depth in unique_depths:
+            for lat, lon in flood_points[depth]:
+                csvwriter.writerow([lat, lon, depth])
 
 def main():
-    meta4_file = r"C:\Users\uyen truong\Downloads\ingolstadt.meta4"
-    
     try:
+        meta4_file = r"C:\Users\uyen truong\Downloads\09161000.meta4"
         dgm_url = get_dgm_url_from_meta4(meta4_file)
         print(f"URL của DGM: {dgm_url}")
         
@@ -97,35 +114,28 @@ def main():
         elevation, transform, dgm_crs, bounds = load_dgm(dgm_file)
         print(f"DGM đã được tải. Kích thước: {elevation.shape}")
         print(f"Hệ tọa độ của DGM: {dgm_crs}")
-        
-        # Sử dụng tọa độ nằm trong phạm vi DGM (EPSG:25832)
-        x, y = 678501.30, 5397001.66  # Tọa độ đã được tính toán
-        print(f"Tọa độ đầu vào (EPSG:25832): x={x}, y={y}")
+        print(f"Phạm vi DGM: {bounds}")
         
         # Thông tin từ trạm Pegel
-        pegelstand_cm = 620  # Giả sử Pegelstand là 150 cm
-        pegelnullpunkt_m = 360.30   # Pegelnullpunkt từ thông tin đã cung cấp (360,30 m NHN)
+        pegelstand_cm = 660
+        pegelnullpunkt_m = 360
         
-        # Tính toán mực nước tuyệt đối
-        absolute_water_level = calculate_absolute_water_level(pegelstand_cm, pegelnullpunkt_m)
+        flood_points = scan_flood_depths(elevation, transform, dgm_crs, bounds, pegelstand_cm, pegelnullpunkt_m)
         
-        point_elevation = get_elevation_at_point(x, y, elevation, transform, dgm_crs, dgm_crs, bounds)
+        print(f"Số lượng độ sâu nước lũ duy nhất: {len(flood_points)}")
+        print("5 giá trị độ sâu nước lũ lớn nhất:")
+        for depth in sorted(flood_points.keys(), reverse=True)[:5]:
+            print(f"{depth} m: {len(flood_points[depth])} điểm")
         
-        if point_elevation is not None:
-            flood_depth = calculate_flood_depth(point_elevation, absolute_water_level)
-            print(f"Độ cao địa hình: {point_elevation:.2f} m NHN")
-            print(f"Pegelstand: {pegelstand_cm} cm")
-            print(f"Pegelnullpunkt: {pegelnullpunkt_m:.2f} m NHN")
-            print(f"Mực nước tuyệt đối: {absolute_water_level:.2f} m NHN")
-            print(f"Độ sâu nước lũ: {flood_depth:.2f} m")
-        else:
-            print("Không thể xác định độ cao tại điểm này.")
-    
+        csv_filename = 'flood_points_ingolstadt.csv'
+        write_to_csv(flood_points, csv_filename)
+        
+        print(f"\nĐã xuất các điểm có độ sâu nước lũ ra file {csv_filename}")
+
     except Exception as e:
         print(f"Đã xảy ra lỗi trong main: {str(e)}")
     
     finally:
-        # Xóa file tạm sau khi sử dụng
         if 'dgm_file' in locals():
             os.unlink(dgm_file)
             print("File tạm đã được xóa")
