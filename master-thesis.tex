@@ -1,7 +1,6 @@
 % **************************************************
 % Document class
 % **************************************************
-% cSpell:disable
 \documentclass[
     a4paper,
     12pt,
@@ -9,7 +8,7 @@
     listof=totoc,
     titlepage,
     footheight=19.28502pt,
-    headsepline  % Thêm đường gạch chân cho tiêu đề
+    headsepline  % Add underline for header
 ]{scrartcl}
 
 % **************************************************
@@ -18,20 +17,6 @@
 
 \usepackage{settings}
 \usepackage{bookmark}
-% Tùy chỉnh tiêu đề trang
-%\usepackage[automark]{scrlayer-scrpage}
-%\clearpairofpagestyles
-%\chead{\upshape\headmark} % Tiêu đề ở giữa, không nghiêng
-%%\ohead{\pagemark} % Số trang ở góc ngoài bên phải
-
-% Đặt font chữ thẳng cho tiêu đề
-%\setkomafont{pageheadfoot}{\normalfont}
-%\setkomafont{pagenumber}{\normalfont}
-
-% Tùy chỉnh tiêu đề trang (nếu cần)
-\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
-\renewcommand{\subsectionmark}[1]{\markright{#1}}
-\renewcommand{\figurename}{Abbildung}
 
 % **************************************************
 % Additional Biblatex configuration
@@ -57,39 +42,60 @@
 % **************************************************
 
 \begin{document}
-
+% Title page without number
 \input{pages/title}
+\thispagestyle{empty}
 
+% Explicitly set page numbering for abstract
+\cleardoublepage
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+% Add abstract to table of contents and number it
+\addcontentsline{toc}{section}{Abstract}
+\KOMAoptions{headsepline=false}
+\cfoot*{\pagemark}
+{
 \input{pages/abstract}
+}
+\cleardoublepage
 
+\KOMAoptions{headsepline=true}
 \tableofcontents
+\cleardoublepage
 
-\clearpage
 \listoffigures
+\cleardoublepage
 
-\clearpage
 \listoftables
+\cleardoublepage
 
-\clearpage
-\lstlistoflistings
 
-\clearpage
+% Add the Abkürzungsverzeichnis to the table of contents manually
+\addcontentsline{toc}{section}{Abkürzungsverzeichnis}
+\section*{Abkürzungsverzeichnis}
 \input{pages/acronyms}
+\cleardoublepage
 
-\clearpage
+% Switch to Arabic numbering from the first chapter
+\pagenumbering{arabic}
+
 \input{chapters/1_introduction}
 
 \input{chapters/3_Theoretischer Hintergrund}
-\clearpage
+\cleardoublepage
 \input{chapters/4_Porfolio preparation}
-\clearpage
+\cleardoublepage
 \input{chapters/5_Methodik}
-
-\clearpage
+\cleardoublepage
 \input{chapters/6_Result}
-\clearpage
-\printbibliography[title=Literaturverzeichnis,heading=bibintoc]
 
+% Switch back to Roman numbering for References
+\cleardoublepage
+% Continue Roman numbering from where it left off
+\pagenumbering{roman}
 
+% Print bibliography
+\printbibliography[title=Literaturverzeichnis]
 
 \end{document}

@@ -79,7 +79,6 @@
 % Source code formatting
 % **************************************************
 \renewcommand\lstlistingname{Quellcode}
-\renewcommand\lstlistlistingname{Quellcodeverzeichnis}
 
 \lstset{%
     backgroundcolor=\color{white},
@@ -100,12 +99,17 @@
 % **************************************************
 % Header and footer
 % **************************************************
-\usepackage{scrlayer-scrpage}
+\usepackage[automark]{scrlayer-scrpage}
 \clearpairofpagestyles
+\cfoot*{\pagemark}  % Đặt số trang ở giữa cuối trang
 \ihead{\leftmark}
-\ohead{\thepage}
+\ohead{}
 \ifoot{}
 \ofoot{}
+
+% Đặt font chữ thẳng cho tiêu đề và số trang
+\setkomafont{pageheadfoot}{\normalfont}
+\setkomafont{pagenumber}{\normalfont}
 
 % **************************************************
 % Miscellaneous
@@ -118,5 +122,29 @@
 % Custom Settings
 % **************************************************
 \renewcommand{\figurename}{Abbildung}  % Change "Figure" to "Abbildung"
+
+% Abstract page style
+\DeclareNewLayer[
+  foreground,
+  foot,
+  contents={\pagemark}
+]{abstractfoot}
+
+\newpairofpagestyles{abstract}{
+  \KOMAoptions{headsepline=false}
+  \clearpairofpagestyles
+  \cfoot*{\pagemark}
+}
+
+% Normal page style
+\newpairofpagestyles{normal}{
+  \KOMAoptions{headsepline=true}
+  \ihead{\leftmark}
+  \ohead{}
+  \cfoot*{\pagemark}
+}
+
+% Use normal page style by default
+\pagestyle{normal}
 
 % ... other custom settings ...
