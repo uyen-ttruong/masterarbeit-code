@@ -28,12 +28,6 @@ for col in numeric_columns:
     if col in df.columns:
         df[col] = df[col].apply(lambda x: flexible_numeric_conversion(x))
 
-# In thông tin về các cột số sau khi chuyển đổi
-for col in numeric_columns:
-    if col in df.columns:
-        print(f"\nThông tin về cột '{col}':")
-        print(df[col].describe())
-
 # Loại bỏ các hàng có giá trị NaN
 df = df.dropna(subset=[col for col in numeric_columns if col in df.columns])
 
@@ -100,25 +94,30 @@ results = df.apply(calculate_values, axis=1)
 # Kết hợp kết quả với DataFrame gốc
 df_results = pd.concat([df, results], axis=1)
 
-# In thông tin thống kê về kết quả tính toán
-print("\nThông tin về kết quả tính toán:")
-for col in ['Immobilienschaden', 'EAI', 'EI', 'Neuer Immobilienwert', 'Neue LtV', 'Neue Risikogewicht', 'Neue RWA', 'RWA Änderung']:
-    print(f"\nThông tin về cột '{col}':")
-    print(df_results[col].describe())
-
 # Lọc dữ liệu chỉ giữ lại các hàng có Schadensfaktor khác 0
 df_damage = df_results[df_results['Schadensfaktor'] != 0].copy()
-print(df_damage['Immobilienschaden'].describe())
 
 # Diagramm zeichnen
 plt.figure(figsize=(10,6))
 sns.histplot(df_damage['Immobilienschaden'], kde=True, bins=10, color='skyblue')
-plt.axvline(df_damage['Immobilienschaden'].mean(), color='red', linestyle='--', label=f'Mean: {df_damage["Immobilienschaden"].mean():.2f}')
-plt.axvline(df_damage['Immobilienschaden'].median(), color='green', linestyle='-.', label=f'Median: {df_damage["Immobilienschaden"].median():.2f}')
-plt.legend()
-plt.title('Verteilung des Immobilienschadens')
-plt.xlabel('Immobilienschaden')
+
+# Thêm mean và median vào biểu đồ
+mean_value = df_damage['Immobilienschaden'].mean()
+median_value = df_damage['Immobilienschaden'].median()
+
+plt.axvline(mean_value, color='red', linestyle='--', label=f'Mean: {mean_value:.2f} €')
+plt.axvline(median_value, color='green', linestyle='-.', label=f'Median: {median_value:.2f} €')
+
+# Đặt nhãn cho trục X và Y
+plt.xlabel('Immobilienschaden (€)')
 plt.ylabel('Häufigkeit')
+plt.title('Verteilung des Immobilienschadens')
+
+# Định dạng các giá trị trục X để thêm ký hiệu €
+x_values = plt.gca().get_xticks()
+plt.gca().set_xticklabels([f'{int(val):,} €' for val in x_values])
+
 plt.grid(True)
+plt.legend()
 plt.tight_layout()
 plt.show()
