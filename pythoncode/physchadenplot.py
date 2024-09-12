@@ -1,14 +1,9 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 # Đọc dữ liệu từ file CSV
 df = pd.read_csv('data/hypothekendaten4.csv', delimiter=';')
-
-# In ra tên các cột trong dữ liệu
-print("Các cột trong dữ liệu:")
-print(df.columns)
 
 # Hàm chuyển đổi linh hoạt
 def flexible_numeric_conversion(value, decimals=2):
@@ -47,7 +42,7 @@ def get_neue_risikogewicht(ltv):
         return 0.70
 
 # Hàm tính toán các giá trị
-def calculate_values(row, T=20):
+def calculate_values(row):
     E_j = row['aktueller_immobilienwert']
     schadenfaktor = row['Schadensfaktor']
     p_I_ij = row['AEP'] if 'AEP' in row.index else 0.01
@@ -58,32 +53,31 @@ def calculate_values(row, T=20):
     # Tính EAI (Công thức 2)
     EAI = immobilienschaden * p_I_ij
     
-    # Tính EI (Công thức 3)
-    EI = EAI * T
-    
-    # Tính giá trị mới của bất động sản (Công thức 4)
+    # Tính giá trị mới của bất động sản (Công thức 3)
     new_immobilienwert = E_j - immobilienschaden
     
-    # Tính LtV mới (Công thức 5)
+    # Tính LtV mới (Công thức 4)
     new_LtV = row['darlehenbetrag'] / new_immobilienwert if new_immobilienwert > 0 else np.inf
     
     # Xác định neue Risikogewicht dựa trên LtV mới
     neue_risikogewicht = get_neue_risikogewicht(new_LtV)
     
+    # Tính Akt. RWA
+    akt_RWA = row['darlehenbetrag'] * row['Risikogewicht']
+    
     # Tính RWA mới dựa trên neue Risikogewicht
     new_RWA = row['darlehenbetrag'] * neue_risikogewicht
     
-    # Tính % thay đổi RWA (Công thức 7)
-    old_RWA = row['darlehenbetrag'] * row['Risikogewicht']
-    RWA_change = (new_RWA / old_RWA) - 1 if old_RWA > 0 else np.inf
+    # Tính % thay đổi RWA (Công thức 6)
+    RWA_change = (new_RWA / akt_RWA) - 1 if akt_RWA > 0 else np.inf
     
     return pd.Series({
         'Immobilienschaden': immobilienschaden, 
         'EAI': EAI, 
-        'EI': EI, 
         'Neuer Immobilienwert': new_immobilienwert, 
         'Neue LtV': new_LtV, 
         'Neue Risikogewicht': neue_risikogewicht, 
+        'Akt. RWA': akt_RWA,
         'Neue RWA': new_RWA, 
         'RWA Änderung': RWA_change
     })
@@ -97,27 +91,33 @@ df_results = pd.concat([df, results], axis=1)
 # Lọc dữ liệu chỉ giữ lại các hàng có Schadensfaktor khác 0
 df_damage = df_results[df_results['Schadensfaktor'] != 0].copy()
 
-# Diagramm zeichnen
-plt.figure(figsize=(10,6))
-sns.histplot(df_damage['Immobilienschaden'], kde=True, bins=10, color='skyblue')
+# Function to calculate statistics
+def calculate_stats(column):
+    return {
+        'mean': df_damage[column].mean(),
+        'median': df_damage[column].median(),
+        'min': df_damage[column].min(),
+        'max': df_damage[column].max(),
+        'std': df_damage[column].std()
+    }
 
-# Thêm mean và median vào biểu đồ
-mean_value = df_damage['Immobilienschaden'].mean()
-median_value = df_damage['Immobilienschaden'].median()
+# Calculate statistics for relevant columns
+columns_to_analyze = ['aktuelles_LtV', 'Neue LtV', 'aktueller_immobilienwert', 'Neuer Immobilienwert', 'Akt. RWA', 'Neue RWA', 'RWA Änderung']
 
-plt.axvline(mean_value, color='red', linestyle='--', label=f'Mean: {mean_value:.2f} €')
-plt.axvline(median_value, color='green', linestyle='-.', label=f'Median: {median_value:.2f} €')
+stats = {col: calculate_stats(col) for col in columns_to_analyze}
 
-# Đặt nhãn cho trục X và Y
-plt.xlabel('Immobilienschaden (€)')
-plt.ylabel('Häufigkeit')
-plt.title('Verteilung des Immobilienschadens')
+# Print results
+for col, col_stats in stats.items():
+    print(f"\nStatistics for {col}:")
+    for stat, value in col_stats.items():
+        print(f"{stat}: {value:.4f}")
 
-# Định dạng các giá trị trục X để thêm ký hiệu €
-x_values = plt.gca().get_xticks()
-plt.gca().set_xticklabels([f'{int(val):,} €' for val in x_values])
+# Calculate percentage of cases where new values increased
+ltv_increased = (df_damage['Neue LtV'] > df_damage['aktuelles_LtV']).mean() * 100
+immobilienwert_decreased = (df_damage['Neuer Immobilienwert'] < df_damage['aktueller_immobilienwert']).mean() * 100
+rwa_increased = (df_damage['RWA Änderung'] > 0).mean() * 100
 
-plt.grid(True)
-plt.legend()
-plt.tight_layout()
-plt.show()
+print(f"\nPercentage of cases where LtV increased: {ltv_increased:.2f}%")
+print(f"Percentage of cases where Immobilienwert decreased: {immobilienwert_decreased:.2f}%")
+print(f"Percentage of cases where RWA increased: {rwa_increased:.2f}%")
+
