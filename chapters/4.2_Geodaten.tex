@@ -83,10 +83,21 @@ Diese Daten liegen aber im ETRS89-Koordinatensystem vor, während die Hypotheken
 
 \subsubsection{Überflutungstiefen}\label{sec:tief}
 Die Schäden durch Überschwemmungen hängen von der Wassertiefe ab. Tieferes Wasser verursacht meist größere und teurere Schäden an Häusern. Für die Analyse der Überflutungstiefe in Bayern benötigt man Überflutungstiefen-Geodaten. \ac{DGM} Modell beschreibt die Höhe des Bodens, wobei eine hohe Auflösung genaue Ergebnisse liefert \parencite{vermessungsverwaltung2019gelandemodell}. Hochwasserstände aus Messungen sind wichtig für präzise Berechnungen. Dafür wurden Daten vom \textcite{bayern2016hochwassernachrichtendienst} für aktuelle Pegelstände betrachtet. Historische Hochwasserdaten helfen bei Einschätzungen künftiger Ereignisse und sind in Berichten und Karten enthalten. Diese wurden vom \textcite{LfU_Bayern} bezogen, wie in Abschnitt \ref{sec:hochgeo} beschrieben.
-Die \ac{DGM}-Daten von \textcite{vermessungsverwaltung2019gelandemodell} für ganz Bayern umfassen ein sehr großes Datenvolumen von ca. 240 GB. Daher wurden nur Daten für die Gebiete mit Hypotheken-Datenpunkten aus Abschnitt \ref{sec:hypogeo} heruntergeladen. Abbildung \ref{fig:ingolstadt} visualisiert das digitale Geländemodell für Ingolstadt, welches die topographischen Merkmale der Stadt und ihrer Umgebung detailliert darstellt und somit eine wichtige Grundlage für die Hochwasseranalyse bildet.
+Die \ac{DGM}-Daten von \textcite{vermessungsverwaltung2019gelandemodell} für ganz Bayern umfassen ein sehr großes Datenvolumen von ca. 240 GB. Daher wurden nur Daten für die Gebiete mit Hypotheken-Datenpunkten aus Abschnitt \ref{sec:hypogeo} heruntergeladen.
+Die Geländehöhe (m) für bestimmte Koordinaten wird aus dem Höhenraster, das aus der \ac{DGM}-Datei gelesen wurde, extrahiert.
+
+Auf Grundlage der gesammelten Daten können die folgenden Berechnungen durchgeführt werden:
+\begin{equation}
+    \text{Absoluter Wasserstand (m)} = \text{Pegelnullpunkt (m)} + \left(\frac{\text{Pegelstand (cm)}}{100}\right)
+\end{equation}
+
+\begin{equation}
+    \text{Hochwassertiefe (m)} = \max \left( \text{Wasserstand (m)} - \text{Geländehöhe (m)}, 0 \right)
+\end{equation}
+ Abbildung \ref{fig:ingolstadt} visualisiert das digitale Geländemodell für Ingolstadt, welches die topographischen Merkmale der Stadt und ihrer Umgebung detailliert darstellt und somit eine wichtige Grundlage für die Hochwasseranalyse bildet.
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\textwidth]{figures/dgm_3d_wireframe_ingolstadt.png}
+    \includegraphics[width=0.8\textwidth]{figures/dgm_3d_wireframe_ingolstadt.png}
     \caption{Digital Geländemodell von Ingolstadt. Quelle: Eigene Darstellung}
     \label{fig:ingolstadt}
 \end{figure}

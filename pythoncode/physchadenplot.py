@@ -1,68 +1,124 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-def csv_datei_lesen(dateipfad):
-    try:
-        df = pd.read_csv(dateipfad)
-    except pd.errors.ParserError:
+# Đọc dữ liệu từ file CSV
+df = pd.read_csv('data/hypothekendaten4.csv', delimiter=';')
+
+# In ra tên các cột trong dữ liệu
+print("Các cột trong dữ liệu:")
+print(df.columns)
+
+# Hàm chuyển đổi linh hoạt
+def flexible_numeric_conversion(value, decimals=2):
+    if isinstance(value, str):
         try:
-            df = pd.read_csv(dateipfad, sep=';')
-        except pd.errors.ParserError:
-            df = pd.read_csv(dateipfad, error_bad_lines=False, warn_bad_lines=True)
-    return df
+            return round(float(value.replace(',', '.')), decimals)
+        except ValueError:
+            return np.nan
+    elif isinstance(value, (int, float)):
+        return round(value, decimals)
+    else:
+        return np.nan
 
-def hochwasserrisiko_analysieren(df):
-    hochwasserrisiko_zaehlung = df['flood_risk'].value_counts()
-    
-    print("\nAnalyse des Hochwasserrisikos:")
-    for risiko, anzahl in hochwasserrisiko_zaehlung.items():
-        print(f"   Anzahl flood_risk = {risiko}: {anzahl}")
-    
-    return hochwasserrisiko_zaehlung
+# Chuyển đổi các cột sang dạng số
+numeric_columns = ['aktuelles_LtV', 'darlehenbetrag', 'aktueller_immobilienwert', 'Schadensfaktor', 'AEP', 'Risikogewicht', 'Ueberschwemmungstiefe', 'Quadratmeterpreise', 'wohnflaeche']
+for col in numeric_columns:
+    if col in df.columns:
+        df[col] = df[col].apply(lambda x: flexible_numeric_conversion(x))
 
-def hochwasserrisiko_plotten(hochwasserrisiko_zaehlung):
-    # Sortiere die Daten in der gewünschten Reihenfolge
-    sortierte_daten = hochwasserrisiko_zaehlung.reindex(['high', 'medium', 'low', 'very low'])
-    
-    plt.figure(figsize=(12, 8))
-    
-    # Erstelle einen Balkendiagramm mit logarithmischer y-Achse
-    ax = sortierte_daten.plot(kind='bar', log=True, color=['red', 'orange', 'yellow', 'green'], edgecolor='black')
-    
-    plt.title('Verteilung des Hochwasserrisikos im Hypothekenportfolio', fontsize=16)
-    plt.xlabel('Risikostufen', fontsize=14)
-    plt.ylabel('Anzahl', fontsize=14)
-    plt.xticks(rotation=0, fontsize=12)
-    
-    # Setze die y-Achse auf einen minimalen Wert von 1 (10^0)
-    plt.ylim(bottom=1, top=sortierte_daten.max()*1.1)
-    
-    # Anpassen der y-Achsen-Beschriftungen
-    y_ticks = [1, 10, 100, 1000, 10000]
-    plt.yticks(y_ticks, [f'{y:,}' for y in y_ticks], fontsize=12)
-    
-    # Füge Werte über den Balken hinzu
-    for i, v in enumerate(sortierte_daten):
-        ax.text(i, v, f'{v:,}', ha='center', va='bottom', fontsize=10, fontweight='bold')
-    
-    # Füge ein Gitternetz hinzu
-    plt.grid(axis='y', linestyle='--', alpha=0.7)
-    
-    plt.tight_layout()
-    plt.savefig('hochwasserrisiko_verteilung_optimiert.png', dpi=300, bbox_inches='tight')
-    plt.close()
+# In thông tin về các cột số sau khi chuyển đổi
+for col in numeric_columns:
+    if col in df.columns:
+        print(f"\nThông tin về cột '{col}':")
+        print(df[col].describe())
 
-def main():
-    dateipfad = 'data/hypothekendaten4.csv'
-    
-    try:
-        df = csv_datei_lesen(dateipfad)
-        hochwasserrisiko_zaehlung = hochwasserrisiko_analysieren(df)
-        hochwasserrisiko_plotten(hochwasserrisiko_zaehlung)
-        print("\nDas optimierte Diagramm der Hochwasserrisikoverteilung wurde unter dem Namen 'hochwasserrisiko_verteilung_optimiert.png' gespeichert.")
-    except Exception as e:
-        print(f"Ein Fehler ist aufgetreten: {str(e)}")
+# Loại bỏ các hàng có giá trị NaN
+df = df.dropna(subset=[col for col in numeric_columns if col in df.columns])
 
-if __name__ == "__main__":
-    main()
+# Hàm xác định giá trị neue Risikogewicht dựa trên Neue LtV
+def get_neue_risikogewicht(ltv):
+    if ltv <= 0.50:
+        return 0.20
+    elif 0.50 < ltv <= 0.60:
+        return 0.25
+    elif 0.60 < ltv <= 0.80:
+        return 0.30
+    elif 0.80 < ltv <= 0.90:
+        return 0.40
+    elif 0.90 < ltv <= 1.00:
+        return 0.50
+    else:
+        return 0.70
+
+# Hàm tính toán các giá trị
+def calculate_values(row, T=20):
+    E_j = row['aktueller_immobilienwert']
+    schadenfaktor = row['Schadensfaktor']
+    p_I_ij = row['AEP'] if 'AEP' in row.index else 0.01
+    
+    # Tính Immobilienschaden (Công thức 1)
+    immobilienschaden = E_j * schadenfaktor
+    
+    # Tính EAI (Công thức 2)
+    EAI = immobilienschaden * p_I_ij
+    
+    # Tính EI (Công thức 3)
+    EI = EAI * T
+    
+    # Tính giá trị mới của bất động sản (Công thức 4)
+    new_immobilienwert = E_j - immobilienschaden
+    
+    # Tính LtV mới (Công thức 5)
+    new_LtV = row['darlehenbetrag'] / new_immobilienwert if new_immobilienwert > 0 else np.inf
+    
+    # Xác định neue Risikogewicht dựa trên LtV mới
+    neue_risikogewicht = get_neue_risikogewicht(new_LtV)
+    
+    # Tính RWA mới dựa trên neue Risikogewicht
+    new_RWA = row['darlehenbetrag'] * neue_risikogewicht
+    
+    # Tính % thay đổi RWA (Công thức 7)
+    old_RWA = row['darlehenbetrag'] * row['Risikogewicht']
+    RWA_change = (new_RWA / old_RWA) - 1 if old_RWA > 0 else np.inf
+    
+    return pd.Series({
+        'Immobilienschaden': immobilienschaden, 
+        'EAI': EAI, 
+        'EI': EI, 
+        'Neuer Immobilienwert': new_immobilienwert, 
+        'Neue LtV': new_LtV, 
+        'Neue Risikogewicht': neue_risikogewicht, 
+        'Neue RWA': new_RWA, 
+        'RWA Änderung': RWA_change
+    })
+
+# Áp dụng tính toán cho mỗi hàng
+results = df.apply(calculate_values, axis=1)
+
+# Kết hợp kết quả với DataFrame gốc
+df_results = pd.concat([df, results], axis=1)
+
+# In thông tin thống kê về kết quả tính toán
+print("\nThông tin về kết quả tính toán:")
+for col in ['Immobilienschaden', 'EAI', 'EI', 'Neuer Immobilienwert', 'Neue LtV', 'Neue Risikogewicht', 'Neue RWA', 'RWA Änderung']:
+    print(f"\nThông tin về cột '{col}':")
+    print(df_results[col].describe())
+
+# Lọc dữ liệu chỉ giữ lại các hàng có Schadensfaktor khác 0
+df_damage = df_results[df_results['Schadensfaktor'] != 0].copy()
+print(df_damage['Immobilienschaden'].describe())
+
+# Diagramm zeichnen
+plt.figure(figsize=(10,6))
+sns.histplot(df_damage['Immobilienschaden'], kde=True, bins=10, color='skyblue')
+plt.axvline(df_damage['Immobilienschaden'].mean(), color='red', linestyle='--', label=f'Mean: {df_damage["Immobilienschaden"].mean():.2f}')
+plt.axvline(df_damage['Immobilienschaden'].median(), color='green', linestyle='-.', label=f'Median: {df_damage["Immobilienschaden"].median():.2f}')
+plt.legend()
+plt.title('Verteilung des Immobilienschadens')
+plt.xlabel('Immobilienschaden')
+plt.ylabel('Häufigkeit')
+plt.grid(True)
+plt.tight_layout()
+plt.show()
