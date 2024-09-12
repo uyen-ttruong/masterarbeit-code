@@ -137,26 +137,23 @@ Wobei:
 Für die Bewertung einzelner Immobilien wurde diese Gleichung wie folgt adaptiert:
 
 \begin{equation}
-\Delta P = -\Delta EC_{rel} \cdot \frac{1 - (1 + r)^{-T}}{r} \cdot P_0
-\end{equation}
-
-Hierbei gilt:
-\begin{equation} 
     \Delta EC_{rel} = (E_j - E_{A+}) \cdot (PE_1 - PE_0) \cdot A
-\end{equation}
-In dieser angepassten Form beschreibt $\Delta P$ die absolute Wertänderung der Immobilie, basierend auf der relativen Änderung der Energiekosten $\Delta EC_{rel}$. Diese berücksichtigt die Differenz im Energieverbrauch $(E_j - E_{A+})$, die Energiepreisentwicklung $(PE_1 - PE_0)$ sowie die Fläche der Immobilie $A$. $P_0$ stellt den aktuellen Immobilienpreis dar.
-
-Anschließend wird die prozentuale Wertänderung ermittelt:
-\begin{equation}
-D_t = \frac{\Delta P_t}{P_t} 
-\end{equation}
-Basierend auf diesen Berechnungen lässt sich der neue Wert des Gebäudes bestimmen:
-\begin{equation}
-\text{Neuer Immobilienwert} = P_t \cdot (1 + D_t)
-\end{equation}
-Schließlich kann der aktualisierte \ac{LtV} berechnet werden:
-\begin{equation}
-\text{Neuer LtV} = \frac{\text{Darlehenbetrag}}{\text{Neuer Immobilienwert}}
-\end{equation}
+    \end{equation}
+    \begin{equation}
+    \Delta P = -\Delta EC_{rel} \cdot \frac{1 - (1 + r)^{-T}}{r}
+    \end{equation}
+    In dieser angepassten Form beschreibt $\Delta P$ die absolute Wertänderung der Immobilie, basierend auf der relativen Änderung der Energiekosten $\Delta EC_{rel}$. Diese berücksichtigt die Differenz im Energieverbrauch $(E_j - E_{A+})$, die Energiepreisentwicklung $(PE_1 - PE_0)$ sowie die Fläche der Immobilie $A$.
+    Anschließend wird die prozentuale Wertänderung ermittelt:
+    \begin{equation}
+    D_t = \frac{\Delta P}{P_0}
+    \end{equation}
+    Basierend auf diesen Berechnungen lässt sich der neue Wert des Gebäudes bestimmen:
+    \begin{equation}
+    \text{Neuer Immobilienwert} = P_0 + \Delta P
+    \end{equation}
+    Schließlich kann der aktualisierte \ac{LtV} berechnet werden:
+    \begin{equation}
+    \text{Neuer LtV} = \frac{\text{Darlehenbetrag}}{\text{Neuer Immobilienwert}}
+    \end{equation}
 
 Diese zweistufige Methodik ermöglicht eine differenzierte Analyse der Wertveränderungen unter Berücksichtigung unter energiepreisbedingter Einflüsse sowie eine Neubewertung des Beleihungsauslaufs.
