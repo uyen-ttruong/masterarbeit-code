@@ -80,6 +80,46 @@
       \verb https://www.lfu.bayern.de/umweltdaten/kartendienste/umweltatlas/index.htm
       \endverb
     \endentry
+    \entry{behr2023warmemonitor}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=842ac18480f6ae01090e4385cc5eb61b}{%
+           family={Behr},
+           familyi={B\bibinitperiod},
+           given={Sophie\bibnamedelima M},
+           giveni={S\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=38026ba4ee6b102b47bf3ffb41325c8f}{%
+           family={al.},
+           familyi={a\bibinitperiod},
+           prefix={et},
+           prefixi={e\bibinitperiod},
+           prefixun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Berlin: Deutsches Institut für Wirtschaftsforschung (DIW)}%
+      }
+      \strng{namehash}{dc22593fb06acde0dbaaa8329a95fd66}
+      \strng{fullhash}{dc22593fb06acde0dbaaa8329a95fd66}
+      \strng{fullhashraw}{dc22593fb06acde0dbaaa8329a95fd66}
+      \strng{bibnamehash}{dc22593fb06acde0dbaaa8329a95fd66}
+      \strng{authorbibnamehash}{dc22593fb06acde0dbaaa8329a95fd66}
+      \strng{authornamehash}{dc22593fb06acde0dbaaa8329a95fd66}
+      \strng{authorfullhash}{dc22593fb06acde0dbaaa8329a95fd66}
+      \strng{authorfullhashraw}{dc22593fb06acde0dbaaa8329a95fd66}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{DIW Wochenbericht}
+      \field{number}{39}
+      \field{title}{Wärmemonitor 2022: Private Haushalte sparen fünf Prozent Heizenergie und CO2-Emissionen ein}
+      \field{volume}{90}
+      \field{year}{2023}
+      \field{pages}{530\bibrangedash 539}
+      \range{pages}{10}
+    \endentry
     \entry{coburn1991vulnerability}{incollection}{}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=aebfab3e23ef14317eaff415e503d685}{%
@@ -424,6 +464,39 @@
       \verb 10.2760/16510
       \endverb
     \endentry
+    \entry{imf2022}{misc}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=ebb24d27be637c70ebf0c297ab842b7f}{%
+           family={{International Monetary Fund}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {International Monetary Fund}%
+      }
+      \strng{namehash}{ebb24d27be637c70ebf0c297ab842b7f}
+      \strng{fullhash}{ebb24d27be637c70ebf0c297ab842b7f}
+      \strng{fullhashraw}{ebb24d27be637c70ebf0c297ab842b7f}
+      \strng{bibnamehash}{ebb24d27be637c70ebf0c297ab842b7f}
+      \strng{authorbibnamehash}{ebb24d27be637c70ebf0c297ab842b7f}
+      \strng{authornamehash}{ebb24d27be637c70ebf0c297ab842b7f}
+      \strng{authorfullhash}{ebb24d27be637c70ebf0c297ab842b7f}
+      \strng{authorfullhashraw}{ebb24d27be637c70ebf0c297ab842b7f}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{[Indicator name], https://climatedata.imf.org/pages/access-data. Accessed on [YYYY-MM-DD]. The transition pathways for the NGFS scenarios have been generated with three well-established integrated assessment models (IAMs), namely GCAM, MESSAGEix-GLOBIOM and REMIND-MAgPIE. These models combine macro-economic, agriculture and land-use, energy, water and climate systems into a common numerical framework that enables the analysis of the complex and non-linear dynamics in and between these components. Sources: NGFS (2023), Scenarios Portal; and IIASA (2023), NGFS Phase 4 Scenario Explorer.}
+      \field{title}{Climate Change Indicators Dashboard}
+      \field{year}{2022}
+      \verb{urlraw}
+      \verb https://climatedata.imf.org/pages/access-data
+      \endverb
+      \verb{url}
+      \verb https://climatedata.imf.org/pages/access-data
+      \endverb
+    \endentry
     \entry{mcmakler2022}{misc}{}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=a6aba5c64ca7807e2904213bf1fabdda}{%
@@ -573,6 +646,38 @@
       \field{labeltitlesource}{title}
       \field{title}{Bevölkerung und Demografie - Bevölkerungsstand}
       \field{year}{2023}
+    \endentry
+    \entry{tergerman}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=640a331c0f0b539b295a86c9ed626c19}{%
+           family={Steege},
+           familyi={S\bibinitperiod},
+           given={Lucas},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5e10bc761e61305795b660af63a75e92}{%
+           family={Vogel},
+           familyi={V\bibinitperiod},
+           given={Edgar},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{4e1b24fc5f6241c0bfe01c7f7454c600}
+      \strng{fullhash}{4e1b24fc5f6241c0bfe01c7f7454c600}
+      \strng{fullhashraw}{4e1b24fc5f6241c0bfe01c7f7454c600}
+      \strng{bibnamehash}{4e1b24fc5f6241c0bfe01c7f7454c600}
+      \strng{authorbibnamehash}{4e1b24fc5f6241c0bfe01c7f7454c600}
+      \strng{authornamehash}{4e1b24fc5f6241c0bfe01c7f7454c600}
+      \strng{authorfullhash}{4e1b24fc5f6241c0bfe01c7f7454c600}
+      \strng{authorfullhashraw}{4e1b24fc5f6241c0bfe01c7f7454c600}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{German residential real estate valuation under NGFS climate scenarios 09/2021}
+      \field{year}{2021}
     \endentry
     \entry{undro1979}{misc}{}{}
       \name{author}{1}{}{%

@@ -55,25 +55,26 @@ for szenario in endpreise.keys():
         preis = endenergie_preis_berechnen(ölpreis, gaspreis, co2_steuer, wechselkurs)
         endpreise[szenario].append(preis)
 
-# Diagramm erstellen
-plt.figure(figsize=(10, 6))
-plt.plot(jahre, endpreise['current_policies'], label='Current policies', color='blue', linewidth=2)
-plt.plot(jahre, endpreise['below_2'], label='2 Degrees', color='red', linestyle='--', linewidth=2)
-plt.plot(jahre, endpreise['disorderly'], label='Disorderly', color='black', linestyle='-.', linewidth=2)
-plt.plot(jahre, endpreise['net_zero'], label='Net Zero', color='blue', linestyle=':', linewidth=2)
+print(endpreise)
+# # Diagramm erstellen
+# plt.figure(figsize=(10, 6))
+# plt.plot(jahre, endpreise['current_policies'], label='Current policies', color='blue', linewidth=2)
+# plt.plot(jahre, endpreise['below_2'], label='2 Degrees', color='red', linestyle='--', linewidth=2)
+# plt.plot(jahre, endpreise['disorderly'], label='Disorderly', color='black', linestyle='-.', linewidth=2)
+# plt.plot(jahre, endpreise['net_zero'], label='Net Zero', color='blue', linestyle=':', linewidth=2)
 
-plt.title('Endenergie-Preis nach NGFS-Szenario')
-plt.xlabel('Jahr')
-plt.ylabel('Euro/kWh')
-plt.legend()
-plt.grid(True, linestyle=':', alpha=0.7)
-plt.ylim(0, max(max(preise) for preise in endpreise.values()) * 1.1)  # Anpassung der y-Achse
+# plt.title('Endenergie-Preis nach NGFS-Szenario')
+# plt.xlabel('Jahr')
+# plt.ylabel('Euro/kWh')
+# plt.legend()
+# plt.grid(True, linestyle=':', alpha=0.7)
+# plt.ylim(0, max(max(preise) for preise in endpreise.values()) * 1.1)  # Anpassung der y-Achse
 
-plt.show()
+# plt.show()
 
-# Werte ausgeben
-szenarien = ['Current policies', '2 Degrees', 'Disorderly', 'Net Zero']
-for i, szenario in enumerate(['current_policies', 'below_2', 'disorderly', 'net_zero']):
-    print(f"\n{szenarien[i]}:")
-    for j, jahr in enumerate(jahre):
-        print(f"{jahr}: {endpreise[szenario][j]:.3f}")
+# # Werte ausgeben
+# szenarien = ['Current policies', '2 Degrees', 'Disorderly', 'Net Zero']
+# for i, szenario in enumerate(['current_policies', 'below_2', 'disorderly', 'net_zero']):
+#     print(f"\n{szenarien[i]}:")
+#     for j, jahr in enumerate(jahre):
+#         print(f"{jahr}: {endpreise[szenario][j]:.3f}")
