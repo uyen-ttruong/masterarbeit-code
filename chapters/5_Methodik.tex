@@ -1,7 +1,9 @@
 
 \section{Methodik}
 \subsection{Datenaufbereitungsprozess}
-Die Vorbereitung der Daten beginnt mit den Basisinformationen zu Quadratmeterpreisen. Es wird ein Datensatz generiert, der drei Anforderungen erfüllt. Erstens: Die Wohnfläche für Eigenheime liegt zwischen 80 und 200 Quadratmetern. Zweitens: Die LTV-Verteilung ähnelt der der Münchener Hypothekenbank mit einem Durchschnitt von etwa 60\%. Drittens: Der durchschnittliche Darlehensbetrag nähert sich 163.700 € an. Alle Werte werden gemäß Berechnungsformeln ermittelt:
+Zur repräsentativen Verteilung der 3853 Datenpunkte, entsprechend der Anzahl der Hypothekarkredite, wird ein proportionaler Ansatz implementiert, der auf der Einwohnerzahl jeder Region basiert. Innerhalb der Postleitzahlgebiete erfolgt die Platzierung mittels eines kontrollierten stochastischen Verfahrens. Für jede Region wird eine zuvor determinierte Anzahl von Zufallspunkten innerhalb der definierten Gebietsgrenzen generiert. Jedem Punkt werden spezifische Koordinaten in Form von Latitude (Breitengrad) und Longitude (Längengrad) zugewiesen. Anschließend wird eine Verifikation der Lage innerhalb des jeweiligen Polygons durchgeführt. Bei erfolgreicher Validierung wird der Punkt mit seinen Latitude- und Longitude-Koordinaten in die Liste der akzeptierten Datenpunkte integriert. Diese Geodaten bilden die Grundlage für die nachfolgende wirtschaftliche Analyse der Hypothekarkredite.
+
+Basierend auf diesen Geodaten erfolgt die Vorbereitung der wirtschaftlichen Daten, beginnend mit den Basisinformationen zu Quadratmeterpreisen. Es wird ein Datensatz generiert, der drei Anforderungen erfüllt. Erstens: Die Wohnfläche für Eigenheime liegt zwischen 80 und 200 Quadratmetern. Zweitens: Die LTV-Verteilung ähnelt der der Münchener Hypothekenbank mit einem Durchschnitt von etwa 60\%. Drittens: Der durchschnittliche Darlehensbetrag nähert sich 163.700 € an. Alle Werte werden gemäß Berechnungsformeln ermittelt:
 \begin{equation}
     \text{Immobilienwert} = \text{Quadratmeterpreis} \cdot \text{Wohnfläche}
 \end{equation}

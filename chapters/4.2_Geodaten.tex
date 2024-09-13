@@ -44,15 +44,7 @@ Tabelle \ref{tab:geodaten} wurde aus Shapefile-Daten der Postleitzahlenregionen 
 \end{figure}
 \FloatBarrier
 
-Zur repräsentativen Verteilung der 3853 Datenpunkte, entsprechend der Anzahl der Hypothekarkredite, wird ein proportionaler Ansatz implementiert, der auf der Einwohnerzahl jeder Region basiert. Innerhalb der Postleitzahlgebiete erfolgt die Platzierung mittels eines kontrollierten stochastischen Verfahrens. Für jede Region wird eine zuvor determinierte Anzahl von Zufallspunkten innerhalb der definierten Gebietsgrenzen generiert. Jedem Punkt werden spezifische Koordinaten in Form von Latitude (Breitengrad) und Longitude (Längengrad) zugewiesen. Anschließend wird eine Verifikation der Lage innerhalb des jeweiligen Polygons durchgeführt. Bei erfolgreicher Validierung wird der Punkt mit seinen Latitude- und Longitude-Koordinaten in die Liste der akzeptierten Datenpunkte integriert.Abbildung \ref{fig:hypothekenportfolio} zeigt die resultierende Distribution der Datenpunkte auf der Karte Bayerns.
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\textwidth]{figures/bayern_por_pop.png} 
-    \caption{Datenpunktverteilung im Hypothekenportfolio Bayern. Quelle: Eigene Darstellung}
-    \label{fig:hypothekenportfolio}
-\end{figure}
-\FloatBarrier
 
 \subsubsection{Hochwassergeodaten}\label{sec:hochgeo}
 
@@ -71,15 +63,9 @@ Im Rahmen eines EU-weiten Stresstests stellt die \ac{EZB} den Banken zur Simulat
 Die \ac{EZB}-Karte klassifiziert Regionen nach Hochwasserrisiken. Sie basiert auf Daten der Europäischen Kommission und Four Twenty Seven \parencite{ECB2022ClimateStressTest}. Allerdings sind die Basisdaten nicht öffentlich zugänglich. Zudem erlaubt die visuelle Darstellung keine präzise Identifikation spezifischer Gebiete. Folglich ergibt sich für Bayern die Notwendigkeit einer detaillierteren Analyse.
 
 Die Kartierungen des Bayerischen Landesamts für Umwelt bieten eine fundierte Grundlage für die regionale Risikoanalyse. Diese für die Einzugsgebiete von Donau, Rhein und Elbe entwickelten Karten ermöglichen eine präzise Einschätzung der Hochwasserrisiken in Bayern \parencite{LfU_Bayern}. Sie visualisieren detailliert die Hochwassergefährdung, potenziell betroffene Landnutzungen und historische Hochwasserereignisse.
-Diese Daten liegen aber im ETRS89-Koordinatensystem vor, während die Hypothekengeodaten das EPSG:3035-System nutzen. Zur Herstellung der Datenkohärenz erfolgt eine Koordinatentransformation in das EPSG:3035-System. Abbildung \ref{fig:bayernflut} präsentiert das Resultat dieser Vereinheitlichung und visualisiert die räumliche Verteilung der Hochwasserrisikogebiete Bayerns.
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\textwidth]{figures/bayern_flut.png} 
-    \caption{Visualisierung historischer Hochwasserereignisgebiete und Verteilung des Darlehensportfolios in Bayern. Quelle: Eigene Darstellung}
-    \label{fig:bayernflut}
-\end{figure}
-\FloatBarrier
-
+Diese Daten liegen im ETRS89-Koordinatensystem vor, während die Hypothekengeodaten das EPSG:3035-System nutzen. ETRS89 ist ein geodätisches Referenzsystem für Europa. Es misst Positionen in geografischen Koordinaten: Breitengrad und Längengrad. Diese werden in Grad, Minuten und Sekunden angegeben. ETRS89 bietet eine hohe Genauigkeit für kontinentale Messungen.
+EPSG:3035 hingegen ist eine kartografische Projektion. Sie wandelt die Erdkrümmung in eine flache Ebene um. Positionen werden hier in Metern gemessen. X-Koordinaten repräsentieren den Abstand vom Projektionszentrum nach Osten. Y-Koordinaten messen den Abstand nach Norden. EPSG:3035 ist speziell für statistische Analysen in Europa konzipiert.
+Zur Herstellung der Datenkohärenz erfolgt eine Koordinatentransformation in das EPSG:3035-System. 
 
 \subsubsection{Überflutungstiefen}\label{sec:tief}
 Die Schäden durch Überschwemmungen hängen von der Wassertiefe ab. Tieferes Wasser verursacht meist größere und teurere Schäden an Häusern. Für die Analyse der Überflutungstiefe in Bayern benötigt man Überflutungstiefen-Geodaten. \ac{DGM} Modell beschreibt die Höhe des Bodens, wobei eine hohe Auflösung genaue Ergebnisse liefert \parencite{vermessungsverwaltung2019gelandemodell}. Hochwasserstände aus Messungen sind wichtig für präzise Berechnungen. Dafür wurden Daten vom \textcite{bayern2016hochwassernachrichtendienst} für aktuelle Pegelstände betrachtet. Historische Hochwasserdaten helfen bei Einschätzungen künftiger Ereignisse und sind in Berichten und Karten enthalten. Diese wurden vom \textcite{LfU_Bayern} bezogen, wie in Abschnitt \ref{sec:hochgeo} beschrieben.
