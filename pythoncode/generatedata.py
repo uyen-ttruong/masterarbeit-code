@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 # Đọc file CSV
-df = pd.read_csv('data/hypothekendaten4.csv', delimiter=';')
+df = pd.read_csv("C:\Users\uyen truong\Downloads\hypothekendaten4_updated.csv", delimiter=';')
 
 # Danh sách các cột số cần xử lý
 numeric_columns = ['Quadratmeterpreise', 'wohnflaeche', 'AEP', 'aktueller_immobilienwert', 'aktuelles_LtV', 'darlehenbetrag']
@@ -10,13 +10,11 @@ numeric_columns = ['Quadratmeterpreise', 'wohnflaeche', 'AEP', 'aktueller_immobi
 # Chuyển đổi kiểu dữ liệu sang số và xử lý lỗi
 for col in numeric_columns:
     if df[col].dtype == 'object':
-        # Nếu cột là kiểu object (chuỗi), thay thế dấu phẩy và chuyển đổi
         df[col] = pd.to_numeric(df[col].str.replace(',', '.'), errors='coerce')
     else:
-        # Nếu cột đã là kiểu số, chỉ cần chuyển đổi các giá trị không hợp lệ thành NaN
         df[col] = pd.to_numeric(df[col], errors='coerce')
 
-# 1. Xử lý cột 'wohnflaeche'
+# 1. Điều chỉnh 'wohnflaeche' để có giá trị trung bình trong khoảng 100-150
 def adjust_wohnflaeche(x):
     if pd.isna(x) or x < 80:
         return np.random.uniform(80, 100)
@@ -26,24 +24,24 @@ def adjust_wohnflaeche(x):
 
 df['wohnflaeche'] = df['wohnflaeche'].apply(adjust_wohnflaeche)
 
-# Điều chỉnh 'wohnflaeche' để có giá trị trung bình trong khoảng 100-150
 target_avg_wohnflaeche = np.random.uniform(100, 150)
 current_avg_wohnflaeche = df['wohnflaeche'].mean()
 
-def scale_wohnflaeche(x):
-    scaled = x * (target_avg_wohnflaeche / current_avg_wohnflaeche)
-    return np.clip(scaled, 80, 250)
-
-df['wohnflaeche'] = df['wohnflaeche'].apply(scale_wohnflaeche)
+df['wohnflaeche'] = df['wohnflaeche'] * (target_avg_wohnflaeche / current_avg_wohnflaeche)
 
 # 2. Điều chỉnh 'darlehenbetrag' để có giá trị trung bình chính xác 163700
 target_avg_darlehenbetrag = 163700
+
+# Tính 'darlehenbetrag' bằng công thức: LTV * Immobilienwert
+df['darlehenbetrag'] = df['aktuelles_LtV'] * df['aktueller_immobilienwert']
+
+# Đảm bảo 'darlehenbetrag' có giá trị trung bình là 163700
 df['darlehenbetrag'] = df['darlehenbetrag'] * (target_avg_darlehenbetrag / df['darlehenbetrag'].mean())
 
-# 3. Điều chỉnh 'aktuelles_LtV' với giới hạn dưới 40%
+# 3. Điều chỉnh 'aktuelles_LtV' với giới hạn phân phối theo yêu cầu
 def adjust_ltv(x):
     if pd.isna(x) or x < 0.4:
-        return np.random.uniform(0.4, 0.5)  # Đảm bảo LTV tối thiểu là 40%
+        return np.random.uniform(0.4, 0.5)
     elif 0.4 <= x <= 0.6:
         return np.random.uniform(0.4, 0.6)
     elif 0.6 < x <= 0.7:
@@ -69,8 +67,8 @@ ltv_distribution = [
     (df['aktuelles_LtV'] > 1.0).mean()
 ]
 
-print("Phân phối LTV sau điều chỉnh:")
-print(ltv_distribution)
+# Cập nhật giá trị 'aktueller_immobilienwert' theo công thức 'wohnflaeche' * 'Quadratmeterpreise'
+df['aktueller_immobilienwert'] = df['wohnflaeche'] * df['Quadratmeterpreise']
 
 # Tạo thống kê mô tả cho các cột số
 desc_stats = df[numeric_columns].describe()
@@ -79,12 +77,12 @@ desc_stats = df[numeric_columns].describe()
 print("\nThống kê mô tả cho các cột số:")
 print(desc_stats.round(2))
 
-# Kiểm tra giá trị thống kê của wohnflaeche
+# Kiểm tra giá trị trung bình của 'wohnflaeche'
 print(f"\nGiá trị trung bình của wohnflaeche: {df['wohnflaeche'].mean():.2f}")
 print(f"Giá trị tối thiểu của wohnflaeche: {df['wohnflaeche'].min():.2f}")
 print(f"Giá trị tối đa của wohnflaeche: {df['wohnflaeche'].max():.2f}")
 
-# Kiểm tra giá trị trung bình của darlehenbetrag
+# Kiểm tra giá trị trung bình của 'darlehenbetrag'
 print(f"Giá trị trung bình của darlehenbetrag: {df['darlehenbetrag'].mean():.2f}")
 
 # Kiểm tra giá trị LTV nhỏ nhất và lớn nhất
@@ -92,6 +90,6 @@ print(f"Giá trị LTV nhỏ nhất: {df['aktuelles_LtV'].min():.2f}")
 print(f"Giá trị LTV lớn nhất: {df['aktuelles_LtV'].max():.2f}")
 
 # Lưu kết quả vào file CSV mới
-df.to_csv('data/hypothekendaten4_cleaned.csv', index=False)
+df.to_csv('data/hypothekendaten4_cleaned.csv', index=False, sep=';')
 
 print("\nĐã xử lý và lưu dữ liệu vào file 'hypothekendaten4_cleaned.csv'")

@@ -1,12 +1,8 @@
 import pandas as pd
-import numpy as np
+import matplotlib.pyplot as plt
 
 # Đọc dữ liệu
-df = pd.read_csv('data/hypothekendaten4.csv', delimiter=';')
-
-# In ra tên các cột trong dữ liệu
-print("Các cột trong dữ liệu:")
-print(df.columns)
+df = pd.read_csv('data\hypothekendaten_final_with_statistics.csv', delimiter=';')
 
 # Hàm chuyển đổi linh hoạt
 def flexible_numeric_conversion(series):
@@ -21,84 +17,82 @@ for col in numeric_columns:
     if col in df.columns:
         df[col] = flexible_numeric_conversion(df[col])
 
-# In thông tin về các cột số sau khi chuyển đổi
-for col in numeric_columns:
-    if col in df.columns:
-        print(f"\nThông tin về cột '{col}':")
-        print(df[col].describe())
+# Lọc các hàng có 'Schadensfaktor' > 0 và loại bỏ NaN
+df = df[df['Schadensfaktor'] > 0].dropna(subset=numeric_columns)
 
-# Loại bỏ các hàng có giá trị NaN
-df = df.dropna(subset=[col for col in numeric_columns if col in df.columns])
-
-# Hàm xác định giá trị neue Risikogewicht dựa trên Neue LtV
-def get_neue_risikogewicht(ltv):
-    if ltv <= 0.50:
-        return 0.20
-    elif 0.50 < ltv <= 0.60:
-        return 0.25
-    elif 0.60 < ltv <= 0.80:
-        return 0.30
-    elif 0.80 < ltv <= 0.90:
-        return 0.40
-    elif 0.90 < ltv <= 1.00:
-        return 0.50
-    else:
-        return 0.70
-
-# Hàm tính toán các giá trị
-def calculate_values(row, T=20):
-    E_j = row['aktueller_immobilienwert']
+# Hàm tính toán các giá trị mới với debug
+def calculate_values_debug(row):
+    aktueller_immobilienwert = row['aktueller_immobilienwert']
     schadenfaktor = row['Schadensfaktor']
-    p_I_ij = row['AEP'] if 'AEP' in row.index else 0.01
+    darlehenbetrag = row['darlehenbetrag']
     
-    # Tính Immobilienschaden (Công thức 1)
-    immobilienschaden = E_j * schadenfaktor
+    immobilienschaden = aktueller_immobilienwert * schadenfaktor
+    new_immobilienwert = aktueller_immobilienwert - immobilienschaden
+    new_LtV = darlehenbetrag / new_immobilienwert if new_immobilienwert > 0 else float('inf')
     
-    # Tính EAI (Công thức 2)
-    EAI = immobilienschaden * p_I_ij
-    
-    # Tính EI (Công thức 3)
-    EI = EAI * T
-    
-    # Tính giá trị mới của bất động sản (Công thức 4)
-    new_immobilienwert = E_j - immobilienschaden
-    
-    # Tính LtV mới (Công thức 5)
-    new_LtV = row['darlehenbetrag'] / new_immobilienwert if new_immobilienwert > 0 else np.inf
-    
-    # Xác định neue Risikogewicht dựa trên LtV mới
-    neue_risikogewicht = get_neue_risikogewicht(new_LtV)
-    
-    # Tính RWA mới dựa trên neue Risikogewicht
-    new_RWA = row['darlehenbetrag'] * neue_risikogewicht
-    
-    # Tính % thay đổi RWA (Công thức 7)
-    old_RWA = row['darlehenbetrag'] * row['Risikogewicht']
-    RWA_change = (new_RWA / old_RWA) - 1 if old_RWA > 0 else np.inf
+    print(f"Debug for row:")
+    print(f"  Aktueller Immobilienwert: {aktueller_immobilienwert}")
+    print(f"  Schadenfaktor: {schadenfaktor}")
+    print(f"  Darlehenbetrag: {darlehenbetrag}")
+    print(f"  Immobilienschaden: {immobilienschaden}")
+    print(f"  New Immobilienwert: {new_immobilienwert}")
+    print(f"  Old LtV: {row['aktuelles_LtV']}")
+    print(f"  New LtV: {new_LtV}")
+    print("--------------------")
     
     return pd.Series({
-        'Immobilienschaden': immobilienschaden,
-        'EAI': EAI,
-        'EI': EI,
         'Neuer Immobilienwert': new_immobilienwert,
-        'Neue LtV': new_LtV,
-        'Neue Risikogewicht': neue_risikogewicht,
-        'Neue RWA': new_RWA,
-        'RWA Änderung': RWA_change
+        'Neue LtV': new_LtV
     })
 
-# Áp dụng tính toán cho mỗi hàng
-results = df.apply(calculate_values, axis=1)
+# Áp dụng tính toán và kết hợp kết quả
+df_results = pd.concat([df, df.apply(calculate_values_debug, axis=1)], axis=1)
 
-# Kết hợp kết quả với DataFrame gốc
-df_results = pd.concat([df, results], axis=1)
+# In thông tin tổng quan
+print("\nOverview:")
+print(df_results[['aktueller_immobilienwert', 'Neuer Immobilienwert', 'aktuelles_LtV', 'Neue LtV']].describe())
 
-# In thông tin thống kê về kết quả tính toán
-print("\nThông tin về kết quả tính toán:")
-for col in ['Immobilienschaden', 'EAI', 'EI', 'Neuer Immobilienwert', 'Neue LtV', 'Neue Risikogewicht', 'Neue RWA', 'RWA Änderung']:
-    print(f"\nThông tin về cột '{col}':")
-    print(df_results[col].describe())
+# Kiểm tra số lượng trường hợp LTV mới cao hơn LTV cũ
+ltv_increased = (df_results['Neue LtV'] > df_results['aktuelles_LtV']).sum()
+print(f"\nSố trường hợp LTV mới cao hơn LTV cũ: {ltv_increased} / {len(df_results)}")
 
+# In ra các trường hợp có LTV mới thấp hơn LTV cũ
+print("\nCác trường hợp có LTV mới thấp hơn LTV cũ:")
+unusual_cases = df_results[df_results['Neue LtV'] <= df_results['aktuelles_LtV']]
+print(unusual_cases[['aktueller_immobilienwert', 'Neuer Immobilienwert', 'aktuelles_LtV', 'Neue LtV', 'Schadensfaktor']])
 
-df_results.to_csv('immobilien_analyse_ergebnisse.csv', index=False, decimal=',')
-print("\nĐã lưu kết quả vào file 'immobilien_analyse_ergebnisse.csv'")
+# Hàm tạo biểu đồ
+def create_chart(data, y_columns, title, y_label, filename, is_percentage=False):
+    plt.figure(figsize=(15, 8))
+    for col in y_columns:
+        values = data[col] * 100 if is_percentage else data[col] / 1000
+        plt.plot(range(len(data)), values, '-o', label=col)
+    
+    plt.xlabel('Immobilien')
+    plt.ylabel(y_label)
+    plt.title(title)
+    plt.xticks(range(len(data)), [f'Immobilie {i+1}' for i in range(len(data))])
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+# Tạo biểu đồ cho Immobilienwert
+create_chart(
+    df_results,
+    ['aktueller_immobilienwert', 'Neuer Immobilienwert'],
+    'Änderungen im Immobilienwert',
+    'Immobilienwert (Tausend €)',
+    'immobilienwert_chart.png'
+)
+
+# Tạo biểu đồ cho LtV
+create_chart(
+    df_results,
+    ['aktuelles_LtV', 'Neue LtV'],
+    'Änderungen in LtV',
+    'LtV (%)',
+    'ltv_chart.png',
+    is_percentage=True
+)
+
+print("Biểu đồ đã được lưu dưới dạng 'immobilienwert_chart.png' và 'ltv_chart.png'")

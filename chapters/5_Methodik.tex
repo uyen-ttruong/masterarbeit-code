@@ -1,5 +1,22 @@
 
 \section{Methodik}
+\subsection{Datenaufbereitungsprozess}
+Der Datenaufbereitungsprozess beginnt mit Grunddaten zu Quadratmeterpreisen. Es wird ein Datensatz generiert, der drei Anforderungen erfüllt. Erstens: Die Wohnfläche für Eigenheime liegt zwischen 80 und 200 Quadratmetern. Zweitens: Die LTV-Verteilung ähnelt der der Münchener Hypothekenbank mit einem Durchschnitt von etwa 60\%. Drittens: Der durchschnittliche Darlehensbetrag nähert sich 163.700 Euro an. Alle Werte werden gemäß Berechnungsformeln ermittelt:
+\begin{equation}
+    \text{Immobilienwert} = \text{Quadratmeterpreis} \cdot \text{Wohnfläche}
+    \end{equation}
+    \begin{equation}
+        \text{Darlehensbetrag} = \text{Immobilienwert} \cdot \text{aktuelles\_LtV}
+    \end{equation}
+
+Abbildung \ref{fig:folowchart} visualisiert diesen Datenaufbereitungsprozess. Der Prozess startet mit dem Einlesen einer CSV-Datei. Diese enthält Immobilien-ID, Geometrie, Überschwemmungsrisiko, Energieklasse und Quadratmeterpreise. Es folgt die Erstellung und Bearbeitung verschiedener Spalten. Mehrere Berechnungsschritte sind involviert. Zwei Entscheidungspunkte betreffen den LTV-Mittelwert und den Darlehensbetrag. Je nach Ergebnis werden unterschiedliche Aktionen ausgeführt. Der Prozess endet mit der Speicherung in einer neuen CSV-Datei. Abschließend wird der endgültige Mittelwert des Darlehensbetrags überprüft. Das Diagramm zeigt einen strukturierten Datenverarbeitungsablauf zur Immobilienbewertung.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{figures/flowchardatatensatz.png}
+    \caption{Prozessablauf Immobilienwertberechnung. Quelle: Eigene Darstellung}
+    \label{fig:folowchart}
+\end{figure}
+
 \subsection{Quantifizierung physischer Risiken}
 In diesem Abschnitt wird bei der Modellierung des Hochwasserrisikos die grundlegende Quantifizierung des physischen Risikos erläutert.
 
