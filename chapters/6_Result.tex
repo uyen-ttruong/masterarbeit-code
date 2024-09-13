@@ -1,4 +1,45 @@
 \section{Ergebnisse}
+\subsection{Hypothekenportfolio-Datensatz}
+Die Erzeugung eines realitätsnahen Datensatzes ist ein wesentlicher Schritt in dieser Forschung, da nur dadurch die Quantifizierung physischer und Transitionsrisiken im Hypothekenportfolio ermöglicht wird. Nach Abschluss aller in Kapitel \ref{sec:createportfolio} beschriebenen Schritte wurde ein realistisches Portfolio von Hypotheken-Immobilien erstellt. Die Grundlage hierfür bilden die in Tabelle \ref{tab:objekt-variablen} beschriebenen Objektvariablen.
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption{Übersicht über das Hypothekenportfolio und die relevanten Objekt-Variablen}
+    \label{tab:objekt-variablen}
+    \begin{tabularx}{1.0\textwidth}{>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
+        \toprule
+        \textbf{Objekt-Variablen} & \textbf{Erklärung} \\
+        \midrule
+        ID & Identifikationsnummer \\
+        \addlinespace
+        Ort & Ort der Immobilie \\
+        \addlinespace
+        Landkreis & Landkreis der Immobilie \\
+        \addlinespace
+        Latitude & Breitengrad der Immobilie zur genauen Lokalisierung \\
+        \addlinespace
+        Longitude & Längengrad der Immobilie zur genauen Lokalisierung \\
+        \addlinespace
+        GEB\_Q & Hochwasser Ergebnis \\
+        \addlinespace
+        AEP & Jährliche Überschreitungswahrscheinlichkeit \\
+        \addlinespace
+        Überschwemmung Tiefe & Tiefe der Überschwemmung an dem Punkt \\
+        \addlinespace
+        Überschwemmungsrisiko Stufe & Stufe des Überschwemmungsrisikos \\
+        \addlinespace
+        Energieklasse & Energieeffizienzklasse der Immobilie \\
+        \addlinespace
+        Quadratmeterpreise & Preis pro Quadratmeter der Immobilie \\
+        \addlinespace
+        Wohnfläche & Gesamte Wohnfläche der Immobilie in Quadratmetern \\
+        \addlinespace
+        Aktueller Immobilienwert & Der aktuelle Wert der Immobilie \\
+        \addlinespace        Aktuelles LTV & Aktuelles Verhältnis von Darlehen zu Wert (Loan-to-Value) \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
 \subsection{Physische Risiko}
 Die Hochwasserrisikostufen im erstellten Portfolio sind wie folgt verteilt: 1 hohes, 17 mittlere, 12 niedrige und 3823 sehr niedrige Risiken. Diese Risikostufeverteilung wird in Abbildung \ref{fig:riskostufe} graphisch dargestellt und visualisiert.
 \begin{figure}[htbp]

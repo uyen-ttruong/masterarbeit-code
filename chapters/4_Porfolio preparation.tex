@@ -1,5 +1,5 @@
 %cSpell:disable
-\section{Portfoliostrukturierung und Datenanalyse}
+\section{Portfoliostrukturierung und Datenanalyse}\label{sec:createportfolio}
 
 Im Rahmen dieses Kapitels wird die Methodik zur Generierung eines repräsentativen Musterportfolios erläutert, das als Grundlage für die Prognose klimabedingter Schäden dient. Trotz des umfangreichen Datenbestands der Finanzinstitute über ihre Kreditengagements hat die limitierte Zugänglichkeit zu detaillierten Datensätzen bisher umfassende empirische Analysen der Kreditrisiken eingeschränkt. Zur Überwindung dieser Limitation wird ein Musterportfolio konstruiert, das eine fundierte Approximation der erwarteten Verluste aus Wohnimmobilienkrediten ermöglicht. Die Quantifizierung essenzieller Risikoparameter basiert primär auf dem Geschäftsbericht der Münchener Hypothekenbank \parencite{MuenchenerHyp2023}, ergänzt durch ausdifferenzierte Datensätze zur Distribution von Energieeffizienzklassen und regionalen Verteilung von Wohneinheiten. Diese Datenaggregation bildet die Basis für eine detaillierte Analyse der Anfälligkeit verschiedener Immobilienarten und Standorte gegenüber umweltbedingten Wertänderungen, physischen Risiken sowie Transitionsrisiken. 
 
@@ -32,39 +32,5 @@ Die Entwicklung der Preise für Öl, Gas und CO\textsubscript{2}-Emissionen nach
     \label{fig:ngfs_preis}
 \end{figure}
 \FloatBarrier
-\subsection{Übersicht über das Hypothekenportfolio}
-Nachdem alle genannten Schritte der Datenanalyse abgeschlossen waren, wurde ein realistisches Portfolio von Hypotheken-Immobilien erstellt. Die in Tabelle \ref{tab:objekt-variablen} beschriebenen Objektvariablen bilden die Grundlage. Sie dienen der Berechnung physischer Risiken und Transitionsrisiken im nächsten Abschnitt.
-\begin{table}[htbp]
-    \centering
-    \small
-    \caption{Übersicht über das Hypothekenportfolio und die relevanten Objekt-Variablen}
-    \label{tab:objekt-variablen}
-    \begin{tabularx}{1.0\textwidth}{>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
-        \toprule
-        \textbf{Objekt-Variablen} & \textbf{Erklärung} \\
-        \midrule
-        ID & Identifikationsnummer \\
-        \addlinespace
-        Ort & Ort der Immobilie \\
-        \addlinespace
-        Landkreis & Landkreis der Immobilie \\
-        \addlinespace
-        Geometrie & Geometrische Lage der Immobilie, bestehend aus Breiten- und Längengrad zur Berechnung der Überschwemmungsgefahr an diesem Punkt \\
-        \addlinespace
-        GEB\_Q & Hochwasser Ergeiniss \\
-        \addlinespace
-        Überschwemmung Tiefe & Tiefe der Überschwemmung an dem Punkt \\
-        \addlinespace
-        Überschwemmungsrisiko Stufe & Stufe des Überschwemmungsrisikos \\
-        \addlinespace
-        Energieklasse & Energieeffizienzklasse der Immobilie \\
-        \addlinespace
-        Aktueller Immobilienwert & Der aktuelle Wert der Immobilie \\
-        \addlinespace
-        Aktuelles LTV & Aktuelles Verhältnis von Darlehen zu Wert (Loan-to-Value) \\
-
-        \bottomrule
-    \end{tabularx}
-\end{table}
 
 
