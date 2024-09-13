@@ -39,7 +39,26 @@ Die Erzeugung eines realitätsnahen Datensatzes ist ein wesentlicher Schritt in 
         \bottomrule
     \end{tabularx}
 \end{table}
-
+Der Datensatz umfasst 3853 Datenpunkte, verteilt auf 1522 Orte und 71 Landkreise in Bayern. Diese Verteilung ist plausibel und entspricht den Annahmen basierend auf der bayerischen Bevölkerungsdichte. Die Verteilung der Energieklassen der Datenpunkte stimmt mit der bayerischen Energieklassenverteilung laut Tabelle \ref{tab:epc_bayern} überein. Ähnlich orientiert sich die LtV-Verteilung an Tabelle \ref{tab:beleihungsauslauf2023}. Unter Berücksichtigung dieser Daten, der durchschnittlichen Darlehensgröße für Wohnimmobilien von ca. 163.700,00 €, der ortsspezifischen Quadratmeterpreise sowie einer Mindest-Wohnfläche von 80 m², ergeben sich folgende Resultate:
+\begin{table}[htbp]
+    \centering
+    \caption{Statistische Zusammenfassung der Hypothekendaten}
+    \label{tab:hypothekenuberblick}
+    \small
+    \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}m{3.5cm}*{5}{>{\centering\arraybackslash}X}} 
+    \toprule
+    Metrik & Mean & Median & Min & Max & Std \\
+    \midrule
+    Preis/m² & 4.727,16 & 3.907,00 & 1.318,00 & 10.186,00 & 2.539,12 \\
+    Wohnfläche & 140,39 & 116,95 & 98,89 & 250,00 & 50,32 \\
+    Akt. Immnwert & 471.408,79 & 349.860,00 & 79.080,00 & 4.465.259,39 & 383.651,85 \\
+    Akt. LtV & 0,5200 & 0,4900 & 0,4000 & 0,8000 & 0,1000 \\
+    Darlehenbetrag & 163.700,00 & 143.976,45 & 27.395,06 & 508.290,10 & 81.859,41 \\
+    \bottomrule
+    \end{tabularx}
+\end{table}
+\FloatBarrier
+Tabelle \ref{tab:hypothekenuberblick} bietet einen umfassenden Überblick über die wesentlichen Finanzkennzahlen und statistischen Merkmale des analysierten Hypothekenportfolios. Die Darlehenbeträge, die im Mittel bei 163.700 € liegen, entsprechen genau der durchschnittlichen Darlehensgröße für Wohnimmobilien von Münchener Hypothekenbank. Die Quadratmeterpreise variieren erheblich, mit einem Durchschnitt von 4.727,16 € und einer Standardabweichung von 2.539,12 €, was die Diversität des Immobilienmarktes widerspiegelt. Die Wohnflächen im Portfolio reichen von 98,89 m² bis 250,00 m², mit einem Durchschnitt von 140,39 m² und einer Standardabweichung von 50,32 m². Diese Verteilung zeigt, dass das Portfolio verschiedene Wohnungsgrößen umfasst, wobei der Schwerpunkt auf mittelgroßen bis größeren Wohneinheiten liegt. Der durchschnittliche aktuelle Immobilienwert liegt bei 471.408,79 €. In Verbindung mit dem durchschnittlichen Beleihungsauslauf von 52\% lässt sich auf eine konservative Kreditvergabepraxis schließen. Dieses LTV-Verhältnis deutet nicht nur auf eine vorsichtige Risikoeinschätzung seitens der Bank hin, sondern auch auf eine solide Eigenkapitalbasis der Kreditnehmer. Die Spannbreite der Darlehensbeträge, von 27.395,06 € bis 508.290,10 €, zeigt zudem, dass das Portfolio sowohl kleinere als auch größere Finanzierungen umfasst, was zur Risikodiversifizierung beiträgt. Zusammenfassend lässt sich sagen, dass diese Daten ein ausgewogenes und realistisches Hypothekenportfolio repräsentieren,
 \subsection{Physische Risiko}
 Die Hochwasserrisikostufen im erstellten Portfolio sind wie folgt verteilt: 1 hohes, 17 mittlere, 12 niedrige und 3823 sehr niedrige Risiken. Diese Risikostufeverteilung wird in Abbildung \ref{fig:riskostufe} graphisch dargestellt und visualisiert.
 \begin{figure}[htbp]
