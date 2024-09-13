@@ -1,20 +1,22 @@
 
 \section{Methodik}
 \subsection{Datenaufbereitungsprozess}
-Der Datenaufbereitungsprozess beginnt mit Grunddaten zu Quadratmeterpreisen. Es wird ein Datensatz generiert, der drei Anforderungen erfüllt. Erstens: Die Wohnfläche für Eigenheime liegt zwischen 80 und 200 Quadratmetern. Zweitens: Die LTV-Verteilung ähnelt der der Münchener Hypothekenbank mit einem Durchschnitt von etwa 60\%. Drittens: Der durchschnittliche Darlehensbetrag nähert sich 163.700 Euro an. Alle Werte werden gemäß Berechnungsformeln ermittelt:
+Die Vorbereitung der Daten beginnt mit den Basisinformationen zu Quadratmeterpreisen. Es wird ein Datensatz generiert, der drei Anforderungen erfüllt. Erstens: Die Wohnfläche für Eigenheime liegt zwischen 80 und 200 Quadratmetern. Zweitens: Die LTV-Verteilung ähnelt der der Münchener Hypothekenbank mit einem Durchschnitt von etwa 60\%. Drittens: Der durchschnittliche Darlehensbetrag nähert sich 163.700 € an. Alle Werte werden gemäß Berechnungsformeln ermittelt:
 \begin{equation}
     \text{Immobilienwert} = \text{Quadratmeterpreis} \cdot \text{Wohnfläche}
-    \end{equation}
-    \begin{equation}
-        \text{Darlehensbetrag} = \text{Immobilienwert} \cdot \text{aktuelles\_LtV}
-    \end{equation}
+\end{equation}
+\begin{equation}
+    \text{Darlehensbetrag} = \text{Immobilienwert} \cdot \text{aktuelles\_LtV}
+\end{equation}
+Abbildung \ref{fig:flowchart} visualisiert diesen Datenaufbereitungsprozess. Der Datenaufbereitungsprozess beginnt mit dem Einlesen einer CSV-Datei, die bereits Immobilien-IDs, Geometriedaten, Überschwemmungsrisikoinformationen, Energieklassen und Quadratmeterpreise enthält. Anschließend wird eine Spalte \enquote{wohnflaeche} erstellt, gefolgt von der Generierung einer Spalte \enquote{aktuelles\_LtV}. Der nächste Schritt beinhaltet die Berechnung des \enquote{aktuellen\_Immobilienwerts}. Ein kritischer Entscheidungspunkt folgt, bei dem geprüft wird, ob der LtV-Mittelwert kleiner als 60\% ist. Falls ja, werden die LtV-Werte angepasst. Andernfalls wird ohne Anpassung fortgefahren. Danach wird die Spalte \enquote{Darlehensbetrag} berechnet.
 
-Abbildung \ref{fig:folowchart} visualisiert diesen Datenaufbereitungsprozess. Der Prozess startet mit dem Einlesen einer CSV-Datei. Diese enthält Immobilien-ID, Geometrie, Überschwemmungsrisiko, Energieklasse und Quadratmeterpreise. Es folgt die Erstellung und Bearbeitung verschiedener Spalten. Mehrere Berechnungsschritte sind involviert. Zwei Entscheidungspunkte betreffen den LTV-Mittelwert und den Darlehensbetrag. Je nach Ergebnis werden unterschiedliche Aktionen ausgeführt. Der Prozess endet mit der Speicherung in einer neuen CSV-Datei. Abschließend wird der endgültige Mittelwert des Darlehensbetrags überprüft. Das Diagramm zeigt einen strukturierten Datenverarbeitungsablauf zur Immobilienbewertung.
+Der zweite Entscheidungspunkt überprüft, ob der Darlehensbetrag-Mittelwert gleich 163.700 € ist. Wenn nicht, wird die Wohnfläche angepasst und eine Neuberechnung von \enquote{aktuellen\_Immobilienwert} und \enquote{Darlehensbetrag} durchgeführt. Bei Erfüllung der Bedingung wird der Prozess ohne Änderungen fortgesetzt. Die letzten Schritte umfassen die Überprüfung der Formeln, das Speichern der Ergebnisse in einer neuen CSV-Datei und abschließend die Prüfung des endgültigen Mittelwerts des Darlehensbetrags. Dieser strukturierte Ablauf gewährleistet eine präzise und konsistente Datenaufbereitung für die Immobilienbewertung.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.3\textwidth]{figures/flowchardatatensatz.png}
     \caption{Prozessablauf Immobilienwertberechnung. Quelle: Eigene Darstellung}
-    \label{fig:folowchart}
+    \label{fig:flowchart}
 \end{figure}
 
 \subsection{Quantifizierung physischer Risiken}
