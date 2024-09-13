@@ -100,27 +100,34 @@ Nach der Berechnung der Überflutungstiefe kann durch den Vergleich mit der Scha
     \label{fig:schadenwert}
 \end{figure}
 \FloatBarrier
-
-Die Tabelle \ref{tab:hypothekenstatistiken} ist eine Zusammenfassung der Berechnungsergebnisse von Immobilienschäden, neuen LtV und RWA.
-
-\begin{table}[htbp]
+In der folgenden Abbildung \ref{fig:schadenereignis} wird der prozentuale Gesamtschadenwert im Vergleich zum Gesamtimmobilienwert im Falle des Eintritts eines Schadensereignisses dargestellt. Abbildung \ref{fig:schadenereignis_jahr} zeigt den prozentualen Gesamtschadenwert im Vergleich zum Gesamtimmobilienwert, wenn ein Schadensereignis innerhalb eines Jahres eintritt.
+\begin{figure}[H]
     \centering
-    \caption{Hypothekenstatistik unter Berücksichtigung von Hochwasserschäden}
-    \label{tab:hypothekenstatistiken}
-    \small
-    \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}m{3.5cm}*{5}{>{\centering\arraybackslash}X}} 
-    \toprule
-    Metrik & Mean & Median & Min & Max & Std \\
-    \midrule
-    Akt. LtV & 0,4331 & 0,3400 & 0,1200 & 0,7100 & 0,1953 \\
-    Neue LtV & 0,4785 & 0,5249 & 0,1220 & 0,7650 & 0,2092 \\
-    Akt. ImmWert & 475.937,88 & 346.735,06 & 290.946,02 & 1.782.375,74 & 401.402,81 \\
-    Neu. ImmWert & 440.379,85 & 308.751,00 & 267.372,00 & 1.728.904,47 & 396.910,80 \\
-    Neue RWA & 43.140,48 & 42.174,46 & 15.015,81 & 72.381,12 & 20.672,58 \\
-    Akt. RWA & 41.952,93 & 40.939,72 & 15.015,81 & 72.381,12 & 20.879,41 \\
-    \bottomrule
-    \end{tabularx}
-\end{table}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/roundchartsloss.png}
+        \caption{Prozentualer Gesamtschaden am Immobilienwert im Schadensfall}
+        \label{fig:schadenereignis}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/roundchartloss1year.png}
+        \caption{Prozentualer Gesamtschaden am Immobilienwert im Jahresschadensfall}
+        \label{fig:schadenereignis_jahr}
+    \end{minipage}
+\end{figure}
+
+
+Abbildung \ref{fig:schadenLtV} vergleicht den aktuellen Beleihungsauslauf mit dem Beleihungsauslauf nach Eintritt eines Schadensereignisses.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/compareltv.png}
+    \caption{Vergleich des aktuellen und neuen Beleihungsauslaufs nach Schadenseintritt. Quelle: Eigene Darstellung}
+    \label{fig:schadenLtV}
+\end{figure}
+\FloatBarrier
 
 
 

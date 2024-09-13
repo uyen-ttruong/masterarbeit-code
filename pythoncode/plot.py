@@ -128,3 +128,44 @@ plt.gca().xaxis.set_major_locator(plt.MaxNLocator(10))  # Giới hạn số nhã
 
 plt.tight_layout(rect=[0, 0.03, 1, 0.95])
 plt.show()
+
+#Tạo biểu đồ cột so sánh RWA cũ và RWA mới với đường nối các đỉnh cột
+plt.figure(figsize=(16, 8))
+
+# Vẽ biểu đồ cột cho RWA cũ
+bar_width = 0.4
+index = np.arange(len(df_damage))
+
+plt.bar(index, df_damage['darlehenbetrag'] * df_damage['Risikogewicht'], 
+        bar_width, label='RWA cũ', color='blue')
+
+# Vẽ biểu đồ cột cho RWA mới với độ lệch
+plt.bar(index + bar_width, df_damage['Neue RWA'], 
+        bar_width, label='RWA mới', color='orange')
+
+# Vẽ đường nối các đỉnh cột
+plt.plot(index + bar_width / 2, df_damage['darlehenbetrag'] * df_damage['Risikogewicht'], 
+         '-o', color='blue', markersize=5, label='Line RWA cũ')
+plt.plot(index + bar_width / 2, df_damage['Neue RWA'], 
+         '-o', color='orange', markersize=5, label='Line RWA mới')
+
+# Đặt tên cho các cột
+plt.xticks(index + bar_width / 2, df_damage.index, rotation=45, ha='right')
+
+# Thêm tiêu đề và nhãn
+plt.title('Vergleich zwischen altem und neuem RWA')
+plt.xlabel('Immobilien ID', labelpad=10)
+plt.ylabel('RWA (in Euro)', labelpad=10)
+
+# Định dạng trục y theo Euro
+plt.gca().yaxis.set_major_formatter(FuncFormatter(format_euro))
+
+# Thêm chú thích và lưới
+plt.legend()
+plt.grid(True, axis='y')
+
+# Tinh chỉnh bố cục
+plt.tight_layout()
+
+# Hiển thị biểu đồ
+plt.show()
