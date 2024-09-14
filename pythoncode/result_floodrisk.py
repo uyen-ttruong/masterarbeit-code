@@ -103,7 +103,7 @@ print(total_schadensfaktor_value)
 print(total_immobilienwert)
 print(df_results['aktueller_immobilienwert'].sum())
 
-# Tạo biểu đồ hình quạt cho tổng thiệt hại dựa trên aktueller immobilienwert và schadenfaktor
+# Tạo biểu đồ hình quạt cho tổng thiệt hại dựa trên aktueller immobilienwert và schadenwert
 plt.figure(figsize=(8, 8))
 
 # Tạo dữ liệu cho biểu đồ
