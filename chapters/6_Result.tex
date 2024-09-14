@@ -62,21 +62,20 @@ Als Ergebnis entstand ein umfassender Datensatz, dessen Grundlage die in Tabelle
 \end{table}
 \FloatBarrier
 Der Datensatz umfasst 3853 Datenpunkte, verteilt auf 1522 Orte und 71 Landkreise in Bayern. Diese Verteilung ist plausibel und entspricht den Annahmen basierend auf der bayerischen Bevölkerungsdichte. Die Verteilung der Energieklassen der Datenpunkte stimmt mit der bayerischen Energieklassenverteilung laut Tabelle \ref{tab:epc_bayern} überein. Ähnlich orientiert sich die LtV-Verteilung an Tabelle \ref{tab:beleihungsauslauf2023}.
-
 \begin{table}[htbp]
     \centering
     \caption{Statistische Zusammenfassung der Hypothekendaten}
     \label{tab:hypothekenuberblick}
     \small
-    \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}m{3.5cm}*{5}{>{\centering\arraybackslash}X}} 
+    \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}m{3.5cm}*{5}{>{\centering\arraybackslash}X}}
     \toprule
     Metrik & Mean & Median & Min & Max & Std \\
     \midrule
-    Preis/m² & 4.727,16 & 3.907,00 & 1.318,00 & 10.186,00 & 2.539,12 \\
-    Wohnfläche & 140,39 & 116,95 & 98,89 & 250,00 & 50,32 \\
-    Akt. Immnwert & 471.408,79 & 349.860,00 & 79.080,00 & 4.465.259,39 & 383.651,85 \\
-    Akt. LtV & 0,5200 & 0,4900 & 0,4000 & 0,8000 & 0,1000 \\
-    Darlehenbetrag & 163.700,00 & 143.976,45 & 27.395,06 & 508.290,10 & 81.859,41 \\
+    Preis/m² & 2.458,57 & 2.032,01 & 685,48 & 5.297,69 & 1.320,59 \\
+    Wohnfläche & 114,40 & 111,78 & 80,00 & 168,23 & 29,14 \\
+    Akt. Immnwert & 281.726,31 & 229.186,05 & 54.838,79 & 889.649,95 & 173.681,59 \\
+    Akt. LtV & 0,5978 & 0,6000 & 0,4200 & 0,7500 & 0,1012 \\
+    Darlehenbetrag & 168.148,10 & 136.034,00 & 26.368,90 & 662.763,36 & 108.638,21 \\
     \bottomrule
     \end{tabularx}
 \end{table}
@@ -132,32 +131,44 @@ Abbildung \ref{fig:schadenLtV} vergleicht den aktuellen Beleihungsauslauf mit de
 
 
 \subsection{Transitionsrisiko}
-In Abschnitt \ref{sec:endenfkt} wurden Berechnungen zur absoluten Wertänderung der Immobilien durchgeführt. Diese Berechnungen wurden für Häuser mit Energieeffizienzklassen unterhalb von A und A+ vorgenommen. Die Analysen ergaben Daten zur jährlichen absoluten Werteentwicklung dieser Immobilien. Zudem wurden verschiedene Szenarien betrachtet. Die folgenden Abbildungen zeigen die absoluten Immobilien-Wertsveränderungen in Abhängigkeit von Zeit und Szenario.
+Abbildung \ref{fig:endpreis_energie} zeigt das Ergebnis der Berechnungen des Endpreises für Energie, basierend auf den NGFS-Szenarien, unter Berücksichtigung der Mehrwert- und Energiesteuern in vier NGFS-Szenarien: Netto-Null, Ungeordnet (Disorderly), Unter 2°C (Below 2 Degrees) und Aktuelle Richtlinien (Current Policies).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/endpreis.png}
+    \caption{Endpreis der Energie mit Mehrwert- und CO2-Steuern nach NGFS-Szenarien. Quelle: Eigene Darstellung}
+    \label{fig:endpreis_energie}
+\end{figure}
+\FloatBarrier
+
+Auf Grundlage des zuvor berechneten Endenergiepreises und der Formel aus Abschnitt \ref{sec:endenfkt} wurde die absolute Wertänderung der Immobilien ermittelt. Diese Berechnungen wurden für Häuser mit Energieeffizienzklassen unterhalb von A und A+ vorgenommen. Die Analysen ergaben Daten zur jährlichen absoluten Werteentwicklung dieser Immobilien. Zudem wurden verschiedene Szenarien betrachtet.und der Formel aus Abschnitt \ref{sec:endenfkt} wurde die absolute Wertänderung der Immobilien ermittelt. Diese Berechnungen wurden für Häuser mit Energieeffizienzklassen unterhalb von A und A+ vorgenommen. Die Analysen ergaben Daten zur jährlichen absoluten Werteentwicklung dieser Immobilien. Zudem wurden verschiedene Szenarien betrachtet.
+
+Die folgenden Abbildungen zeigen die absoluten Immobilien-Wertsveränderungen in Abhängigkeit von Zeit und Szenario.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{figures/Aktuelle Richtlinien_percentage_change_plot.png}
-    \caption{Prozentuale Wertänderung der Immobilien im Szenario Aktuelle Richtlinien.}
+    \caption{Prozentuale Wertänderung der Immobilien im Szenario Aktuelle Richtlinien. Quelle: Eigene Darstellung}
     \label{fig:aktuelle_richtlinien}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{figures/Netto-Null_percentage_change_plot.png}
-    \caption{Prozentuale Wertänderung der Immobilien im Szenario Netto-Null.}
+    \caption{Prozentuale Wertänderung der Immobilien im Szenario Netto-Null. Quelle: Eigene Darstellung}
     \label{fig:netto_null}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{figures/Unter 2°C_percentage_change_plot.png}
-    \caption{Prozentuale Wertänderung der Immobilien im Szenario Unter 2°C.}
+    \caption{Prozentuale Wertänderung der Immobilien im Szenario Unter 2°C. Quelle: Eigene Darstellung}
     \label{fig:unter_2c}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{figures/Ungeordnet_percentage_change_plot.png}
-    \caption{Prozentuale Wertänderung der Immobilien im Szenario Ungeordnet.}
+    \caption{Prozentuale Wertänderung der Immobilien im Szenario Ungeordnet.Quelle: Eigene Darstellung}
     \label{fig:ungeordnet}
 \end{figure}
 

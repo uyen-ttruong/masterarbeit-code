@@ -36,6 +36,7 @@ def calculate_values_detailed(row):
     return pd.Series({
         'Neuer Immobilienwert': new_immobilienwert,
         'Neue LtV': new_LtV,
+         'Berechnetes Schaden': immobilienschaden,
         'Berechnetes altes LtV': calculated_old_LtV
     })
 
@@ -55,6 +56,7 @@ for _, row in unusual_cases.iterrows():
     print(f"  Neuer Immobilienwert: {row['Neuer Immobilienwert']:.2f}")
     print(f"  Darlehenbetrag: {row['darlehenbetrag']:.2f}")
     print(f"  Schadensfaktor: {row['Schadensfaktor']:.4f}")
+    print(f"  Berechnetes Schaden: {row['Berechnetes Schaden']:.4f}")
     print(f"  Altes LtV (aus Daten): {row['aktuelles_LtV']:.4f}")
     print(f"  Berechnetes altes LtV: {row['Berechnetes altes LtV']:.4f}")
     print(f"  Neues LtV: {row['Neue LtV']:.4f}")
