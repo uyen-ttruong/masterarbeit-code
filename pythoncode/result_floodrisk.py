@@ -5,8 +5,37 @@ import seaborn as sns
 from matplotlib.ticker import FuncFormatter
 
 # Daten von CSV-Datei lesen
-df = pd.read_csv('data\hypothekendaten_final_with_statistics.csv', delimiter=';')
+df = pd.read_csv('data/hypothekendaten_final_with_statistics.csv', delimiter=';')
 
+# # Đếm số lượng trong cột 'flood_risk'
+# flood_risk_counts = df['flood_risk'].value_counts().sort_index()
+
+# # Màu sắc cho từng cấp độ rủi ro
+# colors = ['red', 'orange', 'yellow', 'green']
+
+# # Tạo biểu đồ
+# plt.figure(figsize=(10, 6))
+# bars = plt.bar(flood_risk_counts.index, flood_risk_counts.values, color=colors)
+
+# # Hiển thị số liệu trên từng cột
+# for bar in bars:
+#     height = bar.get_height()
+#     plt.text(bar.get_x() + bar.get_width() / 2, height, f'{int(height):,}', ha='center', va='bottom', fontsize=12, fontweight='bold')
+
+# # Đặt nhãn trục x và y với font chữ 12
+# plt.xlabel('Risikostufen', fontsize=12)
+# plt.ylabel('Anzahl', fontsize=12)
+
+# # Đặt tỷ lệ log cho trục y để rõ hơn khi có sự chênh lệch lớn giữa các cột
+# plt.yscale('log')
+
+# # Đặt kích thước font cho các giá trị trục
+# plt.xticks(fontsize=12)
+# plt.yticks(fontsize=12)
+
+# # Hiển thị biểu đồ
+# plt.tight_layout()
+# plt.show()
 # ID-Spalte hinzufügen, falls sie nicht vorhanden ist
 if 'ID' not in df.columns:
     df['ID'] = range(1, len(df) + 1)
@@ -91,90 +120,103 @@ df_results = pd.concat([df, df.apply(calculate_values, axis=1)], axis=1)
 # Filtern der Daten, um nur die Zeilen zu behalten, bei denen der Schadensfaktor ungleich 0 ist
 df_damage = df_results[df_results['Schadensfaktor'] != 0].copy()
 
-#plot hinh quat
-# Tính tổng thiệt hại cho từng tài sản: immobilienschaden = immobillienwert * schadenfaktor
-# Tính tổng thiệt hại cho từng tài sản: immobilienschaden = immobillienwert * schadenfaktor
-df_damage['total_schadensfaktor_value'] = df_damage['aktueller_immobilienwert'] * df_damage['Schadensfaktor']
+# #plot hinh quat
+# # Tính tổng thiệt hại cho từng tài sản: immobilienschaden = immobillienwert * schadenfaktor
+# # Tính tổng thiệt hại cho từng tài sản: immobilienschaden = immobillienwert * schadenfaktor
+# df_damage['total_schadensfaktor_value'] = df_damage['aktueller_immobilienwert'] * df_damage['Schadensfaktor']
 
-# Tổng giá trị thiệt hại từ schadenfaktor
-total_schadensfaktor_value = df_damage['total_schadensfaktor_value'].sum()
-total_immobilienwert = df_damage['aktueller_immobilienwert'].sum()
-print(total_schadensfaktor_value)
-print(total_immobilienwert)
-print(df_results['aktueller_immobilienwert'].sum())
+# # Tổng giá trị thiệt hại từ schadenfaktor
+# total_schadensfaktor_value = df_damage['total_schadensfaktor_value'].sum()
+# total_immobilienwert = df_damage['aktueller_immobilienwert'].sum()
+# print(total_schadensfaktor_value)
+# print(total_immobilienwert)
+# print(df_results['aktueller_immobilienwert'].sum())
 
-# Tạo biểu đồ hình quạt cho tổng thiệt hại dựa trên aktueller immobilienwert và schadenwert
-plt.figure(figsize=(8, 8))
+# # Tạo biểu đồ hình quạt cho tổng thiệt hại dựa trên aktueller immobilienwert và schadenwert
+# plt.figure(figsize=(8, 8))
 
-# Tạo dữ liệu cho biểu đồ
-labels = ['Gesamtschadenwert', '']  # Đổi thành cụm từ học thuật hơn
-sizes = [total_schadensfaktor_value, total_immobilienwert - total_schadensfaktor_value]
-colors = ['#E9C46A', '#2A9D8F']  # Đổi vị trí màu vàng và xanh
+# # Tạo dữ liệu cho biểu đồ
+# labels = ['Gesamtschadenwert', '']  # Đổi thành cụm từ học thuật hơn
+# sizes = [total_schadensfaktor_value, total_immobilienwert - total_schadensfaktor_value]
+# colors = ['#E9C46A', '#2A9D8F']  # Đổi vị trí màu vàng và xanh
 
-# Tạo biểu đồ với đường viền đậm và điều chỉnh khoảng cách label, pctdistance
-wedges, texts, autotexts = plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%',
-                                   startangle=140, wedgeprops=dict(edgecolor='black', linewidth=2),
-                                   pctdistance=0.85, labeldistance=1.1)
+# # Tạo biểu đồ với đường viền đậm và điều chỉnh khoảng cách label, pctdistance
+# wedges, texts, autotexts = plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%',
+#                                    startangle=140, wedgeprops=dict(edgecolor='black', linewidth=2),
+#                                    pctdistance=0.85, labeldistance=1.1)
 
-# Thiết lập font chữ và kích thước
-for text in texts + autotexts:
-    text.set_fontsize(12)
+# # Thiết lập font chữ và kích thước
+# for text in texts + autotexts:
+#     text.set_fontsize(12)
 
-# Hiển thị biểu đồ
-plt.axis('equal')
-plt.tight_layout()
-plt.show()
+# # Hiển thị biểu đồ
+# plt.axis('equal')
+# plt.tight_layout()
+# plt.show()
 
-# Tính tổng thiệt hại trong một năm (EAI đã được tính dựa trên schadenfaktor)
-total_schaden_pro_jahr = df_damage['EAI'].sum()
+# # Tính tổng thiệt hại trong một năm (EAI đã được tính dựa trên schadenfaktor)
+# total_schaden_pro_jahr = df_damage['EAI'].sum()
 
-# Tạo biểu đồ hình quạt cho tổng thiệt hại dựa trên EAI trong 1 năm
-plt.figure(figsize=(8, 8))
+# # Tạo biểu đồ hình quạt cho tổng thiệt hại dựa trên EAI trong 1 năm
+# plt.figure(figsize=(8, 8))
 
-# Tạo dữ liệu cho biểu đồ
-labels = ['Gesamtschadenwert (1 Jahr)', '']  # Đổi thành cụm từ học thuật hơn
-sizes = [total_schaden_pro_jahr, total_immobilienwert - total_schaden_pro_jahr]
-colors = ['#E9C46A', '#2A9D8F']  # Sử dụng màu sắc giống biểu đồ 1
+# # Tạo dữ liệu cho biểu đồ
+# labels = ['Gesamtschadenwert (1 Jahr)', '']  # Đổi thành cụm từ học thuật hơn
+# sizes = [total_schaden_pro_jahr, total_immobilienwert - total_schaden_pro_jahr]
+# colors = ['#E9C46A', '#2A9D8F']  # Sử dụng màu sắc giống biểu đồ 1
 
-# Tạo biểu đồ với đường viền đậm và điều chỉnh khoảng cách label, pctdistance
-wedges, texts, autotexts = plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%',
-                                   startangle=140, wedgeprops=dict(edgecolor='black', linewidth=2),
-                                   pctdistance=1.1, labeldistance=1.5)
+# # Tạo biểu đồ với đường viền đậm và điều chỉnh khoảng cách label, pctdistance
+# wedges, texts, autotexts = plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%',
+#                                    startangle=140, wedgeprops=dict(edgecolor='black', linewidth=2),
+#                                    pctdistance=1.1, labeldistance=1.5)
 
-# Thiết lập font chữ và kích thước
-for text in texts + autotexts:
-    text.set_fontsize(12)
+# # Thiết lập font chữ và kích thước
+# for text in texts + autotexts:
+#     text.set_fontsize(12)
 
-# Hiển thị biểu đồ
-plt.axis('equal')
-plt.tight_layout()
-plt.show()
+# # Hiển thị biểu đồ
+# plt.axis('equal')
+# plt.tight_layout()
+# plt.show()
 # # Formatierungsfunktion für Euro
 # def format_euro(x, p):
 #     return f"{x:,.0f} €".replace(",", ".")
 
 # # Plot 1: Verteilung des Immobilienschadens
+# def format_euro(x, pos):
+#     """ Định dạng số thành dạng Euro với dấu chấm phân tách ngàn và ký hiệu €"""
+#     return f"{x:,.0f} €".replace(",", ".")
 # plt.figure(figsize=(16, 8))
 # sns.histplot(df_damage['Immobilienschaden'], kde=True, bins=20, color='skyblue')
 
 # mean_value = df_damage['Immobilienschaden'].mean()
 # median_value = df_damage['Immobilienschaden'].median()
 
+# # Vẽ các đường thể hiện giá trị mean và median với màu sắc tươi sáng
 # plt.axvline(mean_value, color='green', linestyle='--', label=f'Mean: {mean_value:,.2f} €'.replace(",", "."))
 # plt.axvline(median_value, color='red', linestyle='-.', label=f'Median: {median_value:,.2f} €'.replace(",", "."))
 
-# plt.legend()
-# plt.title('Verteilung des Immobilienschadens')
-# plt.xlabel('Immobilienschaden (in Euro)', labelpad=10)
-# plt.ylabel('Häufigkeit')
+# # Hiển thị chú thích
+# plt.legend(fontsize=12)
 
+# # Thiết lập nhãn trục x và y với font chữ 12
+# plt.xlabel('Immobilienschaden (in Euro)', fontsize=12, labelpad=10)
+# plt.ylabel('Häufigkeit', fontsize=12)
+
+# # Định dạng trục x theo dạng Euro
 # plt.gca().xaxis.set_major_formatter(FuncFormatter(format_euro))
+
+# # Hiển thị lưới và chỉnh lại nhãn trục x
 # plt.grid(True)
-# plt.xticks(rotation=45, ha='right')
+# plt.xticks(rotation=45, ha='right', fontsize=12)
+# plt.yticks(fontsize=12)
 # plt.gca().xaxis.set_major_locator(plt.MaxNLocator(10))
 
+# # Tinh chỉnh bố cục
 # plt.tight_layout(rect=[0, 0.03, 1, 0.95])
-# #plt.show()
+
+# # Hiển thị biểu đồ
+# plt.show()
 
 # # Plot 2: Vergleich von RWA
 # plt.figure(figsize=(16, 8))

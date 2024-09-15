@@ -1,160 +1,85 @@
-import pandas as pd
+import matplotlib.pyplot as plt 
 import numpy as np
-import matplotlib.pyplot as plt
-import locale
 
-locale.setlocale(locale.LC_ALL, 'de_DE.UTF-8')
-# Daten laden
-try:
-    df = pd.read_csv('data/hypothekendaten_final_with_id.csv', delimiter=';')
-    print("Daten erfolgreich geladen.")
-except Exception as e:
-    print(f"Fehler beim Laden der Daten: {e}")
-    exit()
-
-# Datenvorverarbeitung (wie zuvor)
-numeric_columns = ['wohnflaeche', 'aktueller_immobilienwert', 'darlehenbetrag', 'aktuelles_LtV', 'Risikogewicht']
-for col in numeric_columns:
-    if col in df.columns:
-        if df[col].dtype == 'object':
-            df[col] = df[col].str.replace(',', '.')
-        df[col] = pd.to_numeric(df[col], errors='coerce')
-
-energieklassen = ['B', 'C', 'D', 'F', 'G', 'H']
-df = df[df['Energieklasse'].isin(energieklassen)]
-
-# Energieverbrauch für jede Klasse
-energieverbrauch = {
-    'B': 62.5, 'C': 87.5, 'D': 115, 'F': 180, 'G': 225, 'H': 275
+# Daten
+jahre = [2020, 2025, 2030, 2035, 2040, 2045, 2050]
+net_zero = {
+    'gas': [6.22, 6.59, 7.16, 7.66, 8.21, 9.25, 9.8],
+    'öl': [14.97, 15.33, 15.77, 16.07, 16.54, 17.76, 17.65],
+    'co2_steuer': [0, 25.2, 117.98, 230.48, 450.58, 933.36, 1320]
 }
-df['E_j'] = df['Energieklasse'].map(energieverbrauch)
-
-# Konstanten
-E_Aplus = 30
-r = 0.024
-T = 30
-
-# Energiepreise für verschiedene Szenarien (2020 bis 2050)
-energiepreise = {
-    'Netto-Null': {2020: 0.0623, 2050: 0.3389},
-    'Ungeordnet': {2020: 0.0581, 2050: 0.2593},
-    'Unter 2°C': {2020: 0.0598, 2050: 0.1622},
-    'Aktuelle Richtlinien': {2020: 0.0581, 2050: 0.0594}
+disorderly = {
+    'gas': [6.22, 6.27, 6.16, 6.66, 6.97, 7.34, 7.99],
+    'öl': [14.97, 14.99, 15.01, 15.6, 15.75, 15.44, 14.89],
+    'co2_steuer': [0, 0, 0, 64.35, 165.33, 392.87, 984.33]
+}
+below_2 = {
+    'gas': [6.22, 6.56, 6.77, 7, 7.23, 7.54, 7.94],
+    'öl': [14.97, 15.29, 15.54, 15.75, 15.86, 15.88, 15.62],
+    'co2_steuer': [0, 4.42, 53.29, 102.24, 173.77, 287.96, 485.69]
+}
+current_policies = {
+    'gas': [6.22, 6.27, 6.16, 6.17, 6.3, 6.3, 6.35],
+    'öl': [14.97, 14.99, 15.01, 15.13, 15.35, 15.55, 15.4],
+    'co2_steuer': [0, 0, 0, 0, 0, 0, 0]
 }
 
-# Funktion zur Berechnung des Risikogewichts basierend auf LtV
-def get_neue_risikogewicht(ltv):
-    if ltv <= 0.50:
-        return 0.20
-    elif 0.50 < ltv <= 0.60:
-        return 0.25
-    elif 0.60 < ltv <= 0.80:
-        return 0.30
-    elif 0.80 < ltv <= 0.90:
-        return 0.40
-    elif 0.90 < ltv <= 1.00:
-        return 0.50
-    else:
-        return 0.70
+# Funktion zur Berechnung des Endenergie-Preises
+def endenergie_preis_berechnen(ölpreis, gaspreis, co2_steuer, wechselkurs):
+    kO = 0.287  # kg CO2/kWh für Öl (κ^O)
+    kG = 0.238  # kg CO2/kWh für Gas (κ^G)
+    gamma = 1700  # kWh/BOE (γ)
+    omega_O = 0.35  # Gewichtung für Öl (ω^O)
+    tau = 0.19  # Mehrwert- und Energiesteuer (τ_t)
 
-# Funktion zur Berechnung neuer Werte für ein bestimmtes Jahr
-def neue_werte_berechnen(zeile, PE_0, PE_t, jahr):
-    try:
-        E_j = float(zeile['E_j'])
-        wohnflaeche = float(zeile['wohnflaeche'])
-        aktueller_immobilienwert = float(zeile['aktueller_immobilienwert'])
-        darlehenbetrag = float(zeile['darlehenbetrag'])
-        old_RWA = darlehenbetrag * float(zeile.get('Risikogewicht', 0))
+    # Berechnung der Komponenten nach der gegebenen Formel:
+    PO_t = (kO * co2_steuer / 1000) + (ölpreis / (wechselkurs * gamma))  # P^O_t
+    PG_t = (kG * co2_steuer / 1000) + (gaspreis / (wechselkurs * gamma))  # P^G_t
+    
+    P_t = (1 + tau) * (omega_O * PO_t + (1 - omega_O) * PG_t)  # Endpreis P_t
+    
+    return P_t
 
-        delta_EC_rel = (E_j - E_Aplus) * (PE_t - PE_0) * wohnflaeche
-        delta_P = -delta_EC_rel * ((1 - (1 + r)**-(2050-jahr)) / r)
-        neuer_immobilienwert = aktueller_immobilienwert + delta_P
-        neuer_beleihungsauslauf = darlehenbetrag / neuer_immobilienwert
+# Angenommener Wechselkurs (USD/EUR)
+wechselkurs = 0.65
+
+# Berechnung der Endenergie-Preise
+endpreise = {szenario: [] for szenario in ['net_zero', 'disorderly', 'below_2', 'current_policies']}
+
+for szenario in endpreise.keys():
+    for jahr in range(len(jahre)):
+        ölpreis = eval(f"{szenario}['öl'][{jahr}]") * 5.8  # Umrechnung von GJ auf BOE
+        gaspreis = eval(f"{szenario}['gas'][{jahr}]") * 5.8  # Umrechnung von GJ auf BOE
+        co2_steuer = eval(f"{szenario}['co2_steuer'][{jahr}]") * wechselkurs
         
-        neue_risikogewicht = get_neue_risikogewicht(neuer_beleihungsauslauf)
-        new_RWA = darlehenbetrag * neue_risikogewicht
-        
-        return pd.Series({
-            'Energieklasse': zeile['Energieklasse'],
-            'new_RWA': new_RWA
-        })
-    except Exception as e:
-        print(f"Fehler in neue_werte_berechnen: {e}")
-        return pd.Series({
-            'Energieklasse': np.nan,
-            'new_RWA': np.nan
-        })
+        preis = endenergie_preis_berechnen(ölpreis, gaspreis, co2_steuer, wechselkurs)
+        endpreise[szenario].append(preis)
 
-print("Beginne mit der Berechnung für die Szenarien von 2020 bis 2050.")
+# Diagramm erstellen
+plt.figure(figsize=(10, 6))
 
-# Ergebnisse für jedes Szenario
-all_scenarios_rwa = {}
+# Đặt màu cho từng đường dựa trên hình bạn đã cung cấp
+plt.plot(jahre, endpreise['net_zero'], label='Netto-Null', color='blue', linewidth=2)
+plt.plot(jahre, endpreise['disorderly'], label='Ungeordnet', color='orange', linewidth=2)
+plt.plot(jahre, endpreise['below_2'], label='Unter 2°C', color='green', linewidth=2)
+plt.plot(jahre, endpreise['current_policies'], label='Aktuelle Richtlinien', color='red', linewidth=2)
 
-for szenario, preise in energiepreise.items():
-    print(f"\nVerarbeite Szenario: {szenario}")
-    
-    PE_0 = preise[2020]
-    PE_2050 = preise[2050]
-    
-    gesamt_rwa_jaehrlich = {}
-    
-    for jahr in range(2020, 2051):
-        PE_t = PE_0 + (PE_2050 - PE_0) * (jahr - 2020) / (2050 - 2020)
-        
-        # Anwendung der Berechnung auf jede Zeile
-        df_result = df.apply(lambda zeile: neue_werte_berechnen(zeile, PE_0, PE_t, jahr), axis=1)
-        
-        # Berechnung des Gesamt-RWA für das aktuelle Jahr
-        gesamt_rwa = df_result['new_RWA'].sum()
-        gesamt_rwa_jaehrlich[jahr] = gesamt_rwa
-    
-    # Ausgabe der jährlichen Gesamt-RWA-Werte
-    print(f"\nJährliche Gesamt-RWA-Werte für Szenario {szenario}:")
-    for jahr, rwa in gesamt_rwa_jaehrlich.items():
-        print(f"{jahr}: {rwa:,.2f}")
-    
-    all_scenarios_rwa[szenario] = gesamt_rwa_jaehrlich
+# Điều chỉnh kích thước phông chữ và thêm lưới
+plt.xlabel('Jahr', fontsize=12)
+plt.ylabel('Euro/kWh', fontsize=12)
+plt.legend(fontsize=12)
+plt.grid(True, linestyle=':', alpha=0.7)
+plt.ylim(0, max(max(preise) for preise in endpreise.values()) * 1.1)  # Anpassung der y-Achse
 
+# Điều chỉnh phông chữ cho các giá trị trên trục
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
 
-print("\nBerechnung abgeschlossen. Erstelle Plot...")
+plt.show()
 
-print("\nBerechnung abgeschlossen. Erstelle Plot...")
-
-# Erstellen des Plots mit angepassten Einstellungen
-plt.figure(figsize=(16, 10))  # Noch größere Abbildung
-
-for szenario, rwa_values in all_scenarios_rwa.items():
-    years = list(rwa_values.keys())
-    rwa = [value / 1000 for value in rwa_values.values()]  # Umrechnung in Tausend Euro
-    plt.plot(years, rwa, label=szenario, linewidth=3)  # Noch dickere Linien
-
-plt.xlabel('Jahr', fontsize=24)  # Noch größere Schrift für x-Achsen-Beschriftung
-plt.ylabel('Gesamt RWA (Tausend €)', fontsize=24)  # Noch größere Schrift für y-Achsen-Beschriftung
-
-plt.legend(fontsize=20, loc='upper left')  # Noch größere Schrift in der Legende
-plt.grid(True)
-
-# Noch größere Schrift für Achsenbeschriftungen
-plt.xticks(fontsize=18)
-plt.yticks(fontsize=18)
-
-# Anpassen der y-Achse für bessere Lesbarkeit mit Punkt als Tausendertrennzeichen
-def format_func(value, tick_number):
-    return locale.format_string('%.0f', value, grouping=True)
-
-plt.gca().yaxis.set_major_formatter(plt.FuncFormatter(format_func))
-
-# Vergrößern der Werte auf den Achsen
-plt.tick_params(axis='both', which='major', labelsize=18)
-
-# Anpassen der x-Achse für bessere Lesbarkeit
-plt.xticks(range(2020, 2051, 5))  # Zeige nur alle 5 Jahre an
-
-# Speichern des Plots
-plt.tight_layout()  # Optimiert das Layout
-plt.savefig('gesamt_rwa_plot.png', dpi=300, bbox_inches='tight')  # Höhere Auflösung und enger Rahmen
-print("Plot wurde als 'gesamt_rwa_plot.png' gespeichert.")
-
-plt.close()
-
-print("\nBerechnung und Erstellung des Plots abgeschlossen.")
+# # Werte ausgeben
+# szenarien = ['Current policies', '2 Degrees', 'Disorderly', 'Net Zero']
+# for i, szenario in enumerate(['current_policies', 'below_2', 'disorderly', 'net_zero']):
+#     print(f"\n{szenarien[i]}:")
+#     for j, jahr in enumerate(jahre):
+#         print(f"{jahr}: {endpreise[szenario][j]:.3f}")

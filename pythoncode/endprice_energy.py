@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt 
 import numpy as np
 
 # Daten
@@ -55,22 +55,26 @@ for szenario in endpreise.keys():
         preis = endenergie_preis_berechnen(ölpreis, gaspreis, co2_steuer, wechselkurs)
         endpreise[szenario].append(preis)
 
-print(endpreise)
-# # Diagramm erstellen
-# plt.figure(figsize=(10, 6))
-# plt.plot(jahre, endpreise['current_policies'], label='Current policies', color='blue', linewidth=2)
-# plt.plot(jahre, endpreise['below_2'], label='2 Degrees', color='red', linestyle='--', linewidth=2)
-# plt.plot(jahre, endpreise['disorderly'], label='Disorderly', color='black', linestyle='-.', linewidth=2)
-# plt.plot(jahre, endpreise['net_zero'], label='Net Zero', color='blue', linestyle=':', linewidth=2)
+#print(endpreise)
+# Diagramm erstellen
+plt.figure(figsize=(10, 6))
+plt.plot(jahre, endpreise['current_policies'], label='Current policies', color='blue', linewidth=2)
+plt.plot(jahre, endpreise['below_2'], label='2 Degrees', color='red', linestyle='--', linewidth=2)
+plt.plot(jahre, endpreise['disorderly'], label='Disorderly', color='black', linestyle='-.', linewidth=2)
+plt.plot(jahre, endpreise['net_zero'], label='Net Zero', color='blue', linestyle=':', linewidth=2)
 
-# plt.title('Endenergie-Preis nach NGFS-Szenario')
-# plt.xlabel('Jahr')
-# plt.ylabel('Euro/kWh')
-# plt.legend()
-# plt.grid(True, linestyle=':', alpha=0.7)
-# plt.ylim(0, max(max(preise) for preise in endpreise.values()) * 1.1)  # Anpassung der y-Achse
+# Xóa tiêu đề biểu đồ, điều chỉnh kích thước phông chữ và thêm lưới
+plt.xlabel('Jahr', fontsize=12)
+plt.ylabel('Euro/kWh', fontsize=12)
+plt.legend(fontsize=12)
+plt.grid(True, linestyle=':', alpha=0.7)
+plt.ylim(0, max(max(preise) for preise in endpreise.values()) * 1.1)  # Anpassung der y-Achse
 
-# plt.show()
+# Điều chỉnh phông chữ cho các giá trị trên trục
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+
+plt.show()
 
 # # Werte ausgeben
 # szenarien = ['Current policies', '2 Degrees', 'Disorderly', 'Net Zero']

@@ -7,7 +7,7 @@ print("Bắt đầu chạy script.")
 
 # Dữ liệu
 try:
-    df = pd.read_csv('data/hypothekendaten4.csv', delimiter=';')
+    df = pd.read_csv('data/hypothekendaten_final_with_id.csv', delimiter=';')
     print("Đã tải dữ liệu thành công.")
 except Exception as e:
     print(f"Lỗi khi tải dữ liệu: {e}")
@@ -19,7 +19,10 @@ print(f"Các cột trong DataFrame: {df.columns.tolist()}")
 # Chuyển đổi các cột cần thiết sang kiểu số
 numeric_columns = ['wohnflaeche', 'aktueller_immobilienwert', 'darlehenbetrag', 'aktuelles_LtV']
 for col in numeric_columns:
-    df[col] = pd.to_numeric(df[col].str.replace(',', '.'), errors='coerce')
+    if df[col].dtype == 'object':  # Kiểm tra nếu cột là dạng chuỗi (object)
+        df[col] = pd.to_numeric(df[col].str.replace(',', '.'), errors='coerce')
+    else:
+        df[col] = pd.to_numeric(df[col], errors='coerce')  # Trường hợp cột đã là dạng số nhưng có giá trị lỗi
 
 print("Đã chuyển đổi các cột sang kiểu số.")
 
@@ -131,65 +134,66 @@ for szenario, daten in ergebnisse.items():
         except KeyError as e:
             print(f"Lỗi: Không tìm thấy dữ liệu cho năm {jahr} trong kịch bản {szenario}: {e}")
     
-    print("Bảng kết quả đã được tạo.")
-    print(result_table)  # In DataFrame
-# colors = {
-#     'B': 'red',
-#     'C': 'green',
-#     'D': 'blue',
-#     'F': 'orange',
-#     'G': 'purple',
-#     'H': 'brown'
-# }
-# def plot_scenario(szenario, ergebnisse):
-#     plt.figure(figsize=(12, 8))
+    #print("Bảng kết quả đã được tạo.")
+    #print(result_table)  # In DataFrame
+colors = {
+    'B': 'red',
+    'C': 'green',
+    'D': 'blue',
+    'F': 'orange',
+    'G': 'purple',
+    'H': 'brown'
+}
+plt.rcParams.update({'font.size': 11})
 
-#     # Lặp qua các lớp năng lượng để vẽ dữ liệu
-#     for klasse in energieklassen:
-#         # Kiểm tra nếu dữ liệu tồn tại cho từng lớp
-#         if klasse in ergebnisse[szenario].index:
-#             color = colors[klasse]  # Màu cho lớp hiện tại
+def plot_scenario(szenario, ergebnisse):
+    plt.figure(figsize=(12, 8))
 
-#             # Chỉ vẽ giá trị mới (neuer_immobilienwert)
-#             plt.plot(jahre, ergebnisse[szenario].loc[klasse, [f'durchschnittlicher_neuer_immobilienwert_{jahr}' for jahr in jahre]] / 1000,
-#                      label=f'{klasse}', linestyle='-', marker='o', color=color)
-#         else:
-#             print(f"Keine Daten für Klasse {klasse} im Szenario {szenario}")
+    # Lặp qua các lớp năng lượng để vẽ dữ liệu
+    for klasse in energieklassen:
+        # Kiểm tra nếu dữ liệu tồn tại cho từng lớp
+        if klasse in ergebnisse[szenario].index:
+            color = colors[klasse]  # Màu cho lớp hiện tại
 
-#     # Cài đặt các tham số biểu đồ
-#     plt.xlabel('Jahr')
-#     plt.ylabel('Immobilienwert (in Tausend Euro)')
-#     plt.title(f'Immobilienwertentwicklung für Szenario {szenario}')
-#     plt.legend()
-#     plt.grid(True)
+            # Chỉ vẽ giá trị mới (neuer_immobilienwert)
+            plt.plot(jahre, ergebnisse[szenario].loc[klasse, [f'durchschnittlicher_neuer_immobilienwert_{jahr}' for jahr in jahre]] / 1000,
+                     label=f'{klasse}', linestyle='-', marker='o', color=color)
+        else:
+            print(f"Keine Daten für Klasse {klasse} im Szenario {szenario}")
 
-#     # Hiển thị biểu đồ
-#     plt.show()
-# def plot_percentage_change(szenario, ergebnisse):
-#     plt.figure(figsize=(12, 8))
+    # Cài đặt các tham số biểu đồ, bỏ tiêu đề
+    plt.xlabel('Jahr')
+    plt.ylabel('Immobilienwert (in Tausend Euro)')
+    plt.legend()
+    plt.grid(True)
 
-#     for klasse in energieklassen:
-#         if klasse in ergebnisse[szenario].index:
-#             color = colors[klasse]
+    # Hiển thị biểu đồ
+    plt.show()
+
+def plot_percentage_change(szenario, ergebnisse):
+    plt.figure(figsize=(12, 8))
+
+    for klasse in energieklassen:
+        if klasse in ergebnisse[szenario].index:
+            color = colors[klasse]
             
-#             # Tính phần trăm thay đổi
-#             wertänderung = [ergebnisse[szenario].loc[klasse, f'durchschnittliche_wertänderung_{jahr}'] for jahr in jahre]
-#             percentage_change = [change * 100 for change in wertänderung]  # Chuyển đổi sang phần trăm
+            # Tính phần trăm thay đổi
+            wertänderung = [ergebnisse[szenario].loc[klasse, f'durchschnittliche_wertänderung_{jahr}'] for jahr in jahre]
+            percentage_change = [change * 100 for change in wertänderung]  # Chuyển đổi sang phần trăm
             
-#             plt.plot(jahre, percentage_change, label=f'{klasse}', linestyle='-', marker='o', color=color)
-#         else:
-#             print(f"Keine Daten für Klasse {klasse} im Szenario {szenario}")
+            plt.plot(jahre, percentage_change, label=f'{klasse}', linestyle='-', marker='o', color=color)
+        else:
+            print(f"Keine Daten für Klasse {klasse} im Szenario {szenario}")
 
-#     plt.axhline(y=0, color='r', linestyle='--')  # Thêm đường 0%
-#     plt.xlabel('Jahr')
-#     plt.ylabel('Prozentuale Wertänderung (%)')
-#     plt.title(f'Prozentuale Wertänderung der Immobilien für Szenario {szenario}')
-#     plt.legend()
-#     plt.grid(True)
-#     plt.savefig(f'{szenario}_percentage_change_plot.png')
-#     plt.close()
-# # Gọi hàm để vẽ biểu đồ cho từng kịch bản
-# for szenario in energiepreise.keys():
-#     print(f"Erzeuge Diagramm für Szenario: {szenario}")
-#     #plot_scenario(szenario, ergebnisse)
-#     plot_percentage_change(szenario, ergebnisse)
+    plt.axhline(y=0, color='r', linestyle='--')  # Thêm đường 0%
+    plt.xlabel('Jahr')
+    plt.ylabel('Prozentuale Wertänderung (%)')
+    plt.legend()
+    plt.grid(True)
+    plt.savefig(f'{szenario}_percentage_change_plot.png')
+    plt.close()
+
+# Gọi hàm để vẽ biểu đồ cho từng kịch bản
+for szenario in energiepreise.keys():
+    print(f"Erzeuge Diagramm für Szenario: {szenario}")
+    plot_percentage_change(szenario, ergebnisse)
