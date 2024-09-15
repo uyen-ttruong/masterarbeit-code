@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 from tabulate import tabulate
 
 # Đọc dữ liệu từ file CSV
@@ -41,6 +40,9 @@ def get_risikogewicht(ltv):
     else:
         return 0.70
 
+# Recalculate Risikogewicht based on aktuelles_LtV
+df['Risikogewicht'] = df['aktuelles_LtV'].apply(get_risikogewicht)
+
 # Function to calculate values
 def calculate_values(row):
     E_j = row['aktueller_immobilienwert']
@@ -50,11 +52,15 @@ def calculate_values(row):
     immobilienschaden = E_j * schadenfaktor
     EAI = immobilienschaden * p_I_ij
     new_immobilienwert = E_j - immobilienschaden
+    
+    # Tính toán mới LtV dựa trên tài sản thế chấp mới
     new_LtV = row['darlehenbetrag'] / new_immobilienwert if new_immobilienwert > 0 else np.inf
     
-    risikogewicht = get_risikogewicht(row['aktuelles_LtV'])
+    # Sử dụng Risikogewicht đã được tính lại
+    risikogewicht = row['Risikogewicht']
     neue_risikogewicht = get_risikogewicht(new_LtV)
     
+    # Tính toán RWA
     akt_RWA = row['darlehenbetrag'] * risikogewicht
     new_RWA = row['darlehenbetrag'] * neue_risikogewicht
     RWA_change = (new_RWA / akt_RWA) - 1 if akt_RWA > 0 else np.inf
@@ -65,7 +71,7 @@ def calculate_values(row):
         'Neuer Immobilienwert': new_immobilienwert, 
         'Neue LtV': new_LtV, 
         'Risikogewicht': risikogewicht,
-        'Neue Risikogewicht': neue_risikogewicht, 
+        'Neue Risikogewicht': neue_risikogewicht,  
         'Akt. RWA': akt_RWA,
         'Neue RWA': new_RWA, 
         'RWA Änderung': RWA_change
@@ -80,37 +86,9 @@ df_results = pd.concat([df, results], axis=1)
 # Filter data to keep only rows with non-zero Schadensfaktor
 df_damage = df_results[df_results['Schadensfaktor'] != 0].copy()
 
-# Function to calculate statistics
-def calculate_stats(column):
-    return {
-        'mean': df_damage[column].mean(),
-        'median': df_damage[column].median(),
-        'min': df_damage[column].min(),
-        'max': df_damage[column].max(),
-        'std': df_damage[column].std()
-    }
-
-# Calculate statistics for relevant columns
-columns_to_analyze = ['aktuelles_LtV', 'Neue LtV', 'aktueller_immobilienwert', 'Neuer Immobilienwert', 'Akt. RWA', 'Neue RWA', 'RWA Änderung']
-
-stats = {col: calculate_stats(col) for col in columns_to_analyze}
-
-# Print results
-for col, col_stats in stats.items():
-    print(f"\nStatistics for {col}:")
-    for stat, value in col_stats.items():
-        print(f"{stat}: {value:.4f}")
-
-# Calculate percentage of cases where new values increased
-ltv_increased = (df_damage['Neue LtV'] > df_damage['aktuelles_LtV']).mean() * 100
-immobilienwert_decreased = (df_damage['Neuer Immobilienwert'] < df_damage['aktueller_immobilienwert']).mean() * 100
-rwa_increased = (df_damage['RWA Änderung'] > 0).mean() * 100
-
-print(f"\nPercentage of cases where LtV increased: {ltv_increased:.2f}%")
-print(f"Percentage of cases where Immobilienwert decreased: {immobilienwert_decreased:.2f}%")
-print(f"Percentage of cases where RWA increased: {rwa_increased:.2f}%")
-
-print("\nTop 13 rows of relevant columns:")
+# Calculate sums for Akt. RWA and Neue RWA
+akt_rwa_sum = df_damage['Akt. RWA'].sum()
+neue_rwa_sum = df_damage['Neue RWA'].sum()
 
 # Select the relevant columns and sort by absolute RWA Änderung
 table_data = df_damage[['ID', 'aktuelles_LtV', 'Neue LtV', 'Risikogewicht', 'Neue Risikogewicht', 'Akt. RWA', 'Neue RWA', 'RWA Änderung']].copy()
@@ -124,12 +102,25 @@ table_data['Risikogewicht'] = table_data['Risikogewicht'].map(lambda x: f"{x:.2f
 table_data['Neue Risikogewicht'] = table_data['Neue Risikogewicht'].map(lambda x: f"{x:.2f}")
 table_data['Akt. RWA'] = table_data['Akt. RWA'].map(lambda x: f"{x:,.2f}")
 table_data['Neue RWA'] = table_data['Neue RWA'].map(lambda x: f"{x:,.2f}")
-table_data['RWA Änderung'] = table_data['RWA Änderung'].map(lambda x: f"{x:.2%}")
+table_data['RWA Änderung'] = table_data['RWA Änderung'].map(lambda x: f"{x:.2f}")
 
 # Remove the temporary column used for sorting
 table_data = table_data.drop('Abs RWA Änderung', axis=1)
 
-# Create and print the table
+# Kiểm tra và loại bỏ các cột bị trùng lặp
+table_data = table_data.loc[:, ~table_data.columns.duplicated()]
+
+# Tạo hàng tổng kết với đúng số lượng cột
+sum_row = pd.DataFrame([['Sum', '', '', '', '', f"{akt_rwa_sum:,.2f}", f"{neue_rwa_sum:,.2f}", '']], 
+                       columns=table_data.columns)
+
+# Kết hợp hàng tổng kết với bảng
+table_data = pd.concat([table_data, sum_row], ignore_index=True)
+
+# Tạo bảng kết quả và in ra
 table = tabulate(table_data, headers='keys', tablefmt='pipe', showindex=False)
+print("\nTop 13 rows of relevant columns with RWA sums:")
 print(table)
 
+# Save the new dataset to a CSV file
+df_results.to_csv('new_hypothekendaten_final_with_risikogewicht.csv', sep=';', index=False)

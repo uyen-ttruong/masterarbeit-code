@@ -113,16 +113,40 @@ In der folgenden Abbildung \ref{fig:schadenereignis} wird der prozentuale Gesamt
     \label{fig:schadenereignis_jahr}
 \end{figure}
 
-
-Abbildung \ref{fig:schadenLtV} vergleicht den aktuellen Beleihungsauslauf mit dem Beleihungsauslauf nach Eintritt eines Schadensereignisses.
-
-\begin{figure}[htbp]
+In der folgenden Tabelle \ref{tab:rwa_anderung} sind die Veränderungen des Beleihungsauslaufs und des Risikogewichts infolge eines Schadensereignisses dargestellt.
+\begin{table}[htbp]
     \centering
-    \includegraphics[width=0.5\textwidth]{figures/compareltv.png}
-    \caption{Vergleich des aktuellen und neuen Beleihungsauslaufs nach Schadenseintritt. Quelle: Eigene Darstellung}
-    \label{fig:schadenLtV}
-\end{figure}
-\FloatBarrier
+    \caption{Übersicht der Änderungen von LtV und RWA nach Schadensereignis}
+    \label{tab:rwa_anderung}
+    \footnotesize 
+    \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}m{1.0cm} *{4}{>{\centering\arraybackslash}m{1.3cm}} >{\raggedleft\arraybackslash}m{2.0cm} >{\raggedleft\arraybackslash}m{2.0cm} >{\centering\arraybackslash}m{1.0cm}}
+    \toprule
+    ID & Akt. LtV & Neu LtV & Akt. RW & Neu RW & \makecell{Akt. \\ RWA (€)} & \makecell{Neu \\ RWA (€)} & \(\Delta\) RWA \\
+    \midrule
+    2633 & 0.44 & 0.67 & 0.20 & 0.30 & 26.843,55 & 40.265,32 & 0,50 \\
+    3688 & 0.48 & 0.50 & 0.20 & 0.25 & 38.995,87 & 48.744,84 & 0,25 \\
+    2635 & 0.52 & 0.60 & 0.25 & 0.30 & 60.503,46 & 72.604,15 & 0,20 \\
+    3376 & 0.56 & 0.67 & 0.25 & 0.30 & 36.661,73 & 43.994,08 & 0,20 \\
+    2634 & 0.74 & 0.77 & 0.30 & 0.30 & 57.615,57 & 57.615,57 & 0,00 \\
+    2961 & 0.65 & 0.69 & 0.30 & 0.30 & 117.890,11 & 117.890,11 & 0,00 \\
+    2666 & 0.44 & 0.45 & 0.20 & 0.20 & 63.261,10 & 63.261,10 & 0,00 \\
+    3358 & 0.70 & 0.76 & 0.30 & 0.30 & 40.379,53 & 40.379,53 & 0,00 \\
+    3716 & 0.52 & 0.55 & 0.25 & 0.25 & 32.263,95 & 32.263,95 & 0,00 \\
+    3719 & 0.67 & 0.72 & 0.30 & 0.30 & 45.931,46 & 45.931,46 & 0,00 \\
+    3775 & 0.55 & 0.57 & 0.25 & 0.25 & 31.190,40 & 31.190,40 & 0,00 \\
+    3776 & 0.54 & 0.55 & 0.25 & 0.25 & 61.807,26 & 61.807,26 & 0,00 \\
+    3778 & 0.54 & 0.59 & 0.25 & 0.25 & 43.608,49 & 43.608,49 & 0,00 \\
+    \midrule
+    Sum & & & & & 656.952,48 € & 699.556,26 € &  \\
+    \bottomrule
+    \end{tabularx}
+\end{table}
+
+
+
+
+
+
 
 
 
@@ -140,7 +164,7 @@ Abbildung \ref{fig:endpreis_energie} zeigt das Ergebnis der Berechnungen des End
 Auf Grundlage des zuvor berechneten Endenergiepreises und der Formel aus Abschnitt \ref{sec:endenfkt} wurde die absolute Wertänderung der Immobilien ermittelt. Diese Berechnungen wurden für Häuser mit Energieeffizienzklassen unterhalb von A und A+ vorgenommen. Die Analysen ergaben Daten zur jährlichen absoluten Werteentwicklung dieser Immobilien. Zudem wurden verschiedene Szenarien betrachtet.und der Formel aus Abschnitt \ref{sec:endenfkt} wurde die absolute Wertänderung der Immobilien ermittelt. Diese Berechnungen wurden für Häuser mit Energieeffizienzklassen unterhalb von A und A+ vorgenommen. Die Analysen ergaben Daten zur jährlichen absoluten Werteentwicklung dieser Immobilien. Zudem wurden verschiedene Szenarien betrachtet.
 
 Die folgenden Abbildungen zeigen die absoluten Immobilien-Wertsveränderungen in Abhängigkeit von Zeit und Szenario.
-% Stellen Sie sicher, dass dies im Hauptteil Ihres Dokuments ist
+
 \begin{figure}[htbp]
     \centering
     \begin{subfigure}[b]{0.48\textwidth}
