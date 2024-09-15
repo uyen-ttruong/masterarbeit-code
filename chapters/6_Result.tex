@@ -99,22 +99,18 @@ Nach der Berechnung der Überflutungstiefe kann durch den Vergleich mit der Scha
     \label{fig:schadenwert}
 \end{figure}
 \FloatBarrier
-In der folgenden Abbildung \ref{fig:schadenereignis} wird der prozentuale Gesamtschadenwert im Vergleich zum Gesamtimmobilienwert im Falle des Eintritts eines Schadensereignisses dargestellt. Abbildung \ref{fig:schadenereignis_jahr} zeigt den prozentualen Gesamtschadenwert im Vergleich zum Gesamtimmobilienwert, wenn ein Schadensereignis innerhalb eines Jahres eintritt.
+In der folgenden Abbildung \ref{fig:schadenereignis} wird der prozentuale Gesamtschadenwert im Vergleich zum Gesamtimmobilienwert im Falle des Eintritts eines Schadensereignisses dargestellt. Abbildung \ref{fig:schadenereignis_jahr} zeigt den prozentualen Gesamtschadenwert im Vergleich zum Gesamtimmobilienwert, wenn ein Schadensereignis innerhalb eines Jahres eintritt.\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{figures/roundchartsloss.png}
+    \caption{Prozentualer Gesamtschaden am Immobilienwert im Schadensfall}
+    \label{fig:schadenereignis}
+\end{figure}
+
 \begin{figure}[H]
     \centering
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{figures/roundchartsloss.png}
-        \caption{Prozentualer Gesamtschaden am Immobilienwert im Schadensfall}
-        \label{fig:schadenereignis}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{figures/roundchartloss1year.png}
-        \caption{Prozentualer Gesamtschaden am Immobilienwert im Jahresschadensfall}
-        \label{fig:schadenereignis_jahr}
-    \end{minipage}
+    \includegraphics[width=0.45\textwidth]{figures/roundchartloss1year.png}
+    \caption{Prozentualer Gesamtschaden am Immobilienwert im Jahresschadensfall}
+    \label{fig:schadenereignis_jahr}
 \end{figure}
 
 
@@ -122,7 +118,7 @@ Abbildung \ref{fig:schadenLtV} vergleicht den aktuellen Beleihungsauslauf mit de
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{figures/compareltv.png}
+    \includegraphics[width=0.5\textwidth]{figures/compareltv.png}
     \caption{Vergleich des aktuellen und neuen Beleihungsauslaufs nach Schadenseintritt. Quelle: Eigene Darstellung}
     \label{fig:schadenLtV}
 \end{figure}
@@ -144,31 +140,38 @@ Abbildung \ref{fig:endpreis_energie} zeigt das Ergebnis der Berechnungen des End
 Auf Grundlage des zuvor berechneten Endenergiepreises und der Formel aus Abschnitt \ref{sec:endenfkt} wurde die absolute Wertänderung der Immobilien ermittelt. Diese Berechnungen wurden für Häuser mit Energieeffizienzklassen unterhalb von A und A+ vorgenommen. Die Analysen ergaben Daten zur jährlichen absoluten Werteentwicklung dieser Immobilien. Zudem wurden verschiedene Szenarien betrachtet.und der Formel aus Abschnitt \ref{sec:endenfkt} wurde die absolute Wertänderung der Immobilien ermittelt. Diese Berechnungen wurden für Häuser mit Energieeffizienzklassen unterhalb von A und A+ vorgenommen. Die Analysen ergaben Daten zur jährlichen absoluten Werteentwicklung dieser Immobilien. Zudem wurden verschiedene Szenarien betrachtet.
 
 Die folgenden Abbildungen zeigen die absoluten Immobilien-Wertsveränderungen in Abhängigkeit von Zeit und Szenario.
-\begin{figure}[H]
+% Stellen Sie sicher, dass dies im Hauptteil Ihres Dokuments ist
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=\linewidth]{figures/Aktuelle Richtlinien_percentage_change_plot.png}
-    \caption{Prozentuale Wertänderung der Immobilien im Szenario Aktuelle Richtlinien. Quelle: Eigene Darstellung}
-    \label{fig:aktuelle_richtlinien}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/Aktuelle Richtlinien_percentage_change_plot.png}
+        \caption{Prozentuale Wertänderung der Immobilien im Szenario Aktuelle Richtlinien.}
+        \label{fig:aktuelle_richtlinien}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/Netto-Null_percentage_change_plot.png}
+        \caption{Prozentuale Wertänderung der Immobilien im Szenario Netto-Null.}
+        \label{fig:netto_null}
+    \end{subfigure}
+    
+    \vspace{1em}
+    
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/Unter 2°C_percentage_change_plot.png}
+        \caption{Prozentuale Wertänderung der Immobilien im Szenario Unter 2°C.}
+        \label{fig:unter_2c}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/Ungeordnet_percentage_change_plot.png}
+        \caption{Prozentuale Wertänderung der Immobilien im Szenario Ungeordnet.}
+        \label{fig:ungeordnet}
+    \end{subfigure}
+    \caption{Prozentuale Wertänderung der Immobilien in verschiedenen Szenarien.}
+    \label{fig:all_scenarios}
 \end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{figures/Netto-Null_percentage_change_plot.png}
-    \caption{Prozentuale Wertänderung der Immobilien im Szenario Netto-Null. Quelle: Eigene Darstellung}
-    \label{fig:netto_null}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{figures/Unter 2°C_percentage_change_plot.png}
-    \caption{Prozentuale Wertänderung der Immobilien im Szenario Unter 2°C. Quelle: Eigene Darstellung}
-    \label{fig:unter_2c}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{figures/Ungeordnet_percentage_change_plot.png}
-    \caption{Prozentuale Wertänderung der Immobilien im Szenario Ungeordnet.Quelle: Eigene Darstellung}
-    \label{fig:ungeordnet}
-\end{figure}
-
