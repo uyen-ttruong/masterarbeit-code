@@ -1,7 +1,6 @@
 % cSpell:disable
 \thispagestyle{empty}
 
-
 \begin{minipage}[c][\textheight][s]{\textwidth}
 
 % Logo oben rechteckig
@@ -16,14 +15,13 @@
 
 \vspace{0.5cm}
 
-% Titel
+% Titel (Deutsch)
 \begin{flushright}
   \sffamily\bfseries\Large
   \parbox{0.9\textwidth}{\raggedleft\getTitle}
   
   \vspace{0.3cm}
   
-  {\large\getAuthor}
 \end{flushright}
 
 \vspace{0.5cm}
@@ -31,12 +29,20 @@
 % Untere Linie
 \noindent\rule{\linewidth}{0.4mm}
 
+\vspace{0.5cm}
+
+% Titel (Englisch)
+\begin{center}
+  \sffamily\bfseries\large
+  \getTitleen
+\end{center}
+
 \vfill
 
 % Zusätzliche Informationen
 \begin{center}
   \large
-  \getDoctype
+  {\bfseries\Large \getDoctype}
   
   \vspace{0.3cm}
   
@@ -54,7 +60,7 @@
   
   \vfill
   
-  München, den \getSubmissionDate
+  Abgabedatum: \getSubmissionDate
   
   \vspace{0.5cm}
   

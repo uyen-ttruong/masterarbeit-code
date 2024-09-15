@@ -1,6 +1,6 @@
-\section{Ergebnisse}
+\section{Ergebnisse}\label{kap:5}
 \subsection{Portfoliodatensatz}
-Die Erzeugung eines realitätsnahen Datensatzes ist ein wesentlicher Schritt in dieser Forschung, da nur dadurch die Quantifizierung physischer und Transitionsrisiken im Hypothekenportfolio ermöglicht wird. Nach Abschluss aller in Kapitel \ref{sec:createportfolio} beschriebenen Schritte wurde ein realistisches Portfolio von Hypotheken-Immobilien erstellt.
+Nach Abschluss aller in Kapitel \ref{sec:createportfolio} beschriebenen Schritte wurde ein realistisches Portfolio von Hypotheken-Immobilien erstellt.
 Abbildung \ref{fig:hypothekenportfolio} zeigt die resultierende Distribution der Datenpunkte auf der Karte Bayerns.
 
 \begin{figure}[htbp]
@@ -10,7 +10,7 @@ Abbildung \ref{fig:hypothekenportfolio} zeigt die resultierende Distribution der
     \label{fig:hypothekenportfolio}
 \end{figure}
 \FloatBarrier
-
+\clearpage
 Abbildung \ref{fig:bayernflut} präsentiert das Resultat dieser Vereinheitlichung der Datenpunkte auf der Karte Bayerns mit den Hochwasserrisikogebieten.
 
 \begin{figure}[htbp]
@@ -20,7 +20,7 @@ Abbildung \ref{fig:bayernflut} präsentiert das Resultat dieser Vereinheitlichun
     \label{fig:bayernflut}
 \end{figure}
 \FloatBarrier
-
+\clearpage
 Als Ergebnis entstand ein umfassender Datensatz, dessen Grundlage die in Tabelle \ref{tab:objekt-variablen} beschriebenen Objektvariablen bilden.
 \begin{table}[htbp]
     \centering
@@ -61,7 +61,7 @@ Als Ergebnis entstand ein umfassender Datensatz, dessen Grundlage die in Tabelle
     \end{tabularx}
 \end{table}
 \FloatBarrier
-Der Datensatz umfasst 3853 Datenpunkte, verteilt auf 1522 Orte und 71 Landkreise in Bayern. Diese Verteilung ist plausibel und entspricht den Annahmen basierend auf der bayerischen Bevölkerungsdichte. Die Verteilung der Energieklassen der Datenpunkte stimmt mit der bayerischen Energieklassenverteilung laut Tabelle \ref{tab:epc_bayern} überein. Ähnlich orientiert sich die LtV-Verteilung an Tabelle \ref{tab:beleihungsauslauf2023}.
+Der Datensatz umfasst 3853 Datenpunkte, verteilt auf 1522 Orte und 71 Landkreise in Bayern. Die Verteilung der Energieklassen der Datenpunkte stimmt mit der bayerischen Energieklassenverteilung laut Tabelle \ref{tab:epc_bayern} überein. Ähnlich orientiert sich die LtV-Verteilung an Tabelle \ref{tab:beleihungsauslauf2023}.
 \begin{table}[htbp]
     \centering
     \caption{Statistische Zusammenfassung der Hypothekendaten}
@@ -121,7 +121,7 @@ In der folgenden Tabelle \ref{tab:rwa_anderung} sind die Veränderungen des Bele
     \footnotesize 
     \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}m{1.0cm} *{4}{>{\centering\arraybackslash}m{1.3cm}} >{\raggedleft\arraybackslash}m{2.0cm} >{\raggedleft\arraybackslash}m{2.0cm} >{\centering\arraybackslash}m{1.0cm}}
     \toprule
-    ID & Akt. LtV & Neu LtV & Akt. RW & Neu RW & \makecell{Akt. \\ RWA (€)} & \makecell{Neu \\ RWA (€)} & \(\Delta\) RWA \\
+    ID & Akt. LtV & Neu LtV & Akt. RW & Neu RW & \makecell{Akt. \\ RWA / €} & \makecell{Neu \\ RWA / €} & \(\Delta\) RWA \\
     \midrule
     2633 & 0.44 & 0.67 & 0.20 & 0.30 & 26.843,55 & 40.265,32 & 0,50 \\
     3688 & 0.48 & 0.50 & 0.20 & 0.25 & 38.995,87 & 48.744,84 & 0,25 \\

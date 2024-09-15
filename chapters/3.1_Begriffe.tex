@@ -24,35 +24,35 @@ Der Beleihungsauslauf in diesem Fall beträgt 55\%. Das bedeutet, dass 55\% des 
 \subsubsection{Risikogewichtete Aktiva}
 Neben dem Beleihungsauslauf spielen die Risikogewichteten Aktiva eine zentrale Rolle bei der Risikobewertung von Hypothekenkrediten. Der Beleihungsauslauf \ac{LtV} beschreibt das Verhältnis zwischen Kreditbetrag und Immobilienwert. Die Risikogewichteten Aktiva \acs{RWA} hingegen quantifizieren das potenzielle Risiko für die Bank. Jedem Kredit wird ein Risikogewicht zugeordnet. Dieses Gewicht basiert auf dem Beleihungsauslauf. Die risikogewichteten Aktiva \acs{RWA}, abhängig von der Beleihungsquote, berechnen sich folgendermaßen:
 \begin{equation}
-    RWA = \text{Darlehenbetrag} \times \text{Risikogewicht}
+    RWA = \text{Darlehenbetrag} \cdot \text{Risikogewicht}
 \end{equation}
 Das Risikogewicht wird anhand der Beleihungsquote ermittelt.
 Zur Veranschaulichung der RWA-Berechnung wird folgendes Beispiel herangezogen:
 Eine Hypothekenbank hat zwei Wohnimmobilienkredite mit unterschiedlichen Beleihungsausläufen:
 Kredit A mit einem \ac{LtV} von 60\% (Risikogewicht 35\%):  
 \[
-\text{RWA} = 200.000 \, \text{€} \times 35\% = 70.000 \, \text{€}
+\text{RWA} = 200.000 \, \text{€} \cdot 35\% = 70.000 \, \text{€}
 \]  
 Kredit B mit einem \ac{LtV} von 85\% (Risikogewicht 50\%):  
 \[
-\text{RWA} = 200.000 \, \text{€} \times 50\% = 100.000 \, \text{€}
+\text{RWA} = 200.000 \, \text{€} \cdot 50\% = 100.000 \, \text{€}
 \]
 Die Gesamt-\acs{RWA}beträgt somit: 70.000 € + 100.000 € = 170.000 €.  
 Trotz identischer Darlehensbeträge wird der Kredit mit einem höheren \ac{LtV} als riskanter angesehen und trägt daher mehr zum Gesamt-\acs{RWA} bei.
 Die Hypothekenbank verwendet die \acs{RWA} zur Berechnung ihrer Mindestkapitalanforderungen:
 \begin{equation}
-    \text{Mindestkapital} = \text{RWA}_{\text{Gesamt}} \times \text{Mindestkapitalquote}
+    \text{Mindestkapital} = \text{RWA}_{\text{Gesamt}} \cdot \text{Mindestkapitalquote}
     \label{eq:min_capital}
     \end{equation}
     
     Bei einer angenommenen Mindestkapitalquote von 8\% ergibt sich:
     
     \begin{equation*}
-    \text{Mindestkapital} = 170.000 \, \text{€} \times 8\% = 13.600 \, \text{€}
+    \text{Mindestkapital} = 170.000 \, \text{€} \cdot 8\% = 13.600 \, \text{€}
     \end{equation*}
 Dieses Beispiel zeigt, wie Hypothekenbanken \acs{RWA} in Verbindung mit dem Beleihungsauslauf nutzen, um sicherzustellen, dass sie über ausreichend Kapital verfügen, um potenzielle Verluste aus ihren risikogewichteten Hypothekenkrediten abzudecken. Es verdeutlicht auch, wie höhere \ac{LtV}-Werte zu höheren Kapitalanforderungen führen.
 \subsubsection{Physische Risiken}
-Unter physischen Risiken versteht man Gefahren aus Naturereignissen mit negativen Folgen für Gesellschaft, Wirtschaft und Ökosysteme \parencite{greenvisionsolutions_transitorische_2024}. Diese Risiken werden in zwei Kategorien unterteilt. Akute Risiken entstehen durch plötzliche extreme Ereignisse wie Überschwemmungen oder Stürme. Chronische Risiken ergeben sich aus langfristigen klimatischen Veränderungen. Beispiele dafür sind der Meeresspiegelanstieg, Wasserstress, Biodiversitätsverlust und Mangel an Ressourcen.\parencite{dnb2019values}.
+Unter physischen Risiken versteht man Gefahren aus Naturereignissen mit negativen Folgen für Gesellschaft, Wirtschaft und Ökosysteme \parencite{greenvisionsolutions_transitorische_2024}. Diese Risiken werden in zwei Kategorien unterteilt. Akute Risiken entstehen durch plötzliche extreme Ereignisse wie Überschwemmungen oder Stürme. Chronische Risiken ergeben sich aus langfristigen klimatischen Veränderungen. Beispiele dafür sind der Meeresspiegelanstieg, Wasserstress, Biodiversitätsverlust und Mangel an Ressourcen \parencite{dnb2019values}.
 \subsubsection{Transitionsrisiken}
 Transitionsrisiken bezeichnen finanzielle Risiken für Verluste, die im Zuge des Übergangs zu einer Wirtschaft mit weniger CO2-Emissionen und einer umweltfreundlicheren Ökonomie auftreten können \parencite{ecb2020climate}. Dies sind Risiken im Zusammenhang mit Technologie, Marktpreisen, Regulierung und Reputation
 
@@ -65,7 +65,7 @@ Das \ac{NGFS} hat 72 verschiedene Klimaszenarien entwickelt, wovon sechs für di
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/NGFS.png}
-    \caption{NGFS Klimaszenario-Framework. Quelle: NGFS Climate Scenarios for central banks and supervisors (June 2021)}
+    \caption{NGFS Klimaszenario-Framework. Quelle: \textcite{NGFS2021}}
     \label{fig:ngfs}
 \end{figure}
 \FloatBarrier
@@ -73,7 +73,7 @@ Das \ac{NGFS} hat 72 verschiedene Klimaszenarien entwickelt, wovon sechs für di
 \begin{table}[htbp]
     \centering
     \small
-    \caption{Überblick über NGFS-Rahmen zur Klassifizierung von Klimarisiken. In Anlehnung an Quelle: NGFS Climate Scenarios for central banks and supervisors (June 2021).}
+    \caption{Überblick über NGFS-Rahmen zur Klassifizierung von Klimarisiken. In Anlehnung an Quelle: \textcite{NGFS2021}.}
     \label{tab:ngfs-framework}
     \begin{tabularx}{1.0\textwidth}{>{\raggedright\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\raggedright\arraybackslash}X}
         \toprule
@@ -111,7 +111,7 @@ Der Energieeffizienzklassen, auch \ac{EPC} bekannt, ist eine zentrale Kennzahl i
 Die Klassifizierung für Energieeffizienzklassen  erfolgt anhand der Effizienz, die in kWh pro m² gemessen wird \parencite{gebaeudeenergiegesetz2020}. Dabei dient die Nutzfläche als Grundlage, welche meist etwas größer als die Wohfläche ist. Aus Tabelle \ref{tab:epc} ergeben sich folgende Grenzwerte für die Klassen.
 \begin{table}[htbp]
     \centering
-    \caption{Überblick über Energieeffizienzklassen für Gebäude. Quelle:Gebäudeenergiegesetz (2020)}
+    \caption{Überblick über Energieeffizienzklassen für Gebäude. Quelle: \textcite{gebaeudeenergiegesetz2020}}
     \label{tab:epc}
     \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
         \toprule

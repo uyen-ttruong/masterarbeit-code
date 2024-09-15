@@ -4,7 +4,7 @@
 
 Für die Kompatibilität von Hypotheken- und Hochwasserdaten sind geografische Koordinaten erforderlich. Dieser Abschnitt befasst sich mit der Generierung präziser Koordinaten für die Datenpunkte.
 
-Eine zufällige Verteilung in Bayern würde die Struktur eines Kreditportfolios nicht korrekt abbilden, da eine ungleichmäßige Verteilung von Immobilien sowohl in Deutschland als auch in Bayern zu beobachten ist. \textcite{zurek2022real} analysierte die Beziehung zwischen Bevölkerungsdichte und Kreditvergabe in Deutschland. Die Studie zeigt, dass Regionen mit stärkerem Wirtschaftswachstum höhere Immobilienpreise aufweisen. Dies führt zu einer erhöhten Kreditnachfrage. Auf Basis dieser empirischen Erkenntnisse wird die Bevölkerungsdichte als Grundlage für die Zuweisung spezifischer Koordinaten zu jedem Datenpunkt herangezogen.
+Eine zufällige Verteilung in Bayern würde die Struktur eines Kreditportfolios nicht korrekt abbilden, da eine ungleichmäßige Verteilung von Immobilien sowohl in Deutschland als auch in Bayern zu beobachten ist. \textcite{zurek2022real} analysierte die Beziehung zwischen Bevölkerungsdichte und Kreditvergabe in Deutschland. Die Studie zeigt, dass Regionen mit stärkerem Wirtschaftswachstum höhere Immobilienpreise aufweisen. Dies führt zu einer erhöhten Kreditnachfrage. Auf Basis dieser empirischen Erkenntnisse wird die Bevölkerungs-dichte als Grundlage für die Zuweisung spezifischer Koordinaten zu jedem Datenpunkt herangezogen.
 
 Die verwendete Datenquelle stammt von \textcite{suche_postleitzahl}. Sie kombiniert OpenStreetMap-Daten mit Einwohnerzahlen von \textcite{destatis}. Dies ermöglicht eine präzise Segmentierung in Postleitzahlenzonen. Tabelle \ref{tab:geodaten} zeigt die Daten dieser geographischen Strukturierung.
 Übersicht der Geodaten für Postleitzahlgebiete in Bayern
@@ -38,7 +38,7 @@ Tabelle \ref{tab:geodaten} wurde aus Shapefile-Daten der Postleitzahlenregionen 
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.95\textwidth]{figures/Bayern_pop_plz.png}
+    \includegraphics[width=1\textwidth]{figures/Bayern_pop_plz.png}
     \caption{Verteilung der Bevölkerungsdichte Bayerns nach Postleitzahlenbereichen. Quelle: Eigene Darstellung}
     \label{fig:bevoelkerungsdichte}
 \end{figure}
@@ -55,7 +55,7 @@ Im Rahmen eines EU-weiten Stresstests stellt die \ac{EZB} den Banken zur Simulat
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.6\textwidth]{figures/euflood.png} 
-    \caption{EU-Hochwasserrisikokarte.Quelle: EZB 2022 Klimarisiko-Stresstest}
+    \caption{EU-Hochwasserrisikokarte.Quelle: \textcite{ECB2022ClimateStressTest}}
     \label{fig:euflut}
 \end{figure}
 \FloatBarrier
@@ -68,17 +68,17 @@ EPSG:3035 hingegen ist eine kartografische Projektion. Sie wandelt die Erdkrümm
 Zur Herstellung der Datenkohärenz erfolgt eine Koordinatentransformation in das EPSG:3035-System. 
 
 \subsubsection{Überflutungstiefen}\label{sec:tief}
-Die Schäden durch Überschwemmungen hängen von der Wassertiefe ab. Tieferes Wasser verursacht meist größere und teurere Schäden an Häusern. Für die Analyse der Überflutungstiefe in Bayern benötigt man Überflutungstiefen-Geodaten. \ac{DGM} Modell beschreibt die Höhe des Bodens, wobei eine hohe Auflösung genaue Ergebnisse liefert \parencite{vermessungsverwaltung2019gelandemodell}. Hochwasserstände aus Messungen sind wichtig für präzise Berechnungen. Dafür wurden Daten vom \textcite{bayern2016hochwassernachrichtendienst} für aktuelle Pegelstände betrachtet. Historische Hochwasserdaten helfen bei Einschätzungen künftiger Ereignisse und sind in Berichten und Karten enthalten. Diese wurden vom \textcite{LfU_Bayern} bezogen, wie in Abschnitt \ref{sec:hochgeo} beschrieben.
-Die \ac{DGM}-Daten von \textcite{vermessungsverwaltung2019gelandemodell} für ganz Bayern umfassen ein sehr großes Datenvolumen von ca. 240 GB. Daher wurden nur Daten für die Gebiete mit Hypotheken-Datenpunkten aus Abschnitt \ref{sec:hypogeo} heruntergeladen.
-Die Geländehöhe (m) für bestimmte Koordinaten wird aus dem Höhenraster, das aus der \ac{DGM}-Datei gelesen wurde, extrahiert.
+Die Schäden durch Überschwemmungen hängen von der Wassertiefe ab. Tieferes Wasser verursacht meist größere und teurere Schäden an Häusern. Für die Analyse der Überflutungstiefe in Bayern benötigt man Überflutungstiefen-Geodaten. \ac{DGM} beschreibt die Höhe des Bodens, wobei eine hohe Auflösung genaue Ergebnisse liefert \parencite{vermessungsverwaltung2019gelandemodell}. Hochwasserstände sind wichtig für präzise Berechnungen. Dafür wurden Daten vom \textcite{bayern2016hochwassernachrichtendienst} für aktuelle Pegelstände betrachtet. Historische Hochwasserdaten helfen bei Einschätzungen künftiger Ereignisse und sind in Berichten und Karten enthalten. Diese wurden vom \textcite{LfU_Bayern} bezogen, wie in Abschnitt \ref{sec:hochgeo} beschrieben.
+
+Die Geländehöhe  für $m$ bestimmte Koordinaten wird aus dem Höhenraster, das aus der \ac{DGM}-Datei gelesen wurde, extrahiert.
 
 Auf Grundlage der gesammelten Daten können die folgenden Berechnungen durchgeführt werden:
 \begin{equation}
-    \text{Absoluter Wasserstand (m)} = \text{Pegelnullpunkt (m)} + \left(\frac{\text{Pegelstand (cm)}}{100}\right)
+    \text{Absoluter Wasserstand} = \text{Pegelnullpunkt} + \text{Pegelstand}
 \end{equation}
 
 \begin{equation}
-    \text{Hochwassertiefe (m)} = \max \left( \text{Wasserstand (m)} - \text{Geländehöhe (m)}, 0 \right)
+    \text{Hochwassertiefe} = \max \left( \text{Wasserstand} - \text{Geländehöhe} \right)
 \end{equation}
  Abbildung \ref{fig:ingolstadt} visualisiert das digitale Geländemodell für Ingolstadt, welches die topographischen Merkmale der Stadt und ihrer Umgebung detailliert darstellt und somit eine wichtige Grundlage für die Hochwasseranalyse bildet.
 \begin{figure}[!ht]

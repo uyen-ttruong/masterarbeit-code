@@ -1,6 +1,6 @@
 %cSpell:disable
 \subsection{Hypothekendaten}
-In diesem Abschnitt wird die Analyse des Geschäftsberichts der Münchener Hypothekenbank durchgeführt. Um Schäden an spezifischen Gebäuden vorherzusagen, wird ein Portfolio benötigt, das ein repräsentatives Bankportfolio widerspiegelt. Es ist notwendig, ein Portfolio zu erstellen, das in etwa realistisch ist, da die vertraulichen Wohnimmobilien-Hypothekenportfolios von Banken nicht öffentlich bekannt gegeben werden. Es wird analysiert, welche Aspekte berücksichtigt werden, um die Größe und Struktur eines Portfolios von Wohnimmobilien-Hypotheken festzulegen. Außerdem wird erläutert, wie Informationen zu Kreditmerkmalen, speziell Beleihungsquoten, in das Portfolio eingebunden werden.
+In diesem Abschnitt wird die Analyse des Geschäftsberichts der Münchener Hypothekenbank durchgeführt. Um Schäden an spezifischen Gebäuden vorherzusagen, wird ein Portfolio benötigt, das ein repräsentatives Bankportfolio widerspiegelt. Es ist notwendig, ein Portfolio zu erstellen, das realistisch ist, da die vertraulichen Wohnimmobilien-Hypothekenportfolios von Banken nicht öffentlich bekannt gegeben werden. Es wird analysiert, welche Aspekte berücksichtigt werden, um die Größe und Struktur eines Portfolios von Wohnimmobilien-Hypotheken festzulegen. Außerdem wird erläutert, wie Informationen zu Kreditmerkmalen, speziell Beleihungsquoten, in das Portfolio eingebunden werden.
 
 Zum Stichtag 31.12.2023 belief sich der ausstehende Bestand an Wohnimmobilienfinanzierungen im Portfolio der \textcite{MuenchenerHyp2023} in Bayern auf 8.921.489.311,00 €, wobei die durchschnittliche Größe der Darlehen für Wohnimmobilien circa 163.700,00 € betrug. Zur Ermittlung der Anzahl der Darlehen im Portfolio wird zunächst der Gesamtbestand durch die durchschnittliche Größe der Darlehen dividiert, was gerundet 54.500 Darlehen ergibt. Unter Anwendung der Gleichung \ref{eq:cochran} zur Berechnung der erforderlichen Stichprobengröße für das theoretische Szenario einer unendlichen Anzahl von Immobilien im Portfolio ergibt sich bei einem Konfidenzintervall von 99\% und einer Fehlermarge von 2\% ein notwendiger Stichprobenumfang von 4.147 Datenpunkten. Die in Gleichung \ref{eq:finite_population} präsentierte Formulierung für endliche Populationen führt jedoch zu einer Reduktion auf 3.853 Darlehen als erforderliche Stichprobengröße für Portfolios mit 54.500 Elementen.
 
@@ -8,7 +8,7 @@ Neben der Anzahl der Darlehen ist auch deren Qualität, insbesondere der Beleihu
 
 \begin{table}[htbp]
     \centering
-    \caption{Verteilung des Beleihungsauslaufs im Wohnimmobilienportfolio der Münchener Hypothekenbank zum 31.12.2023. Quelle: Münchener Hypothekenbank eG (2023)}
+    \caption{Verteilung des Beleihungsauslaufs im Wohnimmobilienportfolio der Münchener Hypothekenbank zum 31.12.2023. Quelle: \textcite{MuenchenerHyp2023}}
     \label{tab:beleihungsauslauf2023}
     \small 
     \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X*{6}{>{\centering\arraybackslash}X}} 

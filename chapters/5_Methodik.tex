@@ -1,5 +1,5 @@
 
-\section{Methodik}
+\section{Methodik}\label{kap:4}
 \subsection{Datenaufbereitungsprozess}
 Zur repräsentativen Verteilung der 3853 Datenpunkte, entsprechend der Anzahl der Hypothekarkredite, wird ein proportionaler Ansatz implementiert, der auf der Einwohnerzahl jeder Region basiert. Innerhalb der Postleitzahlgebiete erfolgt die Platzierung mittels eines kontrollierten stochastischen Verfahrens. Für jede Region wird eine zuvor determinierte Anzahl von Zufallspunkten innerhalb der definierten Gebietsgrenzen generiert. Jedem Punkt werden spezifische Koordinaten in Form von Latitude (Breitengrad) und Longitude (Längengrad) zugewiesen. Anschließend wird eine Verifikation der Lage innerhalb des jeweiligen Polygons durchgeführt. Bei erfolgreicher Validierung wird der Punkt mit seinen Latitude- und Longitude-Koordinaten in die Liste der akzeptierten Datenpunkte integriert. Diese Geodaten bilden die Grundlage für die nachfolgende wirtschaftliche Analyse der Hypothekarkredite.
 
@@ -8,7 +8,7 @@ Basierend auf diesen Geodaten erfolgt die Vorbereitung der wirtschaftlichen Date
     \text{Immobilienwert} = \text{Quadratmeterpreis} \cdot \text{Wohnfläche}
 \end{equation}
 \begin{equation}
-    \text{Darlehensbetrag} = \text{Immobilienwert} \cdot \text{aktuelles\_LtV}
+    \text{Darlehensbetrag} = \text{Immobilienwert} \cdot \text{aktuelles LtV}
 \end{equation}
 Abbildung \ref{fig:flowchart} visualisiert diesen Datenaufbereitungsprozess. Der Datenaufbereitungsprozess beginnt mit dem Einlesen einer CSV-Datei, die bereits Immobilien-IDs, Geometriedaten, Überschwemmungsrisikoinformationen, Energieklassen und Quadratmeterpreise enthält. Anschließend wird eine Spalte \enquote{wohnflaeche} erstellt, gefolgt von der Generierung einer Spalte \enquote{aktuelles\_LtV}. Der nächste Schritt beinhaltet die Berechnung des \enquote{aktuellen\_Immobilienwerts}. Ein kritischer Entscheidungspunkt folgt, bei dem geprüft wird, ob der LtV-Mittelwert kleiner als 60\% ist. Falls ja, werden die LtV-Werte angepasst. Andernfalls wird ohne Anpassung fortgefahren. Danach wird die Spalte \enquote{Darlehensbetrag} berechnet.
 
@@ -48,7 +48,7 @@ Abbildung \ref{fig:damage_curve1} und \ref{fig:damage_curve2} präsentieren zwei
 
 \subsubsection{Risikogewichte}
 Basel III ist ein globales Regelwerk, das nach der Finanzkrise 2008 zur Stabilisierung des Bankensektors eingeführt wurde. Der Abschnitt \acs{CRE}20 beschreibt die Vorgaben zur Berechnung der \ac{RWA}, wobei feste Risikogewichte für verschiedene Kreditarten vorgeschrieben werden. Für Wohnimmobilienkredite, die nicht vom durch die Immobilie generierten Cashflow abhängen, werden die Risikogewichte anhand des \ac{LtV}-Verhältnisses bestimmt: Je höher der \ac{LtV}, desto höher das Risikogewicht.
-
+In Tabelle \ref{tab:rwa_ltv} wird das Risikogewicht in Abhängigkeit vom \ac{LtV}-Verhältnis dargestellt.
 \begin{table}[htbp]
     \centering
     \caption{Risikogewichte basierend auf dem LtV-Verhältnis für Wohnimmobilienkredite. Quelle: Vanweddingen, 2023 }
@@ -63,21 +63,16 @@ Basel III ist ein globales Regelwerk, das nach der Finanzkrise 2008 zur Stabilis
     \end{tabularx}
 \end{table}
 
-
-
-
-In Tabelle \ref{tab:rwa_ltv} wird das Risikogewicht in Abhängigkeit vom \ac{LtV}-Verhältnis dargestellt.
-
 \subsubsection{Berechnung von Immobilienwerten unter Hochwasserrisiko}
 Gemäß der Definition von der \textcite{undro1979} ergibt sich das Risiko aus drei Komponenten: Gefährdungswahrscheinlichkeit,  den betroffenen Elemente (Exposition) und Vulnerabilität. \parencite{coburn1991vulnerability}. Dies kann vereinfacht ausgedrückt werden als:
 
 \begin{equation}
-    \text{Physisches Risiko} = \text{Gefährdungswahrscheinlichkeit} \times \text{Exposition} \times \text{Vulnerabilität}
+    \text{Physisches Risiko} = \text{Gefährdungswahrscheinlichkeit} \cdot \text{Exposition} \cdot \text{Vulnerabilität}
 \end{equation}
 
 Um eine genauere Analyse der einzelnen Immobilienschäden zu ermöglichen, wird eine detailliertere Schadensformel \parencite{vanweddingen2023physicalrisk} benutzt:
 \begin{equation}
-    Immobilienschaden_{i,j} = E_j \times d(I_{i,j}|v_j)
+    Immobilienschaden_{i,j} = E_j \cdot d(I_{i,j}|v_j)
     \label{eq:schaden}
 \end{equation}
 Wobei:
@@ -91,7 +86,7 @@ Wobei:
 
 Formel \ref{eq:schaden} berücksichtigt die Gefährdungswahrscheinlichkeit nicht, da sie den Schaden für ein einzelnes Ereignis berechnet. Für den erwarteten jährlichen Immobilienschaden wird die jährliche Überschreitungswahrscheinlichkeit aus Kapitel \ref{sec:EPC} benötigt und wird nachfolgend berechnet:
 \begin{equation}
-    EAI_j = \sum_i Immobilienschaden_{i,j} \times p(I_{i,j})
+    EAI_j = \sum Immobilienschaden_{i,j} \cdot p(I_{i,j})
     \label{eq:EAI}
 \end{equation}
 Hierbei steht \acs{EAI} für den erwarteten jährlichen Schaden, und \( p(I_{i,j}) \) ist die Eintrittswahrscheinlichkeit des Ereignisses \( i \) mit der Intensität \( I_{i,j} \) am Standort \( j \).
