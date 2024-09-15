@@ -1,9 +1,9 @@
 
 \section{Methodik}\label{kap:4}
 \subsection{Datenaufbereitungsprozess}
-Zur repräsentativen Verteilung der 3853 Datenpunkte, entsprechend der Anzahl der Hypothekarkredite, wird ein proportionaler Ansatz implementiert, der auf der Einwohnerzahl jeder Region basiert. Innerhalb der Postleitzahlgebiete erfolgt die Platzierung mittels eines kontrollierten stochastischen Verfahrens. Für jede Region wird eine zuvor determinierte Anzahl von Zufallspunkten innerhalb der definierten Gebietsgrenzen generiert. Jedem Punkt werden spezifische Koordinaten in Form von Latitude (Breitengrad) und Longitude (Längengrad) zugewiesen. Anschließend wird eine Verifikation der Lage innerhalb des jeweiligen Polygons durchgeführt. Bei erfolgreicher Validierung wird der Punkt mit seinen Latitude- und Longitude-Koordinaten in die Liste der akzeptierten Datenpunkte integriert. Diese Geodaten bilden die Grundlage für die nachfolgende wirtschaftliche Analyse der Hypothekarkredite.
+Die 3853 Datenpunkte werden proportional zur Einwohnerzahl jeder Region verteilt. Für jede Region wird eine zuvor determinierte Anzahl von Zufallspunkten innerhalb der definierten Gebietsgrenzen generiert. Jedem Punkt werden spezifische Koordinaten in Form von Breitengrad und Längengrad zugewiesen. Anschließend wird eine Verifikation der Lage innerhalb des jeweiligen Polygons durchgeführt. Bei erfolgreicher Validierung wird der Punkt mit seinen Breitengrad- und Längengrad-Koordinaten in die Liste der akzeptierten Datenpunkte integriert. Diese Geodaten bilden die Grundlage für die nachfolgende wirtschaftliche Analyse der Hypothekarkredite.
 
-Basierend auf diesen Geodaten erfolgt die Vorbereitung der wirtschaftlichen Daten, beginnend mit den Basisinformationen zu Quadratmeterpreisen. Es wird ein Datensatz generiert, der drei Anforderungen erfüllt. Erstens: Die Wohnfläche für Eigenheime liegt zwischen 80 und 200 Quadratmetern. Zweitens: Die LTV-Verteilung ähnelt der der Münchener Hypothekenbank mit einem Durchschnitt von etwa 60\%. Drittens: Der durchschnittliche Darlehensbetrag nähert sich 163.700 € an. Alle Werte werden gemäß Berechnungsformeln ermittelt:
+Basierend auf diesen Geodaten erfolgt die Vorbereitung der wirtschaftlichen Daten, beginnend mit den Basisinformationen zu Quadratmeterpreisen. Es wird ein Datensatz generiert, der drei Anforderungen erfüllt. Erstens liegt die Wohnfläche für Eigenheime zwischen 80 und 200 Quadratmetern. Zweitens ähnelt die LTV-Verteilung der der Münchener Hypothekenbank, mit einem Durchschnitt von etwa 60\%. Drittens nähert sich der durchschnittliche Darlehensbetrag 163.700 € an. Alle Werte werden gemäß Berechnungsformeln ermittelt:
 \begin{equation}
     \text{Immobilienwert} = \text{Quadratmeterpreis} \cdot \text{Wohnfläche}
 \end{equation}
@@ -26,28 +26,28 @@ In diesem Abschnitt wird bei der Modellierung des Hochwasserrisikos die grundleg
 
 \subsubsection{Schadensfunktion}\label{sec:schadenfkt}
 Wie bereits in Abschnitt \ref{sec:tief} erwähnt, hängen die Schäden durch Überschwemmungen von der Wassertiefe ab. In diesem Abschnitt wird erklärt, wie diese Abhängigkeit konkret besteht.
-Sobald verschiedene Flutwassertiefen ermittelt sind, wird eine spezifische Schadensfunktion für Wohnimmobilien \acs{RRE} entwickelt. Diese basiert auf der Methodik des Gemeinsamen Forschungszentrums \acs{JRC} der Europäischen Union \parencite{huizinga2017global}.
+Sobald verschiedene Flutwassertiefen ermittelt sind, wird eine spezifische Schadensfunktion für Wohnimmobilien entwickelt. Diese basiert auf der Methodik des \ac{JRC} der Europäischen Union \parencite{huizinga2017global}.
 
-Allerdings ist die Datengrundlage für diese Analyse begrenzt, da das veröffentlichte \acs{JRC}-Dokument keine spezifische Schadensfunktion für Wohngebäude bereitstellt und die zugrunde liegende Studie von \textcite{huizinga2007flood} nicht publiziert wurde. Folglich müssen die erforderlichen Informationen aus den verfügbaren Diagrammen extrahiert werden.
+Allerdings ist die Datengrundlage für diese Analyse begrenzt, da das veröffentlichte \ac{JRC}-Dokument keine spezifische Schadensfunktion für Wohngebäude bereitstellt und die zugrunde liegende Studie von \textcite{huizinga2007flood} nicht publiziert wurde. Folglich müssen die erforderlichen Informationen aus den verfügbaren Diagrammen extrahiert werden.
 
 Abbildung \ref{fig:damage_curve1} und \ref{fig:damage_curve2} präsentieren zwei Grafiken, die die Schadenshöhe pro Quadratmeter und den Schadensfaktor für unterschiedliche europäische Regionen veranschaulichen.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/RREdamagem2.png}
-    \caption{Schaden pro Quadratmeter in verschiedenen Regionen Europas. Quelle: J. Huizinga und al., 2017}
+    \caption{Schaden pro Quadratmeter in verschiedenen Regionen Europas. Quelle: \textcite{huizinga2017global}}
     \label{fig:damage_curve1}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/RREdamage.png}
-    \caption{Schadensfaktor für Wohnimmobilien in verschiedenen Regionen Europas. Quelle: J. Huizinga und al., 2017}
+    \caption{Schadensfaktor für Wohnimmobilien in verschiedenen Regionen Europas. Quelle: \textcite{huizinga2017global}}
     \label{fig:damage_curve2}
 \end{figure}
 
 \subsubsection{Risikogewichte}
-Basel III ist ein globales Regelwerk, das nach der Finanzkrise 2008 zur Stabilisierung des Bankensektors eingeführt wurde. Der Abschnitt \acs{CRE}20 beschreibt die Vorgaben zur Berechnung der \ac{RWA}, wobei feste Risikogewichte für verschiedene Kreditarten vorgeschrieben werden. Für Wohnimmobilienkredite, die nicht vom durch die Immobilie generierten Cashflow abhängen, werden die Risikogewichte anhand des \ac{LtV}-Verhältnisses bestimmt: Je höher der \ac{LtV}, desto höher das Risikogewicht.
+Basel III ist ein globales Regelwerk, das nach der Finanzkrise 2008 zur Stabilisierung des Bankensektors eingeführt wurde. Der Abschnitt CRE20 beschreibt die Vorgaben zur Berechnung der \ac{RWA} wobei feste Risikogewichte für verschiedene Kreditarten vorgeschrieben werden. Für Wohnimmobilienkredite, die nicht vom durch die Immobilie generierten Cashflow abhängen, werden die Risikogewichte anhand des \ac{LtV}-Verhältnisses bestimmt: Je höher der \ac{LtV}, desto höher das Risikogewicht.
 In Tabelle \ref{tab:rwa_ltv} wird das Risikogewicht in Abhängigkeit vom \ac{LtV}-Verhältnis dargestellt.
 \begin{table}[htbp]
     \centering
@@ -64,7 +64,7 @@ In Tabelle \ref{tab:rwa_ltv} wird das Risikogewicht in Abhängigkeit vom \ac{LtV
 \end{table}
 
 \subsubsection{Berechnung von Immobilienwerten unter Hochwasserrisiko}
-Gemäß der Definition von der \textcite{undro1979} ergibt sich das Risiko aus drei Komponenten: Gefährdungswahrscheinlichkeit,  den betroffenen Elemente (Exposition) und Vulnerabilität. \parencite{coburn1991vulnerability}. Dies kann vereinfacht ausgedrückt werden als:
+Gemäß der Definition von der \textcite{undro1979} ergibt sich das Risiko aus drei Komponenten: Gefährdungswahrscheinlichkeit,  den betroffenen Elemente (Exposition) und Vulnerabilität \parencite{coburn1991vulnerability}. Dies kann vereinfacht ausgedrückt werden als:
 
 \begin{equation}
     \text{Physisches Risiko} = \text{Gefährdungswahrscheinlichkeit} \cdot \text{Exposition} \cdot \text{Vulnerabilität}
@@ -86,10 +86,10 @@ Wobei:
 
 Formel \ref{eq:schaden} berücksichtigt die Gefährdungswahrscheinlichkeit nicht, da sie den Schaden für ein einzelnes Ereignis berechnet. Für den erwarteten jährlichen Immobilienschaden wird die jährliche Überschreitungswahrscheinlichkeit aus Kapitel \ref{sec:EPC} benötigt und wird nachfolgend berechnet:
 \begin{equation}
-    EAI_j = \sum Immobilienschaden_{i,j} \cdot p(I_{i,j})
+    EAI_j = Immobilienschaden_{i,j} \cdot p(I_{i,j})
     \label{eq:EAI}
 \end{equation}
-Hierbei steht \acs{EAI} für den erwarteten jährlichen Schaden, und \( p(I_{i,j}) \) ist die Eintrittswahrscheinlichkeit des Ereignisses \( i \) mit der Intensität \( I_{i,j} \) am Standort \( j \).
+Hierbei steht \ac{EAI} für den erwarteten jährlichen Schaden, und \( p(I_{i,j}) \) ist die Eintrittswahrscheinlichkeit des Ereignisses \( i \) mit der Intensität \( I_{i,j} \) am Standort \( j \).
 
 Die Auswirkungen auf den Immobilienwert nach einem Schaden werden wie folgt berechnet:
 \begin{equation}

@@ -34,7 +34,7 @@ Die verwendete Datenquelle stammt von \textcite{suche_postleitzahl}. Sie kombini
 \FloatBarrier
 
 
-Tabelle \ref{tab:geodaten} wurde aus Shapefile-Daten der Postleitzahlenregionen generiert und umfasst die Bevölkerungsverteilung. Vier Spalten sind von besonderer Relevanz: Ort, Landkreis, Geometrie und Einwohner. Die Geometriespalte enthält die geografischen Koordinaten der Gemeinden, dargestellt als Polygon oder Multipolygon. Ein Multipolygon setzt sich aus mehreren Einzelpolygonen verschiedener Formen zusammen. Zur räumlichen Referenzierung dient das Koordinatensystem EPSG:3035. Abbildung \ref{fig:bevoelkerungsdichte} visualisiert die aus diesen Daten abgeleitete Bevölkerungsdichteverteilung Bayerns nach Postleitzahlenbereichen.
+Tabelle \ref{tab:geodaten} wurde aus Shapefile-Daten der Postleitzahlenregionen generiert und umfasst die Bevölkerungsverteilung. Vier Spalten sind relevant, nämlich Ort, Landkreis, Geometrie und Einwohner. Die Geometriespalte enthält die geografischen Koordinaten der Gemeinden, dargestellt als Polygon oder Multipolygon. Ein Multipolygon setzt sich aus mehreren Einzelpolygonen verschiedener Formen zusammen. Zur räumlichen Referenzierung dient das Koordinatensystem EPSG:3035. Abbildung \ref{fig:bevoelkerungsdichte} visualisiert die aus diesen Daten abgeleitete Bevölkerungsdichteverteilung Bayerns nach Postleitzahlenbereichen.
 
 \begin{figure}[htbp]
     \centering
@@ -68,7 +68,7 @@ EPSG:3035 hingegen ist eine kartografische Projektion. Sie wandelt die Erdkrümm
 Zur Herstellung der Datenkohärenz erfolgt eine Koordinatentransformation in das EPSG:3035-System. 
 
 \subsubsection{Überflutungstiefen}\label{sec:tief}
-Die Schäden durch Überschwemmungen hängen von der Wassertiefe ab. Tieferes Wasser verursacht meist größere und teurere Schäden an Häusern. Für die Analyse der Überflutungstiefe in Bayern benötigt man Überflutungstiefen-Geodaten. \ac{DGM} beschreibt die Höhe des Bodens, wobei eine hohe Auflösung genaue Ergebnisse liefert \parencite{vermessungsverwaltung2019gelandemodell}. Hochwasserstände sind wichtig für präzise Berechnungen. Dafür wurden Daten vom \textcite{bayern2016hochwassernachrichtendienst} für aktuelle Pegelstände betrachtet. Historische Hochwasserdaten helfen bei Einschätzungen künftiger Ereignisse und sind in Berichten und Karten enthalten. Diese wurden vom \textcite{LfU_Bayern} bezogen, wie in Abschnitt \ref{sec:hochgeo} beschrieben.
+Die Schäden durch Überschwemmungen hängen von der Wassertiefe ab. Tieferes Wasser verursacht meist größere und teurere Schäden an Häusern. Für die Analyse der Überflutungstiefe in Bayern benötigt man Überflutungstiefen-Geodaten. \ac{DGM} beschreibt die Bodenhöhe und liefert bei hoher Auflösung besonders genaue Ergebnisse. \parencite{vermessungsverwaltung2019gelandemodell}. Hochwasserstände sind wichtig für präzise Berechnungen. Dafür wurden Daten vom \textcite{bayern2016hochwassernachrichtendienst} für aktuelle Pegelstände betrachtet. Historische Hochwasserdaten helfen bei Einschätzungen künftiger Ereignisse und sind in Berichten und Karten enthalten. Diese wurden vom \textcite{LfU_Bayern} bezogen, wie in Abschnitt \ref{sec:hochgeo} beschrieben.
 
 Die Geländehöhe  für $m$ bestimmte Koordinaten wird aus dem Höhenraster, das aus der \ac{DGM}-Datei gelesen wurde, extrahiert.
 
