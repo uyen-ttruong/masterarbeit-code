@@ -17,10 +17,40 @@ Ein niedrigerer Beleihungsauslauf signalisiert dem Kreditinstitut ein geringeres
 
 Zur Veranschaulichung wird ein Fallbeispiel einer Immobilienfinanzierung herangezogen. Dabei bewertet zunächst ein Gutachter ein Objekt, dessen Beleihungswert bei 500.000 Euro liegt. Ein Käufer beantragt einen Kredit von 275.000 Euro für den geplanten Hauskauf.
 Der Beleihungsauslauf wird gemäß Gleichung \ref{eq:ltv} folgendermaßen berechnet:
-\begin{equation}
+\begin{equation*}
     \text{Beleihungsauslauf} = \frac{\text{Darlehensbetrag}}{\text{Beleihungswert}} = \frac{275.000 \mbox{\texteuro}}{500.000 \mbox{\texteuro}} = 0,55 = 55\%
-\end{equation}
+\end{equation*}
 Der Beleihungsauslauf in diesem Fall beträgt 55\%. Das bedeutet, dass 55\% des Immobilienwertes wird von der Bank finanziert. Die restlichen 45\% müssen durch Eigenkapital oder oder andere Einnahmequellen abgedeckt werden.
+\subsubsection{Risikogewichtete Aktiva}
+Neben dem Beleihungsauslauf spielen die Risikogewichteten Aktiva eine zentrale Rolle bei der Risikobewertung von Hypothekenkrediten. Der Beleihungsauslauf \ac{LtV} beschreibt das Verhältnis zwischen Kreditbetrag und Immobilienwert. Die Risikogewichteten Aktiva \acs{RWA} hingegen quantifizieren das potenzielle Risiko für die Bank. Jedem Kredit wird ein Risikogewicht zugeordnet. Dieses Gewicht basiert auf dem Beleihungsauslauf. Die risikogewichteten Aktiva \acs{RWA}, abhängig von der Beleihungsquote, berechnen sich folgendermaßen:
+\begin{equation}
+    RWA = \text{Darlehenbetrag} \times \text{Risikogewicht}
+\end{equation}
+Das Risikogewicht wird anhand der Beleihungsquote ermittelt.
+Zur Veranschaulichung der RWA-Berechnung wird folgendes Beispiel herangezogen:
+Eine Hypothekenbank hat zwei Wohnimmobilienkredite mit unterschiedlichen Beleihungsausläufen:
+Kredit A mit einem \ac{LtV} von 60\% (Risikogewicht 35\%):  
+\[
+\text{RWA} = 200.000 \, \text{€} \times 35\% = 70.000 \, \text{€}
+\]  
+Kredit B mit einem \ac{LtV} von 85\% (Risikogewicht 50\%):  
+\[
+\text{RWA} = 200.000 \, \text{€} \times 50\% = 100.000 \, \text{€}
+\]
+Die Gesamt-\acs{RWA}beträgt somit: 70.000 € + 100.000 € = 170.000 €.  
+Trotz identischer Darlehensbeträge wird der Kredit mit einem höheren \ac{LtV} als riskanter angesehen und trägt daher mehr zum Gesamt-\acs{RWA} bei.
+Die Hypothekenbank verwendet die \acs{RWA} zur Berechnung ihrer Mindestkapitalanforderungen:
+\begin{equation}
+    \text{Mindestkapital} = \text{RWA}_{\text{Gesamt}} \times \text{Mindestkapitalquote}
+    \label{eq:min_capital}
+    \end{equation}
+    
+    Bei einer angenommenen Mindestkapitalquote von 8\% ergibt sich:
+    
+    \begin{equation*}
+    \text{Mindestkapital} = 170.000 \, \text{€} \times 8\% = 13.600 \, \text{€}
+    \end{equation*}
+Dieses Beispiel zeigt, wie Hypothekenbanken \acs{RWA} in Verbindung mit dem Beleihungsauslauf nutzen, um sicherzustellen, dass sie über ausreichend Kapital verfügen, um potenzielle Verluste aus ihren risikogewichteten Hypothekenkrediten abzudecken. Es verdeutlicht auch, wie höhere \ac{LtV}-Werte zu höheren Kapitalanforderungen führen.
 \subsubsection{Physische Risiken}
 Unter physischen Risiken versteht man Gefahren aus Naturereignissen mit negativen Folgen für Gesellschaft, Wirtschaft und Ökosysteme \parencite{greenvisionsolutions_transitorische_2024}. Diese Risiken werden in zwei Kategorien unterteilt. Akute Risiken entstehen durch plötzliche extreme Ereignisse wie Überschwemmungen oder Stürme. Chronische Risiken ergeben sich aus langfristigen klimatischen Veränderungen. Beispiele dafür sind der Meeresspiegelanstieg, Wasserstress, Biodiversitätsverlust und Mangel an Ressourcen.\parencite{dnb2019values}.
 \subsubsection{Transitionsrisiken}
