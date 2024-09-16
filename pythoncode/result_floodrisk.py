@@ -7,35 +7,36 @@ from matplotlib.ticker import FuncFormatter
 # Daten von CSV-Datei lesen
 df = pd.read_csv('data/hypothekendaten_final_with_statistics.csv', delimiter=';')
 
-# # Đếm số lượng trong cột 'flood_risk'
+# # Zähle die Anzahl in der Spalte 'flood_risk'
 # flood_risk_counts = df['flood_risk'].value_counts().sort_index()
 
-# # Màu sắc cho từng cấp độ rủi ro
+# # Farben für jede Risikostufe
 # colors = ['red', 'orange', 'yellow', 'green']
 
-# # Tạo biểu đồ
+# # Erstelle das Diagramm
 # plt.figure(figsize=(10, 6))
 # bars = plt.bar(flood_risk_counts.index, flood_risk_counts.values, color=colors)
 
-# # Hiển thị số liệu trên từng cột
+# # Zeige Zahlen über jeder Säule an
 # for bar in bars:
 #     height = bar.get_height()
 #     plt.text(bar.get_x() + bar.get_width() / 2, height, f'{int(height):,}', ha='center', va='bottom', fontsize=12, fontweight='bold')
 
-# # Đặt nhãn trục x và y với font chữ 12
+# # Setze Beschriftungen für x- und y-Achse mit Schriftgröße 12
 # plt.xlabel('Risikostufen', fontsize=12)
 # plt.ylabel('Anzahl', fontsize=12)
 
-# # Đặt tỷ lệ log cho trục y để rõ hơn khi có sự chênh lệch lớn giữa các cột
+# # Setze logarithmische Skala für y-Achse, um große Unterschiede zwischen den Säulen besser darzustellen
 # plt.yscale('log')
 
-# # Đặt kích thước font cho các giá trị trục
+# # Setze Schriftgröße für Achsenwerte
 # plt.xticks(fontsize=12)
 # plt.yticks(fontsize=12)
 
-# # Hiển thị biểu đồ
+# # Zeige das Diagramm an
 # plt.tight_layout()
 # plt.show()
+
 # ID-Spalte hinzufügen, falls sie nicht vorhanden ist
 if 'ID' not in df.columns:
     df['ID'] = range(1, len(df) + 1)
@@ -120,102 +121,103 @@ df_results = pd.concat([df, df.apply(calculate_values, axis=1)], axis=1)
 # Filtern der Daten, um nur die Zeilen zu behalten, bei denen der Schadensfaktor ungleich 0 ist
 df_damage = df_results[df_results['Schadensfaktor'] != 0].copy()
 
-# #plot hinh quat
-# # Tính tổng thiệt hại cho từng tài sản: immobilienschaden = immobillienwert * schadenfaktor
-# # Tính tổng thiệt hại cho từng tài sản: immobilienschaden = immobillienwert * schadenfaktor
+# #Kreisdiagramm plotten
+# # Berechne den Gesamtschaden für jede Immobilie: immobilienschaden = immobillienwert * schadenfaktor
 # df_damage['total_schadensfaktor_value'] = df_damage['aktueller_immobilienwert'] * df_damage['Schadensfaktor']
 
-# # Tổng giá trị thiệt hại từ schadenfaktor
+# # Gesamtwert des Schadens durch Schadensfaktor
 # total_schadensfaktor_value = df_damage['total_schadensfaktor_value'].sum()
 # total_immobilienwert = df_damage['aktueller_immobilienwert'].sum()
 # print(total_schadensfaktor_value)
 # print(total_immobilienwert)
 # print(df_results['aktueller_immobilienwert'].sum())
 
-# # Tạo biểu đồ hình quạt cho tổng thiệt hại dựa trên aktueller immobilienwert và schadenwert
+# # Erstelle ein Kreisdiagramm für den Gesamtschaden basierend auf aktuellem Immobilienwert und Schadenwert
 # plt.figure(figsize=(8, 8))
 
-# # Tạo dữ liệu cho biểu đồ
-# labels = ['Gesamtschadenwert', '']  # Đổi thành cụm từ học thuật hơn
+# # Erstelle Daten für das Diagramm
+# labels = ['Gesamtschadenwert', '']
 # sizes = [total_schadensfaktor_value, total_immobilienwert - total_schadensfaktor_value]
-# colors = ['#E9C46A', '#2A9D8F']  # Đổi vị trí màu vàng và xanh
+# colors = ['#E9C46A', '#2A9D8F']  # Tausche die Positionen von Gelb und Grün
 
-# # Tạo biểu đồ với đường viền đậm và điều chỉnh khoảng cách label, pctdistance
+# # Erstelle das Diagramm mit dickem Rand und angepasstem Abstand für Label und Prozentsätze
 # wedges, texts, autotexts = plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%',
 #                                    startangle=140, wedgeprops=dict(edgecolor='black', linewidth=2),
 #                                    pctdistance=0.85, labeldistance=1.1)
 
-# # Thiết lập font chữ và kích thước
+# # Setze Schriftart und -größe
 # for text in texts + autotexts:
 #     text.set_fontsize(12)
 
-# # Hiển thị biểu đồ
+# # Zeige das Diagramm
 # plt.axis('equal')
 # plt.tight_layout()
 # plt.show()
 
-# # Tính tổng thiệt hại trong một năm (EAI đã được tính dựa trên schadenfaktor)
+# # Berechne den Gesamtschaden in einem Jahr (EAI wurde basierend auf Schadensfaktor berechnet)
 # total_schaden_pro_jahr = df_damage['EAI'].sum()
 
-# # Tạo biểu đồ hình quạt cho tổng thiệt hại dựa trên EAI trong 1 năm
+# # Erstelle ein Kreisdiagramm für den Gesamtschaden basierend auf EAI in einem Jahr
 # plt.figure(figsize=(8, 8))
 
-# # Tạo dữ liệu cho biểu đồ
-# labels = ['Gesamtschadenwert (1 Jahr)', '']  # Đổi thành cụm từ học thuật hơn
+# # Erstelle Daten für das Diagramm
+# labels = ['Gesamtschadenwert (1 Jahr)', '']
 # sizes = [total_schaden_pro_jahr, total_immobilienwert - total_schaden_pro_jahr]
-# colors = ['#E9C46A', '#2A9D8F']  # Sử dụng màu sắc giống biểu đồ 1
+# colors = ['#E9C46A', '#2A9D8F']  # Verwende die gleichen Farben wie im ersten Diagramm
 
-# # Tạo biểu đồ với đường viền đậm và điều chỉnh khoảng cách label, pctdistance
+# # Erstelle das Diagramm mit dickem Rand und angepasstem Abstand für Label und Prozentsätze
 # wedges, texts, autotexts = plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%',
 #                                    startangle=140, wedgeprops=dict(edgecolor='black', linewidth=2),
 #                                    pctdistance=1.1, labeldistance=1.5)
 
-# # Thiết lập font chữ và kích thước
+# # Setze Schriftart und -größe
 # for text in texts + autotexts:
 #     text.set_fontsize(12)
 
-# # Hiển thị biểu đồ
+# # Zeige das Diagramm
 # plt.axis('equal')
 # plt.tight_layout()
 # plt.show()
+
 # # Formatierungsfunktion für Euro
 # def format_euro(x, p):
 #     return f"{x:,.0f} €".replace(",", ".")
 
 # # Plot 1: Verteilung des Immobilienschadens
 # def format_euro(x, pos):
-#     """ Định dạng số thành dạng Euro với dấu chấm phân tách ngàn và ký hiệu €"""
+#     """ Formatiere Zahl als Euro mit Punkt als Tausendertrennzeichen und €-Symbol"""
 #     return f"{x:,.0f} €".replace(",", ".")
+
 # plt.figure(figsize=(16, 8))
 # sns.histplot(df_damage['Immobilienschaden'], kde=True, bins=20, color='skyblue')
 
 # mean_value = df_damage['Immobilienschaden'].mean()
 # median_value = df_damage['Immobilienschaden'].median()
 
-# # Vẽ các đường thể hiện giá trị mean và median với màu sắc tươi sáng
-# plt.axvline(mean_value, color='green', linestyle='--', label=f'Mean: {mean_value:,.2f} €'.replace(",", "."))
+# # Zeichne Linien für Mittelwert und Median mit leuchtenden Farben
+# plt.axvline(mean_value, color='green', linestyle='--', label=f'Mittelwert: {mean_value:,.2f} €'.replace(",", "."))
 # plt.axvline(median_value, color='red', linestyle='-.', label=f'Median: {median_value:,.2f} €'.replace(",", "."))
 
-# # Hiển thị chú thích
+# # Zeige Legende an
 # plt.legend(fontsize=12)
 
-# # Thiết lập nhãn trục x và y với font chữ 12
+# # Setze Beschriftungen für x- und y-Achse mit Schriftgröße 12
 # plt.xlabel('Immobilienschaden (in Euro)', fontsize=12, labelpad=10)
 # plt.ylabel('Häufigkeit', fontsize=12)
 
-# # Định dạng trục x theo dạng Euro
+# # Formatiere x-Achse als Euro
 # plt.gca().xaxis.set_major_formatter(FuncFormatter(format_euro))
 
-# # Hiển thị lưới và chỉnh lại nhãn trục x
+# # Zeige Gitter und passe x-Achsenbeschriftungen an
 # plt.grid(True)
 # plt.xticks(rotation=45, ha='right', fontsize=12)
 # plt.yticks(fontsize=12)
 # plt.gca().xaxis.set_major_locator(plt.MaxNLocator(10))
 
-# # Tinh chỉnh bố cục
+# # Optimiere Layout
 # plt.tight_layout(rect=[0, 0.03, 1, 0.95])
 
-# # Hiển thị biểu đồ
+# # Zeige das Diagramm
 # plt.show()
 
 # # Plot 2: Vergleich von RWA
@@ -224,8 +226,8 @@ df_damage = df_results[df_results['Schadensfaktor'] != 0].copy()
 # bar_width = 0.4
 # index = np.arange(len(df_damage))
 
-# plt.bar(index, df_damage['darlehenbetrag'] * df_damage['Risikogewicht'], bar_width, label='RWA cũ', color='#6495ED')
-# plt.bar(index + bar_width, df_damage['Neue RWA'], bar_width, label='RWA mới', color='#FFB6C1')
+# plt.bar(index, df_damage['darlehenbetrag'] * df_damage['Risikogewicht'], bar_width, label='Altes RWA', color='#6495ED')
+# plt.bar(index + bar_width, df_damage['Neue RWA'], bar_width, label='Neues RWA', color='#FFB6C1')
 
 # plt.xticks(index + bar_width / 2, df_damage['ID'].astype(str), rotation=45, ha='right')
 
@@ -242,37 +244,37 @@ df_damage = df_results[df_results['Schadensfaktor'] != 0].copy()
 # #plt.show()
 
 # # Plot 3: Vergleich von LtV
-# # Dữ liệu được sắp xếp theo 'Neue LtV' từ thấp đến cao
+# # Daten sortiert nach 'Neue LtV' von niedrig zu hoch
 # df_damage_sorted = df_damage.sort_values(by='Neue LtV')
 
-# # Tạo biểu đồ cột so sánh LtV cũ và LtV mới
+# # Erstelle Balkendiagramm zum Vergleich von altem und neuem LtV
 # plt.figure(figsize=(16, 8))
 
 # bar_width = 0.4
 # index = np.arange(len(df_damage_sorted))
 
-# # Vẽ biểu đồ cột cho LtV cũ
-# plt.bar(index, df_damage_sorted['aktuelles_LtV'], bar_width, label='aktueller LtV', color='lightblue')
+# # Zeichne Balken für alten LtV
+# plt.bar(index, df_damage_sorted['aktuelles_LtV'], bar_width, label='Aktueller LtV', color='lightblue')
 
-# # Vẽ biểu đồ cột cho LtV mới với độ lệch
-# plt.bar(index + bar_width, df_damage_sorted['Neue LtV'], bar_width, label='neuer LtV', color='darkblue')
+# # Zeichne Balken für neuen LtV mit Versatz
+# plt.bar(index + bar_width, df_damage_sorted['Neue LtV'], bar_width, label='Neuer LtV', color='darkblue')
 
-# # Đặt tên cho các cột là Immobilien ID dựa trên cột ID và sắp xếp theo thứ tự đã sắp xếp
+# # Benenne die Balken mit Immobilien ID basierend auf der ID-Spalte und sortiere entsprechend
 # plt.xticks(index + bar_width / 2, [f'ID: {id_}' for id_ in df_damage_sorted['ID']], rotation=45, ha='right')
 
-# # Thêm tiêu đề và nhãn
+# # Füge Titel und Beschriftungen hinzu
 # plt.xlabel('Immobilien ID', labelpad=10)
 # plt.ylabel('LtV (%)', labelpad=10)
 
-# # Định dạng trục y theo dạng phần trăm
+# # Formatiere y-Achse als Prozentsatz
 # plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x:.0%}'))
 
-# # Thêm chú thích và lưới
+# # Füge Legende und Gitter hinzu
 # plt.legend()
 # plt.grid(True, axis='y')
 
-# # Tinh chỉnh bố cục
+# # Optimiere Layout
 # plt.tight_layout()
 
-# # Hiển thị biểu đồ
+# # Zeige das Diagramm
 # #plt.show()

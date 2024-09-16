@@ -4,11 +4,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib.ticker import FuncFormatter
 
-# Đọc dữ liệu từ file CSV
+# Lesen der Daten aus der CSV-Datei
 df = pd.read_csv('data\hypothekendaten_final_with_statistics.csv', delimiter=';')
 
-# In ra tên các cột trong dữ liệu
-print("Các cột trong dữ liệu:")
+# Spaltennamen der Daten anzeigen
+print("Die Spalten in den Daten:")
 print(df.columns)
 print(df.describe().to_string())
 
@@ -24,7 +24,7 @@ def flexible_numeric_conversion(value, decimals=2):
     else:
         return np.nan
 
-# Chuyển đổi các cột sang dạng số
+# Umwandlung der Spalten in numerische Werte
 numeric_columns = ['aktueller_immobilienwert', 'Schadensfaktor', 'AEP', 'darlehenbetrag', 'Risikogewicht']
 for col in numeric_columns:
     df[col] = df[col].apply(lambda x: flexible_numeric_conversion(x))
@@ -103,11 +103,11 @@ print(df_damage['Immobilienschaden'].describe())
 def format_euro(x, p):
     return f"{x:,.0f} €".replace(",", ".")
 
-# Vẽ biểu đồ
+# Verteilung des Immobilienschadens
 plt.figure(figsize=(16, 8))
 sns.histplot(df_damage['Immobilienschaden'], kde=True, bins=20, color='skyblue')
 
-# Định dạng giá trị trung bình và trung vị
+# Durchschnitts- und Medianwerte formatieren
 mean_value = df_damage['Immobilienschaden'].mean()
 median_value = df_damage['Immobilienschaden'].median()
 
@@ -119,53 +119,53 @@ plt.title('Verteilung des Immobilienschadens')
 plt.xlabel('Immobilienschaden (in Euro)', labelpad=10)
 plt.ylabel('Häufigkeit')
 
-# Áp dụng định dạng cho trục x
+# X-Achse formatieren
 plt.gca().xaxis.set_major_formatter(FuncFormatter(format_euro))
 
 plt.grid(True)
 plt.xticks(rotation=45, ha='right')
-plt.gca().xaxis.set_major_locator(plt.MaxNLocator(10))  # Giới hạn số nhãn trên trục x
+plt.gca().xaxis.set_major_locator(plt.MaxNLocator(10))  # Begrenzung der X-Achsen-Tick-Limits
 
 plt.tight_layout(rect=[0, 0.03, 1, 0.95])
 plt.show()
 
-#Tạo biểu đồ cột so sánh RWA cũ và RWA mới với đường nối các đỉnh cột
+# Vergleich zwischen altem und neuem RWA mit Verbindungslinien der Balkenspitzen
 plt.figure(figsize=(16, 8))
 
-# Vẽ biểu đồ cột cho RWA cũ
+# Balkendiagramm für altes RWA
 bar_width = 0.4
 index = np.arange(len(df_damage))
 
 plt.bar(index, df_damage['darlehenbetrag'] * df_damage['Risikogewicht'], 
-        bar_width, label='RWA cũ', color='blue')
+        bar_width, label='Altes RWA', color='blue')
 
-# Vẽ biểu đồ cột cho RWA mới với độ lệch
+# Balkendiagramm für neues RWA mit Verschiebung
 plt.bar(index + bar_width, df_damage['Neue RWA'], 
-        bar_width, label='RWA mới', color='orange')
+        bar_width, label='Neues RWA', color='orange')
 
-# Vẽ đường nối các đỉnh cột
+# Verbindungslinien der Balkenspitzen zeichnen
 plt.plot(index + bar_width / 2, df_damage['darlehenbetrag'] * df_damage['Risikogewicht'], 
-         '-o', color='blue', markersize=5, label='Line RWA cũ')
+         '-o', color='blue', markersize=5, label='Linie altes RWA')
 plt.plot(index + bar_width / 2, df_damage['Neue RWA'], 
-         '-o', color='orange', markersize=5, label='Line RWA mới')
+         '-o', color='orange', markersize=5, label='Linie neues RWA')
 
-# Đặt tên cho các cột
+# X-Achsenbeschriftungen
 plt.xticks(index + bar_width / 2, df_damage.index, rotation=45, ha='right')
 
-# Thêm tiêu đề và nhãn
+# Titel und Achsenbeschriftungen
 plt.title('Vergleich zwischen altem und neuem RWA')
 plt.xlabel('Immobilien ID', labelpad=10)
 plt.ylabel('RWA (in Euro)', labelpad=10)
 
-# Định dạng trục y theo Euro
+# Y-Achse im Euro-Format
 plt.gca().yaxis.set_major_formatter(FuncFormatter(format_euro))
 
-# Thêm chú thích và lưới
+# Legende und Raster
 plt.legend()
 plt.grid(True, axis='y')
 
-# Tinh chỉnh bố cục
+# Layout-Anpassung
 plt.tight_layout()
 
-# Hiển thị biểu đồ
+# Diagramm anzeigen
 plt.show()

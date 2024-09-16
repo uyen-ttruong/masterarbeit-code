@@ -58,20 +58,20 @@ for szenario in endpreise.keys():
 # Diagramm erstellen
 plt.figure(figsize=(10, 6))
 
-# Đặt màu cho từng đường dựa trên hình bạn đã cung cấp
+# Farben für jede Linie basierend auf dem angegebenen Bild
 plt.plot(jahre, endpreise['net_zero'], label='Netto-Null', color='blue', linewidth=2)
 plt.plot(jahre, endpreise['disorderly'], label='Ungeordnet', color='orange', linewidth=2)
 plt.plot(jahre, endpreise['below_2'], label='Unter 2°C', color='green', linewidth=2)
 plt.plot(jahre, endpreise['current_policies'], label='Aktuelle Richtlinien', color='red', linewidth=2)
 
-# Điều chỉnh kích thước phông chữ và thêm lưới
+# Schriftgröße anpassen und Gitter hinzufügen
 plt.xlabel('Jahr', fontsize=12)
 plt.ylabel('Euro/kWh', fontsize=12)
 plt.legend(fontsize=12)
 plt.grid(True, linestyle=':', alpha=0.7)
 plt.ylim(0, max(max(preise) for preise in endpreise.values()) * 1.1)  # Anpassung der y-Achse
 
-# Điều chỉnh phông chữ cho các giá trị trên trục
+# Schriftgröße für Achsenwerte anpassen
 plt.xticks(fontsize=12)
 plt.yticks(fontsize=12)
 

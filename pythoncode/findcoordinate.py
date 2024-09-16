@@ -23,7 +23,7 @@ def download_dgm(url):
             tmp_file.write(response.content)
             return tmp_file.name
     else:
-        raise Exception(f"Không thể tải xuống file DGM. Mã trạng thái HTTP: {response.status_code}")
+        raise Exception(f"Das DGM konnte nicht heruntergeladen werden. HTTP-Statuscode: {response.status_code}")
 
 def load_dgm(file_path):
     with rasterio.open(file_path) as src:
@@ -31,7 +31,7 @@ def load_dgm(file_path):
         transform = src.transform
         crs = src.crs
         bounds = src.bounds
-        print(f"Phạm vi DGM (bounding box): {bounds}")
+        print(f"Umfang des DGM (Bounding Box): {bounds}")
     return elevation, transform, crs, bounds
 
 def get_elevation_at_point(x, y, elevation, transform, src_crs, dst_crs, bounds):
@@ -51,7 +51,7 @@ def get_elevation_at_point(x, y, elevation, transform, src_crs, dst_crs, bounds)
         else:
             return None
     except Exception as e:
-        print(f"Lỗi trong get_elevation_at_point: {str(e)}")
+        print(f"Fehler in get_elevation_at_point: {str(e)}")
         return None
 
 def calculate_absolute_water_level(pegelstand_cm, pegelnullpunkt_m):
@@ -61,7 +61,7 @@ def calculate_flood_depth(ground_elevation, water_level):
     if ground_elevation is None or np.isnan(ground_elevation):
         return None
     depth = water_level - ground_elevation
-    return round(max(depth, 0), 2)  # Làm tròn đến 2 chữ số thập phân
+    return round(max(depth, 0), 2)  # Auf 2 Dezimalstellen runden
 
 def convert_coordinates(latitude, longitude, from_epsg=4326, to_epsg=25832):
     transformer = Transformer.from_crs(f"EPSG:{from_epsg}", f"EPSG:{to_epsg}", always_xy=True)
@@ -91,21 +91,21 @@ def scan_flood_depths(elevation, transform, dgm_crs, bounds, pegelstand_cm, pege
     return flood_points
 
 def write_to_csv(flood_points, filename, min_depth=0.1, max_depth=4.0, num_values=5):
-    # Lọc các điểm nằm trong khoảng độ sâu cho phép
+    # Filtern der Punkte im zulässigen Tiefenbereich
     valid_depths = [depth for depth in flood_points.keys() if min_depth <= depth <= max_depth]
     
     if len(valid_depths) < num_values:
-        print(f"Cảnh báo: Chỉ có {len(valid_depths)} giá trị độ sâu trong khoảng {min_depth}m - {max_depth}m")
+        print(f"Warnung: Nur {len(valid_depths)} Tiefenwerte im Bereich {min_depth}m - {max_depth}m")
         selected_depths = valid_depths
     else:
-        # Chọn num_values giá trị đều nhau trong khoảng độ sâu
+        # Auswahl von num_values gleichmäßig verteilten Tiefenwerten
         step = (len(valid_depths) - 1) / (num_values - 1)
         indices = [int(round(i * step)) for i in range(num_values)]
         selected_depths = [valid_depths[i] for i in indices]
 
     with open(filename, 'w', newline='') as csvfile:
         csvwriter = csv.writer(csvfile)
-        csvwriter.writerow(['Latitude', 'Longitude', 'Flood Depth (m)'])
+        csvwriter.writerow(['Breitengrad', 'Längengrad', 'Hochwassertiefe (m)'])
         
         for depth in selected_depths:
             for lat, lon in flood_points[depth]:
@@ -117,40 +117,40 @@ def main():
     try:
         meta4_file = r"C:\Users\uyen truong\Downloads\neulm.meta4"
         dgm_url = get_dgm_url_from_meta4(meta4_file)
-        print(f"URL của DGM: {dgm_url}")
+        print(f"URL des DGM: {dgm_url}")
         
         dgm_file = download_dgm(dgm_url)
-        print(f"DGM đã được tải xuống tại: {dgm_file}")
+        print(f"DGM wurde heruntergeladen: {dgm_file}")
         
         elevation, transform, dgm_crs, bounds = load_dgm(dgm_file)
-        print(f"DGM đã được tải. Kích thước: {elevation.shape}")
-        print(f"Hệ tọa độ của DGM: {dgm_crs}")
-        print(f"Phạm vi DGM: {bounds}")
+        print(f"DGM wurde geladen. Größe: {elevation.shape}")
+        print(f"Koordinatensystem des DGM: {dgm_crs}")
+        print(f"Umfang des DGM: {bounds}")
         
-        # Thông tin từ trạm Pegel
+        # Informationen vom Pegel
         pegelstand_cm = 800
         pegelnullpunkt_m = 372
         
         flood_points = scan_flood_depths(elevation, transform, dgm_crs, bounds, pegelstand_cm, pegelnullpunkt_m)
         
-        print(f"Số lượng độ sâu nước lũ duy nhất: {len(flood_points)}")
+        print(f"Anzahl einzigartiger Hochwassertiefen: {len(flood_points)}")
         
         csv_filename = 'flood_points_MuehldorfaInncsv'
         selected_depths = write_to_csv(flood_points, csv_filename, min_depth=0.5, max_depth=4.0, num_values=5)
         
-        print("\nCác giá trị độ sâu nước lũ được chọn:")
+        print("\nAusgewählte Hochwassertiefen:")
         for depth in selected_depths:
-            print(f"{depth} m: {len(flood_points[depth])} điểm")
+            print(f"{depth} m: {len(flood_points[depth])} Punkte")
         
-        print(f"\nĐã xuất các điểm có độ sâu nước lũ ra file {csv_filename}")
+        print(f"\nDie Punkte mit Hochwassertiefen wurden in die Datei {csv_filename} exportiert")
 
     except Exception as e:
-        print(f"Đã xảy ra lỗi trong main: {str(e)}")
+        print(f"Fehler im Hauptprogramm: {str(e)}")
     
     finally:
         if 'dgm_file' in locals():
             os.unlink(dgm_file)
-            print("File tạm đã được xóa")
+            print("Temporäre Datei wurde gelöscht")
 
 if __name__ == "__main__":
     main()

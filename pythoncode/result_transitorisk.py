@@ -3,48 +3,48 @@ import numpy as np
 from tabulate import tabulate
 import matplotlib.pyplot as plt
 
-print("Bắt đầu chạy script.")
+print("Skript wird gestartet.")
 
-# Dữ liệu
+# Daten
 try:
     df = pd.read_csv('data/hypothekendaten_final_with_id.csv', delimiter=';')
-    print("Đã tải dữ liệu thành công.")
+    print("Daten erfolgreich geladen.")
 except Exception as e:
-    print(f"Lỗi khi tải dữ liệu: {e}")
+    print(f"Fehler beim Laden der Daten: {e}")
     exit()
 
-print(f"Số dòng trong DataFrame: {len(df)}")
-print(f"Các cột trong DataFrame: {df.columns.tolist()}")
+print(f"Anzahl der Zeilen im DataFrame: {len(df)}")
+print(f"Spalten im DataFrame: {df.columns.tolist()}")
 
-# Chuyển đổi các cột cần thiết sang kiểu số
+# Umwandlung der erforderlichen Spalten in numerische Typen
 numeric_columns = ['wohnflaeche', 'aktueller_immobilienwert', 'darlehenbetrag', 'aktuelles_LtV']
 for col in numeric_columns:
-    if df[col].dtype == 'object':  # Kiểm tra nếu cột là dạng chuỗi (object)
+    if df[col].dtype == 'object':  # Prüfen, ob die Spalte vom Typ String (object) ist
         df[col] = pd.to_numeric(df[col].str.replace(',', '.'), errors='coerce')
     else:
-        df[col] = pd.to_numeric(df[col], errors='coerce')  # Trường hợp cột đã là dạng số nhưng có giá trị lỗi
+        df[col] = pd.to_numeric(df[col], errors='coerce')  # Für den Fall, dass die Spalte bereits numerisch ist, aber fehlerhafte Werte enthält
 
-print("Đã chuyển đổi các cột sang kiểu số.")
+print("Spalten in numerische Typen umgewandelt.")
 
 energieklassen = ['B', 'C', 'D', 'F', 'G', 'H']
 df = df[df['Energieklasse'].isin(energieklassen)]
 
-print(f"Số dòng sau khi lọc theo Energieklasse: {len(df)}")
+print(f"Anzahl der Zeilen nach Filterung nach Energieklasse: {len(df)}")
 
-# Energieverbrauch cho mỗi Klasse
+# Energieverbrauch für jede Klasse
 energieverbrauch = {
     'B': 62.5, 'C': 87.5, 'D': 115, 'F': 180, 'G': 225, 'H': 275
 }
 
-# Thêm cột 'E_j'
+# Spalte 'E_j' hinzufügen
 df['E_j'] = df['Energieklasse'].map(energieverbrauch)
 
-# Các hằng số
+# Konstanten
 E_Aplus = 30
 r = 0.024
 T = 30
 
-# Giá năng lượng cho các kịch bản
+# Energiepreise für verschiedene Szenarien
 energiepreise = {
     'Netto-Null': [0.0623, 0.0652, 0.0868, 0.1117, 0.1584, 0.2606, 0.3389],
     'Ungeordnet': [0.0581, 0.0582, 0.0578, 0.0738, 0.0954, 0.1411, 0.2593],
@@ -84,23 +84,23 @@ def neue_werte_berechnen(zeile, PE_0, PE_1):
             'wertänderung': np.nan
         })
 
-print("Bắt đầu tính toán cho các kịch bản.")
+print("Beginn der Berechnungen für die Szenarien.")
 
-# Kết quả cho mỗi kịch bản
+# Ergebnisse für jedes Szenario
 ergebnisse = {}
 for szenario in energiepreise.keys():
-    print(f"Đang xử lý kịch bản: {szenario}")
+    print(f"Verarbeite Szenario: {szenario}")
     szenario_ergebnisse = []
     
     for i, jahr in enumerate(jahre):
-        print(f"  Đang xử lý năm: {jahr}")
+        print(f"  Verarbeite Jahr: {jahr}")
         PE_0 = energiepreise[szenario][0]
         PE_1 = energiepreise[szenario][i]
 
-        # Áp dụng tính toán cho mỗi hàng
+        # Anwendung der Berechnung auf jede Zeile
         df_result = df.apply(lambda zeile: neue_werte_berechnen(zeile, PE_0, PE_1), axis=1)
 
-        # Tính giá trị trung bình theo Energieklasse
+        # Berechnung der Durchschnittswerte nach Energieklasse
         durchschnittliche_ergebnisse = df_result.groupby(df['Energieklasse']).mean().rename(columns={
             'aktueller_immobilienwert': f'durchschnittlicher_aktueller_immobilienwert_{jahr}',
             'neuer_immobilienwert': f'durchschnittlicher_neuer_immobilienwert_{jahr}',
@@ -111,17 +111,17 @@ for szenario in energiepreise.keys():
 
         szenario_ergebnisse.append(durchschnittliche_ergebnisse)
 
-    # Kết hợp kết quả của tất cả các năm
+    # Zusammenführung der Ergebnisse aller Jahre
     ergebnisse[szenario] = pd.concat(szenario_ergebnisse, axis=1)
 
-print("Đã hoàn thành tính toán. Bắt đầu in kết quả.")
+print("Berechnungen abgeschlossen. Beginn der Ergebnisausgabe.")
 
-# In kết quả
+# Ausgabe der Ergebnisse
 for szenario, daten in ergebnisse.items():
     print(f"\nErgebnisse für das Szenario {szenario}:")
-    print(daten.head())  # Kiểm tra dữ liệu kết quả trước khi lưu
+    print(daten.head())  # Überprüfung der Ergebnisdaten vor dem Speichern
 
-    # Tạo bảng kết quả
+    # Erstellung der Ergebnistabelle
     result_table = pd.DataFrame(index=energieklassen)
     
     for jahr in jahre:
@@ -132,10 +132,11 @@ for szenario, daten in ergebnisse.items():
             result_table[f'{jahr} Neues LtV'] = daten[f'durchschnittlicher_neuer_beleihungsauslauf_{jahr}'].round(4)
             result_table[f'{jahr} Wertänderung'] = daten[f'durchschnittliche_wertänderung_{jahr}'].round(4)
         except KeyError as e:
-            print(f"Lỗi: Không tìm thấy dữ liệu cho năm {jahr} trong kịch bản {szenario}: {e}")
+            print(f"Fehler: Keine Daten für das Jahr {jahr} im Szenario {szenario} gefunden: {e}")
     
-    #print("Bảng kết quả đã được tạo.")
-    #print(result_table)  # In DataFrame
+    #print("Ergebnistabelle wurde erstellt.")
+    #print(result_table)  # Ausgabe des DataFrames
+
 colors = {
     'B': 'red',
     'C': 'green',
@@ -149,25 +150,25 @@ plt.rcParams.update({'font.size': 11})
 def plot_scenario(szenario, ergebnisse):
     plt.figure(figsize=(12, 8))
 
-    # Lặp qua các lớp năng lượng để vẽ dữ liệu
+    # Schleife über die Energieklassen zum Zeichnen der Daten
     for klasse in energieklassen:
-        # Kiểm tra nếu dữ liệu tồn tại cho từng lớp
+        # Prüfen, ob Daten für jede Klasse existieren
         if klasse in ergebnisse[szenario].index:
-            color = colors[klasse]  # Màu cho lớp hiện tại
+            color = colors[klasse]  # Farbe für die aktuelle Klasse
 
-            # Chỉ vẽ giá trị mới (neuer_immobilienwert)
+            # Nur neue Werte (neuer_immobilienwert) zeichnen
             plt.plot(jahre, ergebnisse[szenario].loc[klasse, [f'durchschnittlicher_neuer_immobilienwert_{jahr}' for jahr in jahre]] / 1000,
                      label=f'{klasse}', linestyle='-', marker='o', color=color)
         else:
             print(f"Keine Daten für Klasse {klasse} im Szenario {szenario}")
 
-    # Cài đặt các tham số biểu đồ, bỏ tiêu đề
+    # Diagrammparameter einstellen, Titel entfernen
     plt.xlabel('Jahr')
     plt.ylabel('Immobilienwert (in Tausend Euro)')
     plt.legend()
     plt.grid(True)
 
-    # Hiển thị biểu đồ
+    # Diagramm anzeigen
     plt.show()
 
 def plot_percentage_change(szenario, ergebnisse):
@@ -177,15 +178,15 @@ def plot_percentage_change(szenario, ergebnisse):
         if klasse in ergebnisse[szenario].index:
             color = colors[klasse]
             
-            # Tính phần trăm thay đổi
+            # Berechnung der prozentualen Änderung
             wertänderung = [ergebnisse[szenario].loc[klasse, f'durchschnittliche_wertänderung_{jahr}'] for jahr in jahre]
-            percentage_change = [change * 100 for change in wertänderung]  # Chuyển đổi sang phần trăm
+            percentage_change = [change * 100 for change in wertänderung]  # Umrechnung in Prozent
             
             plt.plot(jahre, percentage_change, label=f'{klasse}', linestyle='-', marker='o', color=color)
         else:
             print(f"Keine Daten für Klasse {klasse} im Szenario {szenario}")
 
-    plt.axhline(y=0, color='r', linestyle='--')  # Thêm đường 0%
+    plt.axhline(y=0, color='r', linestyle='--')  # 0%-Linie hinzufügen
     plt.xlabel('Jahr')
     plt.ylabel('Prozentuale Wertänderung (%)')
     plt.legend()
@@ -193,7 +194,7 @@ def plot_percentage_change(szenario, ergebnisse):
     plt.savefig(f'{szenario}_percentage_change_plot.png')
     plt.close()
 
-# Gọi hàm để vẽ biểu đồ cho từng kịch bản
+# Aufruf der Funktion zum Zeichnen des Diagramms für jedes Szenario
 for szenario in energiepreise.keys():
     print(f"Erzeuge Diagramm für Szenario: {szenario}")
     plot_percentage_change(szenario, ergebnisse)
